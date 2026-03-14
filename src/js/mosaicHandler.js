@@ -13,3 +13,7 @@ export function table(imgs, width, height) {
     console.log(s);
     t.innerHTML=s;
 }
+
+if (typeof window!=undefined) {
+    window.table=table;
+}

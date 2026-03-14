@@ -14,5 +14,11 @@
                 <td>Test4</td>
             </tr>
         </table>
+        <script type="module" src="../js/mosaicHandler.js"></script>
+        <script>
+            window.addEventListener("DOMContentLoaded",()=> {
+                if (window.table) window.table([], 5, 5);
+            });
+        </script>
     </body>
 </html>

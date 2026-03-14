@@ -1,6 +1,4 @@
 const { app, BrowserWindow } = require('electron/main');
-const mosaic = require('./mosaicHandler.js');
-//import { table } from './mosaicHandler.js';
 //run `npm run make` to create an exe file
 //run `npm run start` to run the program
 
@@ -22,7 +20,6 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
-  mosaic.table([], 5, 5);
 });
 
 app.on('window-all-closed', () => {
