@@ -1,5 +1,4 @@
 import { Achievement } from "./achievement";
-import * as json from "../test.json";
 export class AchievementSet {
     name="";
     game=null;

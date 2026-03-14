@@ -1,0 +1,10 @@
+{
+    "games": [
+        {
+            "name": "TestGame1",
+            "img": "../../resources/TestGame1/img.jpg", 
+            "jsonName": "TestGame1",
+            "platform": "PlayStation 5"
+        }
+    ]
+}
