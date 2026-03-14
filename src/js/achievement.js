@@ -3,10 +3,10 @@ export class Achievement {
     description="";
     achievementSet=null;
     unlocked=false;
-    unlockDate=null;
+    unlockDate="";
     img="";
     
-    constructor(name, description, achievementSet, img, unlocked=false, unlockDate=null) {
+    constructor(name, description, achievementSet, img, unlocked=false, unlockDate="") {
         this.name=name;
         this.description=description;
         this.achievementSet=achievementSet;

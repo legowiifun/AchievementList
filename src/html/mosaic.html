@@ -14,10 +14,10 @@
                 <td>Test4</td>
             </tr>
         </table>
-        <script type="module" src="../js/mosaicHandler.js"></script>
+        <script type="module" src="../js/initialize.js"></script>
         <script>
             window.addEventListener("DOMContentLoaded",()=> {
-                if (window.table) window.table([], 5, 5);
+                if (window.initialize) window.initialize.init();
             });
         </script>
     </body>

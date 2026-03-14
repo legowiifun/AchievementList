@@ -1,4 +1,4 @@
-import { Achievement } from "./achievement";
+import { Achievement } from "./achievement.js";
 export class AchievementSet {
     name="";
     game=null;
@@ -26,7 +26,7 @@ export class AchievementSet {
     getAchievementCount() {
         return this.achievements.length;
     }
-    addAchievement(name, description, img, unlocked=false, unlockDate=null) {
+    addAchievement(name, description, img, unlocked=false, unlockDate="") {
         let newAchievement = new Achievement(name,description,this,img,unlocked,unlockDate);
         this.achievements.push(newAchievement);
     }

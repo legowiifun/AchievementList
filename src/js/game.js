@@ -1,6 +1,6 @@
-import { AchievementSet } from "./achievementSet";
+import { AchievementSet } from "./achievementSet.js";
 
-class Game {
+export class Game {
     name="";
     achievementSets=[];
     img="";
@@ -32,7 +32,7 @@ class Game {
     addAchievementSet(name, img) {
         this.achievementSets.push(new AchievementSet(name, this, img));
     }
-    addAchievement(setName, name, description, img, unlocked=false, unlockDate=null) {
+    addAchievement(setName, name, description, img, unlocked=false, unlockDate="") {
         for (let i=0;i<this.achievementSets.length;i++) {
             if (this.achievementSets[i].name==setName) {
                 this.achievementSets[i].addAchievement(name, description, img, unlocked, unlockDate);
@@ -41,9 +41,9 @@ class Game {
         }
         console.error("ERROR: adding an achievement to a set that does not exist!!!");
     }
-    addAchievementByIndex(set, name, description, img, unlocked=false, unlockDate=null) {
-        if (this.achievementSets.length>=set) {
-            console.error("ERROR: adding an achievement to a set that does not exist!!!");
+    addAchievementByIndex(set, name, description, img, unlocked=false, unlockDate="") {
+        if (this.achievementSets.length<=set) {
+            console.error("ERROR: adding an achievement to a set that does not exist! achievementsSet length=",this.achievementSets.length," set index=",set);
             return;
         }
         this.achievementSets[set].addAchievement(name, description, img, unlocked, unlockDate);
