@@ -1,9 +1,9 @@
 import { Game } from './game.js';
-import games from '../json/games.json' with {type: "json"};
-import TestGame1 from '../json/TestGame1.json' with {type: "json"};
-
+import games from '../../resources/games.json' with {type: "json"};
+import TestGame1 from '../../resources/TestGame1.json' with {type: "json"};
 export class initialize {
     init() {
+        //console.log(process.resourcesPath);
         for (let i=0;i<games.length;i++) {
             this.myGames.push(new Game(games[i].name, games[i].img, games[i].platform));
             let jsonName=games[i].jsonName;

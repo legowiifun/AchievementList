@@ -6,7 +6,6 @@ module.exports = {
     asar: true,
     extraResource: [
       './resources',
-      './src/json'
     ]
   },
   rebuildConfig: {},
