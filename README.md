@@ -1,3 +1,3 @@
-This project is a universal achievements list for video games on different platforms. Achievements currently must be added manually. See the resources folder for a guide on how to change achievements. If you compile it, changing these will not require recompilation. 
+This project is a universal achievements list for video games on different platforms. Achievements currently must be added manually. See the resources folder for a guide on how to change achievements. If you compile it, changing these will not require recompilation of the program. However, because the program is currently in an alpha version, changes to the JSON format might happen. 
 
 This is written using Electron and the JavaScript language. 
