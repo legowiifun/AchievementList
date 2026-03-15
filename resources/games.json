@@ -10,5 +10,65 @@
         "img": "img.png",
         "jsonName":"TestGame2.json",
         "platform":"Steam"
+    },
+    {
+        "name": "TestGame3",
+        "img": "img.png",
+        "jsonName":"TestGame2.json",
+        "platform":"Steam"
+    },
+    {
+        "name": "TestGame4",
+        "img": "img.png",
+        "jsonName":"TestGame2.json",
+        "platform":"Steam"
+    },
+    {
+        "name": "TestGame5",
+        "img": "img.png",
+        "jsonName":"TestGame2.json",
+        "platform":"Steam"
+    },
+    {
+        "name": "TestGame6",
+        "img": "img.png",
+        "jsonName":"TestGame2.json",
+        "platform":"Steam"
+    },
+    {
+        "name": "TestGame7",
+        "img": "img.png",
+        "jsonName":"TestGame2.json",
+        "platform":"Steam"
+    },
+    {
+        "name": "TestGame8",
+        "img": "img.png",
+        "jsonName":"TestGame2.json",
+        "platform":"Steam"
+    },
+    {
+        "name": "TestGame9",
+        "img": "img.png",
+        "jsonName":"TestGame2.json",
+        "platform":"Steam"
+    },
+    {
+        "name": "TestGame10",
+        "img": "img.png",
+        "jsonName":"TestGame2.json",
+        "platform":"Steam"
+    },
+    {
+        "name": "TestGame11",
+        "img": "img.png",
+        "jsonName":"TestGame2.json",
+        "platform":"Steam"
+    },
+    {
+        "name": "TestGame12",
+        "img": "img.png",
+        "jsonName":"TestGame2.json",
+        "platform":"Steam"
     }
 ]
