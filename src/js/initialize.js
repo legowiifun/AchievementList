@@ -4,7 +4,7 @@ import TestGame1 from '../../resources/TestGame1.json' with {type: "json"};
 export class initialize {
     resourcesPath;
     main() {
-        window.electron.getPath.then((result)=>{
+        window.electron.getJson("games.json").then((result)=>{
             this.resourcesPath=result;
         }).then(()=>{
             this.init();
