@@ -35,8 +35,19 @@ app.whenReady().then(() => {
     } else {
       dataPath=path.join(process.cwd(),"resources",name);
     }
+    console.log("Getting JSON from ",dataPath);
     const data = await fs.promises.readFile(dataPath,'utf-8');
     return data;
+  });
+  ipcMain.handle('getCompletePath', async (event, name) => {
+    let dataPath;
+    if (app.isPackaged) {
+      dataPath=path.join(process.resourcesPath, "resources",name);
+    } else {
+      dataPath=path.join(process.cwd(),"resources",name);
+    }
+    console.log("Getting file path ",dataPath);
+    return dataPath;
   });
 });
 

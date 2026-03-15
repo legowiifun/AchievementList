@@ -1,19 +1,31 @@
 import { Game } from './game.js';
+import {GameHolder} from './HTMLElements/gameHolder.js'
+
 export class initialize {
     /**
      * @type {object[]}
      */
     gamesJson;
     /**
+     * @type {string[]}
+     */
+    gamesHTML = [];
+    /**
      * @returns {void}
      */
     main() {
-        window.electron.getJson("games.json").then((result)=>{
+        window.resources.getJson("games.json").then((result)=>{
             this.gamesJson=JSON.parse(result);
         }).then(()=>{
             this.init();
+        }).then(()=>{
+            let HTML = "<ul id=\"gamesList\"></ul>";
+            document.getElementById("content").innerHTML=HTML;
+            for (let i=0;i<this.myGames.length;i++) {
+                this.gamesHTML.push(new GameHolder(i));
+            }
         }).catch((err)=> {
-            console.error("Failed to read games.json!");
+            console.error("Failed to read games.json!",err);
         });
     }
 
@@ -28,12 +40,20 @@ export class initialize {
         for (let i=0;i<this.gamesJson.length;i++) {
             this.myGames.push(new Game(this.gamesJson[i].name, this.gamesJson[i].img, this.gamesJson[i].platform));
             let jsonName=this.gamesJson[i].jsonName;
-            window.electron.getJson(jsonName).then((result)=>{
+            window.resources.getJson(jsonName).then((result)=>{
                 this.initGame(JSON.parse(result));
             }).catch((err)=> {
                 console.error("Failed to read "+jsonName+"!");
             });
+            //this.gamesHTML.push(new GameHolder(i));
         }
+
+        /*let HTML = "<ul>";
+        for (let i=0;i<this.gamesHTML.length;i++) {
+            HTML=HTML+this.gamesHTML[i];
+        }
+        HTML=HTML+"</ul>";
+        document.getElementById("content").innerHTML=HTML;*/
     }
 
     /**
