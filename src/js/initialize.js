@@ -18,12 +18,6 @@ export class initialize {
             this.gamesJson=JSON.parse(result);
         }).then(()=>{
             this.init();
-        }).then(()=>{
-            let HTML = "<ul id=\"gamesList\"></ul>";
-            document.getElementById("content").innerHTML=HTML;
-            for (let i=0;i<this.myGames.length;i++) {
-                this.gamesHTML.push(new GameHolder(i));
-            }
         }).catch((err)=> {
             console.error("Failed to read games.json!",err);
         });
@@ -45,15 +39,12 @@ export class initialize {
             }).catch((err)=> {
                 console.error("Failed to read "+jsonName+"!");
             });
-            //this.gamesHTML.push(new GameHolder(i));
         }
-
-        /*let HTML = "<ul>";
-        for (let i=0;i<this.gamesHTML.length;i++) {
-            HTML=HTML+this.gamesHTML[i];
+        let HTML = "<ul id=\"gamesList\"></ul>";
+        document.getElementById("content").innerHTML=HTML;
+        for (let i=0;i<this.myGames.length;i++) {
+            this.gamesHTML.push(new GameHolder(i));
         }
-        HTML=HTML+"</ul>";
-        document.getElementById("content").innerHTML=HTML;*/
     }
 
     /**
