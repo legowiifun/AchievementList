@@ -16,7 +16,6 @@ export class AchievementHolder {
             } else {
                 newHTML=newHTML+"<span class=\"achievementDate\">Unobtained</span>";
             }
-            newHTML=newHTML+"<span class=\"percent\" id=\""+achievementSet.name+"Percent\">"+achievementSet.getPercentageCompleted()+"%</span>";
             newHTML=newHTML+"</li>";
             this.myHTML=newHTML;
             document.getElementById("achievementList").innerHTML=document.getElementById("achievementList").innerHTML+this.myHTML;

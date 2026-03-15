@@ -81,6 +81,7 @@ export class initialize {
      * @param {number} idx 
      */
     setView(view, idx=0) {
+        console.log("Setting view to ",view);
         switch (view) {
             case this.views.gamesView: 
                 this.previousState="";

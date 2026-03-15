@@ -1,7 +1,7 @@
 export class GameHolder {
     myHTML;
-    constructor(game) {
-        let newHTML = "<li>";
+    constructor(game, idx) {
+        let newHTML = "<li onClick=\"initialize.setView(initialize.views.achievementSetsView, "+idx+");\">";
         window.resources.getCompletePath(game.img).then((result)=>{
             newHTML=newHTML+"<img wdith=\"100\" height=\"100\" src=\""+result+"\">";
             newHTML=newHTML+"<span class=\"gameName\">"+game.name+"</span>";
