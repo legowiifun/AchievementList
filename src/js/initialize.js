@@ -3,7 +3,8 @@ import games from '../../resources/games.json' with {type: "json"};
 import TestGame1 from '../../resources/TestGame1.json' with {type: "json"};
 export class initialize {
     init() {
-        //console.log(process.resourcesPath);
+        
+        window.electron.getPath.then((result)=>{console.log(result)});
         for (let i=0;i<games.length;i++) {
             this.myGames.push(new Game(games[i].name, games[i].img, games[i].platform));
             let jsonName=games[i].jsonName;
