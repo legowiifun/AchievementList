@@ -8,7 +8,7 @@ export class AchievementHolder {
     constructor(achievement) {
         let newHTML = "<li>";
         window.resources.getCompletePath(achievement.img).then((result)=>{
-            newHTML=newHTML+"<img wdith=\"100\" height=\"100\" src=\""+result+"\">";
+            newHTML=newHTML+"<img class=\"achievementImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
             newHTML=newHTML+"<span class=\"achievementName\">"+achievement.name+"</span>";
             newHTML=newHTML+"<span class=\"achievementDesc\">"+achievement.description+"</span>";
             if (achievement.unlocked) {

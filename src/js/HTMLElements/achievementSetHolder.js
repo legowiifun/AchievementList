@@ -8,7 +8,7 @@ export class AchievementSetHolder {
     constructor(achievementSet, idx) {
         let newHTML = "<li onClick=\"initialize.setView(initialize.views.achievementsView, "+idx+");\">";
         window.resources.getCompletePath(achievementSet.img).then((result)=>{
-            newHTML=newHTML+"<img wdith=\"100\" height=\"100\" src=\""+result+"\">";
+            newHTML=newHTML+"<img class=\"setImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
             newHTML=newHTML+"<span class=\"setName\">"+achievementSet.name+"</span>";
             newHTML=newHTML+"<span class=\"percent\" id=\""+achievementSet.name+"Percent\">"+achievementSet.getPercentageCompleted()+"%</span>";
             newHTML=newHTML+"</li>";
