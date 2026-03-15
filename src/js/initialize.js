@@ -1,5 +1,6 @@
 import { Game } from './game.js';
-import {GameViewer} from './views/gameViewer.js'
+import {GameViewer} from './views/gameViewer.js';
+import { AchievementSetViewer } from './views/achievementSetViewer.js';
 
 export class initialize {
     /**
