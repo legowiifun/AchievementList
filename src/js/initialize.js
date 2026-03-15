@@ -1,5 +1,5 @@
 import { Game } from './game.js';
-import {GameHolder} from './HTMLElements/gameHolder.js'
+import {GameViewer} from './views/gameViewer.js'
 
 export class initialize {
     /**
@@ -40,11 +40,7 @@ export class initialize {
                 console.error("Failed to read "+jsonName+"!");
             });
         }
-        let HTML = "<ul id=\"gamesList\"></ul>";
-        document.getElementById("content").innerHTML=HTML;
-        for (let i=0;i<this.myGames.length;i++) {
-            this.gamesHTML.push(new GameHolder(i));
-        }
+        new GameViewer(this.myGames);
     }
 
     /**
