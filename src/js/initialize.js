@@ -1,16 +1,13 @@
 import { Game } from './game.js';
 import {GameViewer} from './views/gameViewer.js';
 import { AchievementSetViewer } from './views/achievementSetViewer.js';
+import { AchievementViewer } from './views/achievementViewer.js';
 
 export class initialize {
     /**
      * @type {object[]}
      */
     gamesJson;
-    /**
-     * @type {string[]}
-     */
-    gamesHTML = [];
     /**
      * @returns {void}
      */
