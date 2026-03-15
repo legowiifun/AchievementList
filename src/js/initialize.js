@@ -51,6 +51,7 @@ export class initialize {
                 console.error("Failed to read "+jsonName+"!");
             });
         }
+        document.getElementById("backButton").setAttribute("hidden",true);
         new GameViewer(this.myGames);
     }
 
