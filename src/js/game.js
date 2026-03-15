@@ -2,6 +2,9 @@ import { AchievementSet } from "./achievementSet.js";
 
 export class Game {
     name="";
+    /**
+     * @type {AchievementSet[]}
+     */
     achievementSets=[];
     img="";
     platform="";

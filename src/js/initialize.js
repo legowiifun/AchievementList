@@ -8,6 +8,18 @@ export class initialize {
      * @type {object[]}
      */
     gamesJson;
+
+    views = {
+        gamesView: "GamesView",
+        achievementSetsView: "AchievementSetsView",
+        achievementsView: "AchievementsView"
+    };
+
+    currentState=this.views.gamesView;
+    previousState="";
+    previousIdx=0;
+    currentIdx=0;
+
     /**
      * @returns {void}
      */
@@ -62,6 +74,31 @@ export class initialize {
     * @type {Game[]}
     */
     myGames = [];
+
+
+    /**
+     * @param {string} view 
+     * @param {number} idx 
+     */
+    setView(view, idx=0) {
+        switch (view) {
+            case this.views.gamesView: 
+                this.previousState="";
+                new GameViewer(this.myGames);
+                break;
+            case this.views.achievementSetsView:
+                this.previousState=this.views.gamesView;
+                new AchievementSetViewer(this.myGames[idx].achievementSets);
+                break;
+            case this.views.achievementsView:
+                this.previousState=this.views.achievementSetsView;
+                this.previousIdx=this.currentIdx;
+                new AchievementViewer(this.myGames[this.currentIdx].achievementSets[idx].achievements);
+                break;
+        }
+        this.currentIdx=idx;
+        this.currentState=view;
+    }
 }
 
 
