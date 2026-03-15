@@ -21,7 +21,10 @@ export class initialize {
      * @returns {void}
      */
     init() {
-        //console.log(this.gamesJson);
+        if (this.gamesJson.length==undefined) {
+            console.error("Games.json is not an array!");
+            return;
+        }
         for (let i=0;i<this.gamesJson.length;i++) {
             this.myGames.push(new Game(this.gamesJson[i].name, this.gamesJson[i].img, this.gamesJson[i].platform));
             let jsonName=this.gamesJson[i].jsonName;
@@ -31,13 +34,16 @@ export class initialize {
                 console.error("Failed to read "+jsonName+"!");
             });
         }
-        //console.log(this.myGames);
     }
 
     /**
      * @param {object[]} game 
      */
     initGame(game) {
+        if (game.length==undefined) {
+            console.error("JSON file is not an array!");
+            return;
+        }
         for (let i=0;i<game.length;i++) {
             this.myGames.at(-1).addAchievementSet(game[i].name,game[i].image);
             for (let j=0;j<game[i].achievements.length;j++) {
