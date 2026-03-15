@@ -6,7 +6,7 @@ export class AchievementHolder {
      * @param {Achievement} achievement
      */
     constructor(achievement) {
-        let newHTML = "<li>";
+        let newHTML = "<li class=\"achievementEntry\">";
         window.resources.getCompletePath(achievement.img).then((result)=>{
             newHTML=newHTML+"<img class=\"achievementImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
             newHTML=newHTML+"<span class=\"achievementName\">"+achievement.name+"</span>";
