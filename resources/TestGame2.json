@@ -1,6 +1,6 @@
 [
     {
-        "image": "TestGame1/achievementSetTest2/mainImg",
+        "image": "img.png",
         "name": "achievementSetTest2",
         "achievements": [
             {
@@ -8,7 +8,7 @@
                 "description": "If you are seeing this achievement, the test is successful!",
                 "unlocked": true,
                 "unlockDate": "3/15/2026",
-                "img": "TestGame1/achievementSetTest2/TestAchievement.jpg"
+                "img": "img.png"
             }
         ]
     }

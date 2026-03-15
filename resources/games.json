@@ -1,13 +1,13 @@
 [
     {
         "name": "TestGame1",
-        "img": "img.jpg", 
+        "img": "img.png", 
         "jsonName": "TestGame1.json",
         "platform": "PlayStation 5"
     },
     {
         "name": "TestGame2",
-        "img": "img.jpg",
+        "img": "img.png",
         "jsonName":"TestGame2.json",
         "platform":"Steam"
     }
