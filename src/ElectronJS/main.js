@@ -14,7 +14,7 @@ const createWindow = () => {
     }
   });
 
-  win.loadFile('src/html/mosaic.html');
+  win.loadFile('src/html/index.html');
   
 }
 

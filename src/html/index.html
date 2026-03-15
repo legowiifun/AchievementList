@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>legowiifun's universal achievement viewer</title>
+    </head>
     <body>
         <p>Testing</p>
+        <script type="module" src="../js/initialize.js"></script>
+        <script>
+            window.addEventListener("DOMContentLoaded",()=> {
+                if (window.initialize) window.initialize.main();
+            });
+        </script>
     </body>
 </html>
