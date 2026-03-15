@@ -83,8 +83,10 @@ export class initialize {
      */
     setView(view, idx=0) {
         console.log("Setting view to ",view);
+        document.getElementById("backButton").removeAttribute("hidden");
         switch (view) {
             case this.views.gamesView: 
+                document.getElementById("backButton").setAttribute("hidden",true);
                 this.previousState="";
                 new GameViewer(this.myGames);
                 break;
