@@ -8,6 +8,21 @@
     height:10%;
     border:5px solid black;
     padding:20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content: space-around;
+}
+.gameName {
+    font-weight:1000;
+    font-size:xx-large;
+}
+.platform {
+    font-size:large;
+}
+.percent {
+    font-size:large;
 }
 ul {
     list-style-type:none;
