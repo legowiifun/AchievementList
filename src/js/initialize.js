@@ -2,10 +2,10 @@ import { Game } from './game.js';
 import games from '../../resources/games.json' with {type: "json"};
 import TestGame1 from '../../resources/TestGame1.json' with {type: "json"};
 export class initialize {
-    resourcesPath;
+    gamesJson;
     main() {
         window.electron.getJson("games.json").then((result)=>{
-            this.resourcesPath=result;
+            this.gamesJson=JSON.parse(result);
         }).then(()=>{
             this.init();
         });
@@ -13,14 +13,13 @@ export class initialize {
 
     init() {
         //window.electron.getPath.then((result)=>{console.log(result)});
-        console.log(this.resourcesPath);
+        console.log(this.gamesJson);
         for (let i=0;i<games.length;i++) {
             this.myGames.push(new Game(games[i].name, games[i].img, games[i].platform));
             let jsonName=games[i].jsonName;
-            switch(jsonName) {
-                case "TestGame1":
-                    this.initGame(TestGame1);
-            }
+            window.electron.getJson(jsonName).then((result)=>{
+                this.initGame(JSON.parse(result));
+            });
         }
         console.log(this.myGames);
     }

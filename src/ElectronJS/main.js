@@ -31,14 +31,12 @@ app.whenReady().then(() => {
   ipcMain.handle('getJSON', async (event, name) => {
     let dataPath;
     if (app.isPackaged) {
-      dataPath=path.join(process.resourcesPath,name);
+      dataPath=path.join(process.resourcesPath, "resources",name);
     } else {
       dataPath=path.join(process.cwd(),"resources",name);
     }
     const data = await fs.promises.readFile(dataPath,'utf-8');
     return data;
-  }).catch((err)=> {
-    console.error("Error occurred while reading the file!");
   });
 });
 

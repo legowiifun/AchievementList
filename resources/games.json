@@ -1,8 +1,8 @@
 [
     {
         "name": "TestGame1",
-        "img": "../../resources/TestGame1/img.jpg", 
-        "jsonName": "TestGame1",
+        "img": "resources/TestGame1/img.jpg", 
+        "jsonName": "TestGame2.json",
         "platform": "PlayStation 5"
     }
 ]
