@@ -1,9 +1,8 @@
 [
     {
-        "name": "TestGame1",
-        "img": "img.png", 
-        "jsonName": "TestGame1.json",
-        "platform": "PlayStation 5"
+        "jsonName": "TestGame1\\TestGame1.json",
+        "platform": "PlayStation 5",
+        "save": "TestGame1\\TestSave.json"
     },
     {
         "name": "TestGame2",

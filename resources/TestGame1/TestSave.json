@@ -1,0 +1,19 @@
+[
+    [
+        {
+            "obtained": true,
+            "obtainedDate": "FILL IN JS DATE HERE",
+            "outOf": 1
+        },
+        {
+            "obtained": false,
+            "obtainedDate": "FILL IN JS DATE HERE"
+        }        
+    ],
+    [
+        {
+            "obtained": false,
+            "obtainedDate": "FILL IN JS DATE HERE"
+        }        
+    ]
+]

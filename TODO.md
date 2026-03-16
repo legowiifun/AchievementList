@@ -6,3 +6,10 @@
 - Add a way to create a mosaic
 - Add a "platinum tracker" to track completed games
 - Add a way to filter/sort games/achievements
+
+- JSON changes
+	- change date to JS Date object
+	- move game data to game JSON
+	- move completion data to own JSON file
+	- add tracker for 5/10 style achievements
+	- add tracker for "required for platinum"

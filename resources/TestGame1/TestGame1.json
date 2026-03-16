@@ -1,0 +1,39 @@
+{
+    "name": "TestGame1",
+    "img": "img.png", 
+    "achievements": [
+        {
+            "image": "img.png",
+            "name": "achievementSetTest1",
+            "achievements": [
+                {
+                    "name": "Started the game!",
+                    "description": "Start the game",
+                    "img": "img.png",
+                    "requiredForPlat":true,
+                    "outOf":1
+                },
+                {
+                    "name": "This is an achievement!",
+                    "description": "Can you see this achievement!",
+                    "unlocked": false,
+                    "unlockDate":"",
+                    "img":"img.png",
+                    "requiredForPlat":true
+                }
+            ]
+        },
+        {
+            "image": "img.png",
+            "name": "achievementSetTest2",
+            "achievements": [
+                {
+                    "name": "Test achievement!",
+                    "description": "Can you see this achievement!",
+                    "img":"img.png",
+                    "requiredForPlat":false
+                }
+            ]
+        }
+    ]
+}
