@@ -51,24 +51,23 @@ export class initialize {
                 window.resources.getJson(jsonName).then((result)=>{
                     gameIdx=this.initGame(JSON.parse(result),this.gamesJson[i].platform);
                 }).then(()=> {
-            let saveName = this.gamesJson[i].save;
-            if (saveName==undefined) {
-                console.error("Current game is not formatted properly. I can not read it!");                
-            } else {
-                window.resources.getJson(saveName).then((result)=>{
-                    this.initSaves(JSON.parse(result),gameIdx);
-                }).catch((err)=> {
-                    console.error("Failed to read "+saveName+"!",err);
-                });                
-            }
+                    let saveName = this.gamesJson[i].save;
+                    if (saveName==undefined) {
+                        console.error("Current game is not formatted properly. I can not read it!");                
+                    } else {
+                        window.resources.getJson(saveName).then((result)=>{
+                            this.initSaves(JSON.parse(result),gameIdx);
+                        }).catch((err)=> {
+                            console.error("Failed to read "+saveName+"!",err);
+                        });
+                    }
+                }).then(()=>{
+                    this.setView(this.views.gamesView);
                 }).catch((err)=> {
                     console.error("Failed to read "+jsonName+"!",err);
                 });
             }
-            
         }
-        document.getElementById("backButton").setAttribute("hidden",true);
-        new GameViewer(this.myGames);
     }
 
     /**
@@ -92,29 +91,41 @@ export class initialize {
         }
         let newGame=new Game(name,img,platform);
         
-        for (let i=0;i<game.length;i++) {
-            let skipAchievements=false;
+        for (let i=0;i<game.achievements.length;i++) {
+            let skipAchievements=true;
             //check for the onlyOn array
             if (achievements[i].onlyOn!=undefined) {
-                if (achievements[i].onlyOn.find((value)=>{value==platform})==undefined) {
-                    //don't add the achievement set
-                    skipAchievements=true;
+                console.log("OnlyOn=",achievements[i].onlyOn);
+                if (achievements[i].onlyOn.find((value)=>{return value==platform})!=undefined) {
+                    //if you find the platform in the only on array, skip the achievement set
+                    skipAchievements=false;
                 }
+            } else {
+                //if there is not an onlyOn array, do not skip this achievement set
+                skipAchievements=false;
             }
             if (!skipAchievements) {
+                console.log("Adding achievement set ",achievements[i].name);
                 newGame.addAchievementSet(achievements[i].name,achievements[i].image,achievements[i].requiredForPlat);
                 for (let j=0;j<achievements[i].achievements.length;j++) {
-                    let skipAchievement=false;
+                    let skipAchievement=true;
                     if (achievements[i].achievements[j].onlyOn!=undefined) {
-                        if (achievements[i].achievements[j].onlyOn.find((value)=>{value==platform})==undefined) {
-                            //don't add the achievement set
-                            skipAchievement=true;
+                        if (achievements[i].achievements[j].onlyOn.find((value)=>{return value==platform})!=undefined) {
+                            //don't add the achievement
+                            skipAchievement=false;
                         }
+                    } else {
+                        skipAchievement=false;
                     }
                     if (!skipAchievement) {
+                        console.log("Adding achievement ",achievements[i].achievements[j].name);
                         newGame.addAchievementByIndex(i,achievements[i].achievements[j].name,achievements[i].achievements[j].description,achievements[i].achievements[j].img,achievements[i].achievements[j].outOf);
+                    } else {
+                        console.log("Skipping adding achievement ",achievements[i].achievements[j].name);
                     }
                 }
+            } else {
+                console.log("Skipping adding achievement set ",achievements[i].name);
             }
         }
         this.myGames.push(newGame);
@@ -164,7 +175,7 @@ export class initialize {
      * @param {number} idx 
      */
     setView(view, idx=0) {
-        console.log("Setting view to ",view);
+        console.log("Setting view to ",view, idx);
         document.getElementById("backButton").removeAttribute("hidden");
         switch (view) {
             case this.views.gamesView: 

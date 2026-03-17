@@ -1,7 +1,7 @@
 [
     {
         "jsonName": "TestGame1\\TestGame1.json",
-        "platform": "PlayStation 5",
+        "platform": "PlayStation 4",
         "save": "TestGame1\\TestSave.json"
     }
 ]
