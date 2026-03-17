@@ -42,14 +42,30 @@ export class initialize {
             return;
         }
         for (let i=0;i<this.gamesJson.length;i++) {
+            let gameIdx=i;
             //add a new game
-            this.myGames.push(new Game(this.gamesJson[i].name, this.gamesJson[i].img, this.gamesJson[i].platform));
             let jsonName=this.gamesJson[i].jsonName;
-            window.resources.getJson(jsonName).then((result)=>{
-                this.initGame(JSON.parse(result), i);
-            }).catch((err)=> {
-                console.error("Failed to read "+jsonName+"!");
-            });
+            if (jsonName==undefined) {
+                console.error("Current game is not formatted properly. I can not read it!");              
+            } else {
+                window.resources.getJson(jsonName).then((result)=>{
+                    gameIdx=this.initGame(JSON.parse(result),this.gamesJson[i].platform);
+                }).then(()=> {
+            let saveName = this.gamesJson[i].save;
+            if (saveName==undefined) {
+                console.error("Current game is not formatted properly. I can not read it!");                
+            } else {
+                window.resources.getJson(saveName).then((result)=>{
+                    this.initSaves(JSON.parse(result),gameIdx);
+                }).catch((err)=> {
+                    console.error("Failed to read "+saveName+"!",err);
+                });                
+            }
+                }).catch((err)=> {
+                    console.error("Failed to read "+jsonName+"!",err);
+                });
+            }
+            
         }
         document.getElementById("backButton").setAttribute("hidden",true);
         new GameViewer(this.myGames);
@@ -58,17 +74,82 @@ export class initialize {
     /**
      * @param {object[]} game 
      */
-    initGame(game, idx) {
-        if (game.length==undefined) {
-            console.error("JSON file is not an array!");
+    initGame(game, platform) {
+        let name=game.name;
+        if (name==undefined) {
+            console.error("I can not read this name!");
             return;
         }
+        let img=game.img;
+        if (img==undefined) {
+            console.error("I can not find the image for game "+name+"!");
+            return;
+        }
+        let achievements=game.achievements;
+        if (achievements==undefined) {
+            console.error("I can not find the achievements for game "+name+"!");
+            return;
+        }
+        let newGame=new Game(name,img,platform);
+        
         for (let i=0;i<game.length;i++) {
-            this.myGames.at(idx).addAchievementSet(game[i].name,game[i].image);
-            for (let j=0;j<game[i].achievements.length;j++) {
-                //console.log("i=",i);
-                //console.log("Adding to achievement set ",this.myGames.at(-1).achievementSets[i]);
-                this.myGames.at(idx).addAchievementByIndex(i,game[i].achievements[j].name,game[i].achievements[j].description,game[i].achievements[j].img,game[i].achievements[j].unlocked,game[i].achievements[j].unlockDate);
+            let skipAchievements=false;
+            //check for the onlyOn array
+            if (achievements[i].onlyOn!=undefined) {
+                if (achievements[i].onlyOn.find((value)=>{value==platform})==undefined) {
+                    //don't add the achievement set
+                    skipAchievements=true;
+                }
+            }
+            if (!skipAchievements) {
+                newGame.addAchievementSet(achievements[i].name,achievements[i].image,achievements[i].requiredForPlat);
+                for (let j=0;j<achievements[i].achievements.length;j++) {
+                    let skipAchievement=false;
+                    if (achievements[i].achievements[j].onlyOn!=undefined) {
+                        if (achievements[i].achievements[j].onlyOn.find((value)=>{value==platform})==undefined) {
+                            //don't add the achievement set
+                            skipAchievement=true;
+                        }
+                    }
+                    if (!skipAchievement) {
+                        newGame.addAchievementByIndex(i,achievements[i].achievements[j].name,achievements[i].achievements[j].description,achievements[i].achievements[j].img,achievements[i].achievements[j].outOf);
+                    }
+                }
+            }
+        }
+        this.myGames.push(newGame);
+        return(this.myGames.length-1);
+    }
+    initSaves(save, gameIdx) {
+        if (save.length==undefined) {
+            console.error("Saves JSON is not an array!");
+            return;
+        }
+        for (let i=0;i<save.length;i++) {
+            if (save[i].length==undefined) {
+                console.error("Save for this achievement set is not an array!");
+            } else {
+                for (let j=0;j<save[i].length;j++) {
+                    let skipAddingAchievements=false;
+                    if (this.myGames[gameIdx].achievementSets[i]==undefined) {
+                        skipAddingAchievements=true;
+                    } else if (this.myGames[gameIdx].achievementSets[i].achievements[j]==undefined) {
+                        skipAddingAchievements=true;
+                    }
+                    if (!skipAddingAchievements) {
+                    if (save[i][j].obtained==undefined) {
+                        console.error("Can not read json!");
+                    } else {
+                        this.myGames[gameIdx].achievementSets[i].achievements[j].unlocked=save[i][j].obtained;
+                    }
+                    if (save[i][j].obtainedDate==undefined) {
+                        console.error("Can not read json!");
+                    } else {
+                        this.myGames[gameIdx].achievementSets[i].achievements[j].unlockDate=save[i][j].obtainedDate;
+                    }
+                    this.myGames[gameIdx].achievementSets[i].achievements[j].doneOutOf=save[i][j].outOf;
+                    }
+                }
             }
         }
     }

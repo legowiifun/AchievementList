@@ -5,12 +5,12 @@
         {
             "image": "img.png",
             "name": "achievementSetTest1",
+            "requiredForPlat": true,
             "achievements": [
                 {
                     "name": "Started the game!",
                     "description": "Start the game",
                     "img": "img.png",
-                    "requiredForPlat":true,
                     "outOf":1
                 },
                 {
@@ -19,13 +19,15 @@
                     "unlocked": false,
                     "unlockDate":"",
                     "img":"img.png",
-                    "requiredForPlat":true
+                    "onlyOn": ["PlayStation 5"]
                 }
             ]
         },
         {
             "image": "img.png",
             "name": "achievementSetTest2",
+            "onlyOn": ["PlayStation 5"],
+            "requiredForPlat":false,
             "achievements": [
                 {
                     "name": "Test achievement!",

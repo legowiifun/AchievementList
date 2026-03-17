@@ -4,10 +4,12 @@ export class AchievementSet {
     game=null;
     img="";
     achievements=[];
-    constructor(name, game, img) {
+    requiredForPlat=false;
+    constructor(name, game, img,requiredForPlat=false) {
         this.name=name;
         this.game=game;
         this.img=img;
+        this.requiredForPlat=requiredForPlat;
     }
     getPercentageCompleted() {
         let totalAchievements=this.getAchievementCount();
@@ -26,8 +28,8 @@ export class AchievementSet {
     getAchievementCount() {
         return this.achievements.length;
     }
-    addAchievement(name, description, img, unlocked=false, unlockDate="") {
-        let newAchievement = new Achievement(name,description,this,img,unlocked,unlockDate);
+    addAchievement(name, description, img, outOf, unlocked=false, unlockDate="") {
+        let newAchievement = new Achievement(name,description,this,img,outOf, unlocked,unlockDate);
         this.achievements.push(newAchievement);
     }
 }
