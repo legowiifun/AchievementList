@@ -7,8 +7,9 @@ export class Game {
      */
     achievementSets=[];
     img="";
+    platImg="";
     platform="";
-    constructor(name, img, platform) {
+    constructor(name, img, platform, platImg) {
         this.name=name;
         this.img=img;
         this.platform=platform;

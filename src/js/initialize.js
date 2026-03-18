@@ -84,12 +84,17 @@ export class initialize {
             console.error("I can not find the image for game "+name+"!");
             return;
         }
+        let platImg=game.platImg;
+        if (platImg==undefined) {
+            console.error("I can not find the platinum image for game "+name+"!");
+            return;
+        }
         let achievements=game.achievements;
         if (achievements==undefined) {
             console.error("I can not find the achievements for game "+name+"!");
             return;
         }
-        let newGame=new Game(name,img,platform);
+        let newGame=new Game(name,img,platform,platImg);
         
         for (let i=0;i<game.achievements.length;i++) {
             let skipAchievements=true;

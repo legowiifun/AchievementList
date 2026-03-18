@@ -1,6 +1,7 @@
 {
     "name": "TestGame1",
     "img": "img.png", 
+    "platImg":"img.png",
     "achievements": [
         {
             "image": "img.png",
