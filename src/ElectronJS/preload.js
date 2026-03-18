@@ -13,5 +13,8 @@ contextBridge.exposeInMainWorld('resources', {
   },
   getCompletePath: (name)=> {
     return ipcRenderer.invoke("getCompletePath", name);
+  },
+  editJson: (name, content)=> {
+    ipcRenderer.invoke("editJSON", name, content);
   }
 });

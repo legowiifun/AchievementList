@@ -49,6 +49,16 @@ app.whenReady().then(() => {
     console.log("Getting file path ",dataPath);
     return dataPath;
   });
+  ipcMain.handle('editJSON', async (event, name, content)=> {
+    let dataPath;
+    if (app.isPackaged) {
+      dataPath=path.join(process.resourcesPath, "resources",name);
+    } else {
+      dataPath=path.join(process.cwd(),"resources",name);
+    }
+    console.log("Editing JSON from ",dataPath);
+    await fs.promises.writeFile(dataPath,content);
+  });
 });
 
 app.on('window-all-closed', () => {
