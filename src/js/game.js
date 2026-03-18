@@ -52,4 +52,50 @@ export class Game {
         }
         this.achievementSets[set].addAchievement(name, description, img, outOf, unlocked, unlockDate);
     }
+    createGameJSON() {
+        let json={};
+        json.name=this.name;
+        json.img=this.img;
+        json.platImg=this.platImg;
+        let jsonAchievements=[];
+        for (let i=0;i<this.achievementSets.length;i++) {
+            let achievementSetObj = {};
+            achievementSetObj.img=this.achievementSets[i].img;
+            achievementSetObj.name=this.achievementSets[i].name;
+            achievementSetObj.requiredForPlat=this.achievementSets[i].requiredForPlat;
+            let achievements2=[];
+            for (let j=0;j<this.achievementSets[i].achievements.length;j++) {
+                let achievementObj={};
+                achievementObj.name=this.achievementSets[i].achievements[j].name;
+                achievementObj.description=this.achievementSets[i].achievements[j].description;
+                achievementObj.img=this.achievementSets[i].achievements[j].img;
+                if (this.achievementSets[i].achievements[j].outOf!=undefined) {
+                    achievementObj.outOf=this.achievementSets[i].achievements[j].outOf;
+                }
+                achievements2.push(achievementObj);
+            }
+            achievementSetObj.achievements=achievements2;
+            jsonAchievements.push(achievementSetObj);
+        }
+        json.achievements=jsonAchievements;
+        return JSON.stringify(json);
+    }
+    createSaveJSON() {
+        let json=[];
+        for (let i=0;i<this.achievementSets.length;i++) {
+            let achievementArr=[];
+            for (let j=0;j<this.achievementSets[i].achievements.length;j++) {
+                let achievementObj={};
+                achievementObj.obtained=this.achievementSets[i].achievements[j].unlocked;
+                achievementObj.obtainedDate=this.achievementSets[i].achievements[j].unlockDate;
+                if (this.achievementSets[i].achievements[j].doneOutOf!=undefined) {
+                    achievementObj.outOf=this.achievementSets[i].achievements[j].doneOutOf;
+                }
+                achievementArr.push(achievementObj);
+            }
+            json.push(achievementArr);
+        }
+
+        return JSON.stringify(json);
+    }
 }

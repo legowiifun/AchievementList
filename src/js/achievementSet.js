@@ -3,6 +3,9 @@ export class AchievementSet {
     name="";
     game=null;
     img="";
+    /**
+     * @type {Achievement[]}
+     */
     achievements=[];
     requiredForPlat=false;
     constructor(name, game, img,requiredForPlat=false) {

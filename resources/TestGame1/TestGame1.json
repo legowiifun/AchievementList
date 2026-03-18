@@ -17,8 +17,6 @@
                 {
                     "name": "This is an achievement!",
                     "description": "Can you see this achievement!",
-                    "unlocked": false,
-                    "unlockDate":"",
                     "img":"img.png",
                     "onlyOn": ["PlayStation 5"]
                 }
