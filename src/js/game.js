@@ -13,6 +13,7 @@ export class Game {
         this.name=name;
         this.img=img;
         this.platform=platform;
+        this.platImg=platImg;
     }
     getPercentageCompleted() {
         let totalAchievements=this.getAchievementCount();

@@ -153,17 +153,17 @@ export class initialize {
                         skipAddingAchievements=true;
                     }
                     if (!skipAddingAchievements) {
-                    if (save[i][j].obtained==undefined) {
-                        console.error("Can not read json!");
-                    } else {
-                        this.myGames[gameIdx].achievementSets[i].achievements[j].unlocked=save[i][j].obtained;
-                    }
-                    if (save[i][j].obtainedDate==undefined) {
-                        console.error("Can not read json!");
-                    } else {
-                        this.myGames[gameIdx].achievementSets[i].achievements[j].unlockDate=save[i][j].obtainedDate;
-                    }
-                    this.myGames[gameIdx].achievementSets[i].achievements[j].doneOutOf=save[i][j].outOf;
+                        if (save[i][j].obtained==undefined) {
+                            console.error("Can not read json!");
+                        } else {
+                            this.myGames[gameIdx].achievementSets[i].achievements[j].unlocked=save[i][j].obtained;
+                        }
+                        if (save[i][j].obtainedDate==undefined) {
+                            console.error("Can not read json!");
+                        } else {
+                            this.myGames[gameIdx].achievementSets[i].achievements[j].unlockDate=new Date(save[i][j].obtainedDate);
+                        }
+                        this.myGames[gameIdx].achievementSets[i].achievements[j].doneOutOf=save[i][j].outOf;
                     }
                 }
             }

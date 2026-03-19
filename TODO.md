@@ -13,3 +13,5 @@
 	- move completion data to own JSON file
 	- add tracker for 5/10 style achievements
 	- add tracker for "required for platinum"
+
+USE filter:grayscale in CSS to grayscale images for achievements that are not obtained

@@ -2,18 +2,18 @@
     [
         {
             "obtained": true,
-            "obtainedDate": "FILL IN JS DATE HERE",
+            "obtainedDate": "3/18/2026",
             "outOf": 1
         },
         {
             "obtained": false,
-            "obtainedDate": "FILL IN JS DATE HERE"
+            "obtainedDate": "3/18/2026"
         }        
     ],
     [
         {
             "obtained": false,
-            "obtainedDate": "FILL IN JS DATE HERE"
+            "obtainedDate": "3/18/2026"
         }        
     ]
 ]
