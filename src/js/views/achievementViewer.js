@@ -4,7 +4,7 @@ export class AchievementViewer {
         let HTML = "<ul id=\"achievementList\"></ul>";
         document.getElementById("content").innerHTML=HTML;
         for (let i=0;i<achievementArray.length;i++) {
-            new AchievementHolder(achievementArray[i]);
+            new AchievementHolder(achievementArray[i], i);
         }
     }
 }

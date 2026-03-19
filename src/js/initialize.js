@@ -2,6 +2,7 @@ import { Game } from './game.js';
 import {GameViewer} from './views/gameViewer.js';
 import { AchievementSetViewer } from './views/achievementSetViewer.js';
 import { AchievementViewer } from './views/achievementViewer.js';
+import { EditAchievementView } from './views/editAchievementView.js';
 
 export class initialize {
     /**
@@ -12,14 +13,17 @@ export class initialize {
     views = {
         gamesView: "GamesView",
         achievementSetsView: "AchievementSetsView",
-        achievementsView: "AchievementsView"
+        achievementsView: "AchievementsView",
+        editAchievementView: "EditAchievementView"
     };
 
     currentState=this.views.gamesView;
     previousState="";
     previousIdx=0;
     currentIdx=0;
-
+    gameIdx=0;
+    achievementSetIdx=0;
+    achievementIdx=0;
     /**
      * @returns {void}
      */
@@ -189,13 +193,21 @@ export class initialize {
                 new GameViewer(this.myGames);
                 break;
             case this.views.achievementSetsView:
+                this.gameIdx=idx;
                 this.previousState=this.views.gamesView;
                 new AchievementSetViewer(this.myGames[idx].achievementSets);
                 break;
             case this.views.achievementsView:
+                this.achievementSetIdx=idx;
                 this.previousState=this.views.achievementSetsView;
-                this.previousIdx=this.currentIdx;
-                new AchievementViewer(this.myGames[this.currentIdx].achievementSets[idx].achievements);
+                this.previousIdx=this.gameIdx;
+                new AchievementViewer(this.myGames[this.gameIdx].achievementSets[idx].achievements);
+                break;
+            case this.views.editAchievementView:
+                this.achievementIdx=idx;
+                this.previousState=this.views.achievementsView;
+                this.previousIdx=this.achievementSetIdx;
+                new EditAchievementView(this.myGames[this.gameIdx].achievementSets[this.achievementSetIdx].achievements[idx]);
                 break;
         }
         this.currentIdx=idx;
