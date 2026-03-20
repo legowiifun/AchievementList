@@ -1,4 +1,5 @@
 import { Achievement } from "../achievement.js";
+import { getCompletePath } from "../utils.js";
 export class AchievementHolder {
     myHTML;
     achievement;
@@ -11,7 +12,7 @@ export class AchievementHolder {
         let newHTML = "<li class=\"achievementEntry\" id=\"";
         newHTML=newHTML+achievement.name;
         newHTML=newHTML+"\">";
-        window.resources.getCompletePath(achievement.img).then((result)=>{
+        getCompletePath(achievement.img).then((result)=>{
             newHTML=newHTML+"<img class=\"achievementImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
             newHTML=newHTML+"<span class=\"achievementName\">"+achievement.name+"</span>";
             newHTML=newHTML+"<span class=\"achievementDesc\">"+achievement.description+"</span>";

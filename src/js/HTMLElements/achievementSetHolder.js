@@ -1,4 +1,5 @@
 import { AchievementSet } from "../achievementSet.js";
+import { getCompletePath } from "../utils.js";
 export class AchievementSetHolder {
     myHTML;
     /**
@@ -7,7 +8,7 @@ export class AchievementSetHolder {
      */
     constructor(achievementSet, idx) {
         let newHTML = "<li class=\"achievementSetEntry\" onClick=\"initialize.setView(initialize.views.achievementsView, "+idx+");\">";
-        window.resources.getCompletePath(achievementSet.img).then((result)=>{
+        getCompletePath(achievementSet.img).then((result)=>{
             newHTML=newHTML+"<img class=\"setImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
             newHTML=newHTML+"<span class=\"setName\">"+achievementSet.name+"</span>";
             newHTML=newHTML+"<span class=\"percent\" id=\""+achievementSet.name+"Percent\">"+achievementSet.getPercentageCompleted()+"%</span>";

@@ -3,6 +3,7 @@ import {GameViewer} from './views/gameViewer.js';
 import { AchievementSetViewer } from './views/achievementSetViewer.js';
 import { AchievementViewer } from './views/achievementViewer.js';
 import { EditAchievementView } from './views/editAchievementView.js';
+import { getJson } from './utils.js';
 
 export class initialize {
     /**
@@ -17,7 +18,7 @@ export class initialize {
         editAchievementView: "EditAchievementView"
     };
 
-    currentState=this.views.gamesView;
+    currentState="";
     previousState="";
     previousIdx=0;
     currentIdx=0;
@@ -28,7 +29,7 @@ export class initialize {
      * @returns {void}
      */
     main() {
-        window.resources.getJson("games.json").then((result)=>{
+        getJson("games.json").then((result)=>{
             this.gamesJson=JSON.parse(result);
         }).then(()=>{
             this.init();
@@ -52,21 +53,22 @@ export class initialize {
             if (jsonName==undefined) {
                 console.error("Current game is not formatted properly. I can not read it!");              
             } else {
-                window.resources.getJson(jsonName).then((result)=>{
+                getJson(jsonName).then((result)=>{
                     gameIdx=this.initGame(JSON.parse(result),this.gamesJson[i].platform);
                 }).then(()=> {
                     let saveName = this.gamesJson[i].save;
                     if (saveName==undefined) {
                         console.error("Current game is not formatted properly. I can not read it!");                
                     } else {
-                        window.resources.getJson(saveName).then((result)=>{
+                        getJson(saveName).then((result)=>{
                             this.initSaves(JSON.parse(result),gameIdx);
+                        }).then(()=>{
+                            console.log("Current view: ",this.currentState);
+                            this.setView(this.views.gamesView);
                         }).catch((err)=> {
                             console.error("Failed to read "+saveName+"!",err);
                         });
                     }
-                }).then(()=>{
-                    this.setView(this.views.gamesView);
                 }).catch((err)=> {
                     console.error("Failed to read "+jsonName+"!",err);
                 });
@@ -184,6 +186,9 @@ export class initialize {
      * @param {number} idx 
      */
     setView(view, idx=0) {
+        if (this.currentState==view) {
+            return;
+        }
         console.log("Setting view to ",view, idx);
         document.getElementById("backButton").removeAttribute("hidden");
         switch (view) {

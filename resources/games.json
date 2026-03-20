@@ -3,5 +3,10 @@
         "jsonName": "TestGame1\\TestGame1.json",
         "platform": "PlayStation 5",
         "save": "TestGame1\\TestSave.json"
+    },
+    {
+        "jsonName": "TestGame1\\TestGame1.json",
+        "platform": "Steam",
+        "save": "TestGame1\\TestSave.json"
     }
 ]
