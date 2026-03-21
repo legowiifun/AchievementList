@@ -184,6 +184,27 @@ export class initialize {
 
 
     /**
+     * ObjToAdd has parameters jsonName, platform, save
+     * Is added to the JSON
+     * For a downloading system
+     * @param {object} ObjToAdd 
+     */
+    createGamesJSON(ObjToAdd=null) {
+        let newGamesJSON=[];
+        if (ObjToAdd!=null) {
+            newGamesJSON.push(ObjToAdd);
+        }
+        for (let i=0;i<this.myGames.length;i++) {
+            let newGamesObj={};
+            newGamesObj.jsonName=this.myGames[i].gameJSONLocation;
+            newGamesObj.platform=this.myGames[i].platform;
+            newGamesObj.save=this.myGames[i].saveJSONLocation;
+            newGamesJSON.push(newGamesObj);
+        }
+        return JSON.stringify(newGamesJSON);
+    }
+
+    /**
      * @param {string} view 
      * @param {number} idx 
      */
