@@ -13,7 +13,11 @@ export class AchievementHolder {
         newHTML=newHTML+achievement.name;
         newHTML=newHTML+"\">";
         getCompletePath(achievement.img).then((result)=>{
-            newHTML=newHTML+"<img class=\"achievementImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
+            if (achievement.unlocked) {
+                newHTML=newHTML+"<img class=\"achievementImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
+            } else {
+                newHTML=newHTML+"<img class=\"achievementImg unobtainedAchImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
+            }
             newHTML=newHTML+"<span class=\"achievementName\">"+achievement.name+"</span>";
             newHTML=newHTML+"<span class=\"achievementDesc\">"+achievement.description+"</span>";
             if (achievement.unlocked) {
