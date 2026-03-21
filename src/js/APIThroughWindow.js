@@ -12,6 +12,7 @@ export class APIThroughWindow {
     * @type {Game[]}
     */
     myGames = [];
+    currentSort="Alphabetical Ascending";
     /**
      * ObjToAdd has parameters jsonName, platform, save
      * Is added to the JSON

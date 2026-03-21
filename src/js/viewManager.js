@@ -25,10 +25,11 @@ export class ViewManager {
 
     /**
      * @param {string} view 
-     * @param {number} idx 
+     * @param {number} idx
+     * @param {boolean} refresh
      */
-    setView(view, idx=0) {
-        if (this.currentState==view) {
+    setView(view, idx=0, refresh=false) {
+        if (this.currentState==view&&!refresh) {
             return;
         }
         console.log("Setting view to ",view, idx);
