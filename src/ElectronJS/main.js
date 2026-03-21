@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron/main');
 const { ipcMain } = require('electron');
 const path = require('node:path');
 const fs = require('fs');
+
 //run `npm run make` to create an exe file
 //run `npm run start` to run the program
 
@@ -28,6 +29,7 @@ app.whenReady().then(() => {
   ipcMain.on('toMain', (event, arg)=>console.log(arg));
   ipcMain.handle('get-data', async () => 'Data from main');
   ipcMain.handle('resourcesPath', async () => {return process.resourcesPath;});
+
   ipcMain.handle('getJSON', async (event, name) => {
     let dataPath;
     if (app.isPackaged) {
@@ -39,6 +41,7 @@ app.whenReady().then(() => {
     const data = await fs.promises.readFile(dataPath,'utf-8');
     return data;
   });
+
   ipcMain.handle('getCompletePath', async (event, name) => {
     let dataPath;
     if (app.isPackaged) {
@@ -49,6 +52,7 @@ app.whenReady().then(() => {
     console.log("Getting file path ",dataPath);
     return dataPath;
   });
+
   ipcMain.handle('editJSON', async (event, name, content)=> {
     let dataPath;
     if (app.isPackaged) {
@@ -57,6 +61,7 @@ app.whenReady().then(() => {
       dataPath=path.join(process.cwd(),"resources",name);
     }
     console.log("Editing JSON from ",dataPath);
+    await fs.promises.mkdir(path.dirname(dataPath),{recursive:true});
     await fs.promises.writeFile(dataPath,content);
   });
 });
