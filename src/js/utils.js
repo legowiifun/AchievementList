@@ -26,7 +26,7 @@ export function getFilePath(file) {
  * @param {Date} date 
  * @returns {string}
  */
-export function convertDate(date) {
+export function convertDate(date, format=0) {
     //A universal function to create a date string in different formats
     //for now: 
     // 0=mm/dd/yy
@@ -35,7 +35,6 @@ export function convertDate(date) {
     // 3=dd/mm/yy
     // 4=dd/mm/yyyy hh:mm AM/PM
     // 5=dd/mm/yyyy hh:mm 24-hr time
-    let format=0;
 
     switch (format) {
         case 0:{
