@@ -1,6 +1,5 @@
 Before beta release
 - Add a background
-- Add a way to filter/sort games/achievements
 
 After
 - Improve the UI

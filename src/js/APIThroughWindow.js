@@ -30,6 +30,104 @@ export class APIThroughWindow {
         }
         return JSON.stringify(newGamesJSON);
     }
+
+    sortGames(refreshAfter=true) {
+        this.myGames.sort(
+            /**
+             * @param {Game} a 
+             * @param {Game} b 
+             */
+            (a, b)=> {
+                
+                switch(this.currentSort){
+                    case "Alphabetical Ascending":{
+                        let nameA=a.name.toLowerCase();
+                        let nameB=b.name.toLowerCase();
+                        if (nameA<nameB) {
+                            return -1;
+                        }
+                        if (nameA>nameB) {
+                            return 1;
+                        }
+                        //nameA==nameB
+                        let platA=a.platform.toLowerCase();
+                        let platB=b.platform.toLowerCase();
+                        if (platA<platB) {
+                            return -1;
+                        }
+                        if (platA>platB) {
+                            return 1;
+                        }
+                        //name and platform are the same
+                        return 0;
+                        break;
+                    }
+                    case "Alphabetical Descending":{
+                        let nameA=a.name.toLowerCase();
+                        let nameB=b.name.toLowerCase();
+                        if (nameA<nameB) {
+                            return 1;
+                        }
+                        if (nameA>nameB) {
+                            return -1;
+                        }
+                        //nameA==nameB
+                        let platA=a.platform.toLowerCase();
+                        let platB=b.platform.toLowerCase();
+                        if (platA<platB) {
+                            return 1;
+                        }
+                        if (platA>platB) {
+                            return -1;
+                        }
+                        //name and platform are the same
+                        return 0;
+                        break;
+                    }
+                    case "Last Obtained Achievement Date Ascending":{
+                        //if a is before b
+                        if (a.getLastCompletedAchievementDate().getTime()<b.getLastCompletedAchievementDate().getTime()) {
+                            return 1;
+                        }
+                        if (a.getLastCompletedAchievementDate().getTime()>b.getLastCompletedAchievementDate().getTime()) {
+                            return -1;
+                        }
+                        return 0;
+                    }
+                    case "Last Obtained Achievement Date Descending":{
+                        //if a is before b
+                        if (a.getLastCompletedAchievementDate().getTime()<b.getLastCompletedAchievementDate().getTime()) {
+                            return -1;
+                        }
+                        if (a.getLastCompletedAchievementDate().getTime()>b.getLastCompletedAchievementDate().getTime()) {
+                            return 1;
+                        }
+                        return 0;
+                    }
+                    case "Percentage Ascending":{
+                        if (a.getPercentageCompleted()<b.getPercentageCompleted()) {
+                            return 1;
+                        }
+                        if (a.getPercentageCompleted()>b.getPercentageCompleted()) {
+                            return -1;
+                        }
+                    }
+                    case "Percentage Descending":{
+                        if (a.getPercentageCompleted()<b.getPercentageCompleted()) {
+                            return -1;
+                        }
+                        if (a.getPercentageCompleted()>b.getPercentageCompleted()) {
+                            return 1;
+                        }
+                    }
+                }
+            }
+        );
+        if (refreshAfter) {
+            this.viewManager.setView(this.viewManager.views.gamesView,0, true);
+        }
+    }
+
 }
 /**
  * export a singleton for better syntax highlighting in other files
