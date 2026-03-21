@@ -32,6 +32,7 @@ export class ViewManager {
         if (this.currentState==view&&!refresh) {
             return;
         }
+        document.getElementById('content').innerHTML="";
         console.log("Setting view to ",view, idx);
         document.getElementById("backButton").removeAttribute("hidden");
         switch (view) {

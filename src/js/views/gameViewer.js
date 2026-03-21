@@ -3,30 +3,60 @@ import { windowAPI } from '../APIThroughWindow.js';
 import { Game } from '../game.js';
 export class GameViewer {
     constructor(gamesArray) {
-        let HTML = "<ul id=\"gamesList\"></ul>";
-        HTML+="<button onclick=\"window.app.viewManager.setView(window.app.viewManager.views.addGameView, 0);\">Add a game</button>"
+        let gamesList = document.createElement('ul');
+        gamesList.id="gamesList";
+        let addGameButton = document.createElement('button');
+        addGameButton.innerHTML="Add a game";
+        addGameButton.addEventListener('click', ()=>{
+            windowAPI.viewManager.setView(windowAPI.viewManager.views.addGameView,0);
+        });
+        let gameViewerSorting = document.createElement('select');
+        gameViewerSorting.id="gameViewerSorting";
+        
+        let sortOption=document.createElement('option');
+        sortOption.value="Alphabetical Ascending";
+        sortOption.innerHTML="Alphabetical (Ascending)";
+        gameViewerSorting.appendChild(sortOption);
 
-        //sorting
-        //options - last obtained achievement (ascending or descending), alphabetical
-        HTML+="<select id=\"gameViewerSorting\">";
-            HTML+="<option value=\"Alphabetical Ascending\">Alphabetical (Ascending)</option>";
-            HTML+="<option value=\"Alphabetical Descending\">Alphabetical (Descending)</option>";
-            HTML+="<option value=\"Last Obtained Achievement Date Ascending\">Last Obtained Achievement Date (Ascending)</option>";
-            HTML+="<option value=\"Last Obtained Achievement Date Descending\">Last Obtained Achievement Date (Descending)</option>";
-            HTML+="<option value=\"Percentage Ascending\">Percentage (Ascending)</option>";
-            HTML+="<option value=\"Percentage Descending\">Percentage (Descending)</option>";
-        HTML+="</select>";
+        sortOption=document.createElement('option');
+        sortOption.value="Alphabetical Descending";
+        sortOption.innerHTML="Alphabetical (Descending)";
+        gameViewerSorting.appendChild(sortOption);
 
-        document.getElementById("content").innerHTML=HTML;
-        for (let i=0;i<gamesArray.length;i++) {
-            new GameHolder(gamesArray[i], i);
-        }
+        sortOption=document.createElement('option');
+        sortOption.value="Last Obtained Achievement Date Ascending";
+        sortOption.innerHTML="Last Obtained Achievement Date (Ascending)";
+        gameViewerSorting.appendChild(sortOption);
+
+        sortOption=document.createElement('option');
+        sortOption.value="Last Obtained Achievement Date Descending";
+        sortOption.innerHTML="Last Obtained Achievement Date (Descending)";
+        gameViewerSorting.appendChild(sortOption);
+
+        sortOption=document.createElement('option');
+        sortOption.value="Percentage Ascending";
+        sortOption.innerHTML="Percentage (Ascending)";
+        gameViewerSorting.appendChild(sortOption);
+
+        sortOption=document.createElement('option');
+        sortOption.value="Percentage Descending";
+        sortOption.innerHTML="Percentage (Descending)";
+        gameViewerSorting.appendChild(sortOption);
+
         //set the default value
-        document.getElementById("gameViewerSorting").value=windowAPI.currentSort;
+        gameViewerSorting.value=windowAPI.currentSort;
         //add event listener to sort games
-        document.getElementById("gameViewerSorting").addEventListener('change', function(event) {
+        gameViewerSorting.addEventListener('change', function(event) {
             windowAPI.currentSort = document.getElementById("gameViewerSorting").value;
             windowAPI.sortGames();
         });
+        
+        document.getElementById("content").appendChild(gamesList);
+        document.getElementById("content").appendChild(addGameButton);
+        document.getElementById("content").appendChild(gameViewerSorting);
+        for (let i=0;i<gamesArray.length;i++) {
+            new GameHolder(gamesArray[i], i, gamesList);
+        }
+
     }
 }
