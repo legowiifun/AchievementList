@@ -54,14 +54,14 @@ export class initialize {
                 console.error("Current game is not formatted properly. I can not read it!");              
             } else {
                 getJson(jsonName).then((result)=>{
-                    gameIdx=this.initGame(JSON.parse(result),this.gamesJson[i].platform);
+                    gameIdx=this.initGame(JSON.parse(result),this.gamesJson[i].platform, jsonName);
                 }).then(()=> {
                     let saveName = this.gamesJson[i].save;
                     if (saveName==undefined) {
                         console.error("Current game is not formatted properly. I can not read it!");                
                     } else {
                         getJson(saveName).then((result)=>{
-                            this.initSaves(JSON.parse(result),gameIdx);
+                            this.initSaves(JSON.parse(result),gameIdx, saveName);
                         }).then(()=>{
                             console.log("Current view: ",this.currentState);
                             this.setView(this.views.gamesView);
@@ -79,7 +79,7 @@ export class initialize {
     /**
      * @param {object[]} game 
      */
-    initGame(game, platform) {
+    initGame(game, platform, JSONLocation) {
         let name=game.name;
         if (name==undefined) {
             console.error("I can not read this name!");
@@ -100,7 +100,7 @@ export class initialize {
             console.error("I can not find the achievements for game "+name+"!");
             return;
         }
-        let newGame=new Game(name,img,platform,platImg);
+        let newGame=new Game(name,img,platform,platImg, JSONLocation);
         
         for (let i=0;i<game.achievements.length;i++) {
             let skipAchievements=true;
@@ -142,11 +142,12 @@ export class initialize {
         this.myGames.push(newGame);
         return(this.myGames.length-1);
     }
-    initSaves(save, gameIdx) {
+    initSaves(save, gameIdx, saveName) {
         if (save.length==undefined) {
             console.error("Saves JSON is not an array!");
             return;
         }
+        this.myGames[gameIdx].saveJSONLocation=saveName;
         for (let i=0;i<save.length;i++) {
             if (save[i].length==undefined) {
                 console.error("Save for this achievement set is not an array!");

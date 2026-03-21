@@ -9,11 +9,14 @@ export class Game {
     img="";
     platImg="";
     platform="";
-    constructor(name, img, platform, platImg) {
+    gameJSONLocation="";
+    saveJSONLocation=""
+    constructor(name, img, platform, platImg, gameJSONLocation) {
         this.name=name;
         this.img=img;
         this.platform=platform;
         this.platImg=platImg;
+        this.gameJSONLocation=gameJSONLocation;
     }
     getPercentageCompleted() {
         let totalAchievements=this.getAchievementCount();

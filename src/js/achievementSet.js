@@ -1,6 +1,10 @@
 import { Achievement } from "./achievement.js";
+import { Game } from "./game.js";
 export class AchievementSet {
     name="";
+    /**
+     * @type {Game}
+     */
     game=null;
     img="";
     /**

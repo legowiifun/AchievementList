@@ -1,6 +1,11 @@
+import { AchievementSet } from "./achievementSet.js";
+
 export class Achievement {
     name="";
     description="";
+    /**
+     * @type {AchievementSet}
+     */
     achievementSet=null;
     unlocked=false;
     unlockDate="";
