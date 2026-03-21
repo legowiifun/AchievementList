@@ -9,6 +9,18 @@ export async function getCompletePath(name) {
 export async function editJson(name, content) {
     return window.resources.editJson(name, content);
 }
+/**
+ * @type {Promise}
+ */
+export let getPath = window.resources.getPath;
+/**
+ * 
+ * @param {File} file 
+ * @returns {string}
+ */
+export function getFilePath(file) {
+    return window.resources.getFilePath(file);
+}
 
 /**
  * @param {Date} date 

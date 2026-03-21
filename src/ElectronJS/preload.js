@@ -1,4 +1,4 @@
-const {contextBridge, ipcRenderer} = require('electron');
+const {contextBridge, ipcRenderer, webUtils} = require('electron');
 
 contextBridge.exposeInMainWorld('electron', {
   send: (channel, data)=>ipcRenderer.send(channel, data),
@@ -16,5 +16,8 @@ contextBridge.exposeInMainWorld('resources', {
   },
   editJson: (name, content)=> {
     ipcRenderer.invoke("editJSON", name, content);
+  },
+  getFilePath: (file)=> {
+    return webUtils.getPathForFile(file);
   }
 });

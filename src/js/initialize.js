@@ -4,6 +4,7 @@ import { AchievementSetViewer } from './views/achievementSetViewer.js';
 import { AchievementViewer } from './views/achievementViewer.js';
 import { EditAchievementView } from './views/editAchievementView.js';
 import { getJson } from './utils.js';
+import { AddGameViewer } from './views/addGameViewer.js';
 
 export class initialize {
     /**
@@ -15,7 +16,8 @@ export class initialize {
         gamesView: "GamesView",
         achievementSetsView: "AchievementSetsView",
         achievementsView: "AchievementsView",
-        editAchievementView: "EditAchievementView"
+        editAchievementView: "EditAchievementView",
+        addGameView: "AddGameView"
     };
 
     currentState="";
@@ -56,19 +58,21 @@ export class initialize {
                 getJson(jsonName).then((result)=>{
                     gameIdx=this.initGame(JSON.parse(result),this.gamesJson[i].platform, jsonName);
                 }).then(()=> {
-                    let saveName = this.gamesJson[i].save;
-                    if (saveName==undefined) {
-                        console.error("Current game is not formatted properly. I can not read it!");                
-                    } else {
-                        this.myGames[gameIdx].saveJSONLocation=saveName;
-                        getJson(saveName).then((result)=>{
-                            this.initSaves(JSON.parse(result),gameIdx);
-                        }).then(()=>{
-                            console.log("Current view: ",this.currentState);
-                            this.setView(this.views.gamesView);
-                        }).catch((err)=> {
-                            console.error("Failed to read "+saveName+"!",err);
-                        });
+                    if (gameIdx!=-1) {
+                        let saveName = this.gamesJson[i].save;
+                        if (saveName==undefined) {
+                            console.error("Current game is not formatted properly. I can not read it!");                
+                        } else {
+                            this.myGames[gameIdx].saveJSONLocation=saveName;
+                            getJson(saveName).then((result)=>{
+                                this.initSaves(JSON.parse(result),gameIdx);
+                            }).then(()=>{
+                                console.log("Current view: ",this.currentState);
+                                this.setView(this.views.gamesView);
+                            }).catch((err)=> {
+                                console.error("Failed to read "+saveName+"!",err);
+                            });
+                        }
                     }
                 }).catch((err)=> {
                     console.error("Failed to read "+jsonName+"!",err);
@@ -78,28 +82,28 @@ export class initialize {
     }
 
     /**
-     * @param {object[]} game 
+     * @param {object} game 
      */
     initGame(game, platform, JSONLocation) {
         let name=game.name;
         if (name==undefined) {
             console.error("I can not read this name!");
-            return;
+            return -1;
         }
         let img=game.img;
         if (img==undefined) {
             console.error("I can not find the image for game "+name+"!");
-            return;
+            return -1;
         }
         let platImg=game.platImg;
         if (platImg==undefined) {
             console.error("I can not find the platinum image for game "+name+"!");
-            return;
+            return -1;
         }
         let achievements=game.achievements;
         if (achievements==undefined) {
             console.error("I can not find the achievements for game "+name+"!");
-            return;
+            return -1;
         }
         let newGame=new Game(name,img,platform,platImg, JSONLocation);
         
@@ -236,6 +240,10 @@ export class initialize {
                 this.previousState=this.views.achievementsView;
                 this.previousIdx=this.achievementSetIdx;
                 new EditAchievementView(this.myGames[this.gameIdx].achievementSets[this.achievementSetIdx].achievements[idx]);
+                break;
+            case this.views.addGameView:
+                this.previousState=this.views.gamesView;
+                new AddGameViewer();
                 break;
         }
         this.currentIdx=idx;
