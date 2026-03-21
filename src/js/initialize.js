@@ -162,12 +162,12 @@ export class initialize {
                     }
                     if (!skipAddingAchievements) {
                         if (save[i][j].obtained==undefined) {
-                            console.error("Can not read json!");
+                            console.error("Can not determine if this achievement is obtained!");
                         } else {
                             this.myGames[gameIdx].achievementSets[i].achievements[j].unlocked=save[i][j].obtained;
                         }
-                        if (save[i][j].obtainedDate==undefined) {
-                            console.error("Can not read json!");
+                        if (save[i][j].obtainedDate==undefined&&save[i][j].obtained) {
+                            console.error("Can not read the date for this achievement!");
                         } else {
                             this.myGames[gameIdx].achievementSets[i].achievements[j].unlockDate=new Date(save[i][j].obtainedDate);
                         }
