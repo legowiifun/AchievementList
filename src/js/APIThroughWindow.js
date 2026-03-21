@@ -6,6 +6,12 @@ import { ViewManager } from "./viewManager.js";
  * This is accessible through devtools
  */
 export class APIThroughWindow {
+    constructor() {
+        document.getElementById("backButton").addEventListener('click',()=> {
+            this.viewManager.setView(window.app.viewManager.previousState, window.app.viewManager.previousIdx);
+        });
+    }
+
     viewManager = new ViewManager();
     initJSON = new Initialize();
     /**
@@ -14,9 +20,6 @@ export class APIThroughWindow {
     myGames = [];
     currentSort="Alphabetical Ascending";
     /**
-     * ObjToAdd has parameters jsonName, platform, save
-     * Is added to the JSON
-     * For a downloading system
      * @returns {string}
      */
     createGamesJSON() {
@@ -127,13 +130,18 @@ export class APIThroughWindow {
             this.viewManager.setView(this.viewManager.views.gamesView,0, true);
         }
     }
-
+    
 }
 /**
  * export a singleton for better syntax highlighting in other files
  * @type {APIThroughWindow}
  */
-export let windowAPI = new APIThroughWindow();
+export let windowAPI;
+
 if (typeof window!=undefined) {
+    windowAPI = new APIThroughWindow();
     window.app=windowAPI;
+    window.addEventListener("DOMContentLoaded",()=> {
+        windowAPI.initJSON.main();
+    });
 }

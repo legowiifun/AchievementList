@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron/main');
-const { ipcMain } = require('electron');
+const { ipcMain, session } = require('electron');
 const path = require('node:path');
 const fs = require('fs');
 
@@ -20,6 +20,14 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
+  session.defaultSession.webRequest.onHeadersReceived((details, callback)=> {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Content-Security-Policy':['script-src \'self\'']
+      }
+    });
+  });
   createWindow();
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

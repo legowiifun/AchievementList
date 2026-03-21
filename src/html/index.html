@@ -3,15 +3,11 @@
     <head>
         <title>legowiifun's universal achievement viewer</title>
         <link rel="stylesheet" href="../css/main.css" />
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
     </head>
     <body>
-        <button id="backButton" onclick="window.app.viewManager.setView(window.app.viewManager.previousState, window.app.viewManager.previousIdx);">back</button>
+        <button id="backButton">back</button>
         <div id="content"></div>
         <script type="module" src="../js/APIThroughWindow.js"></script>
-        <script>
-            window.addEventListener("DOMContentLoaded",()=> {
-                if (window.app) window.app.initJSON.main();
-            });
-        </script>
     </body>
 </html>
