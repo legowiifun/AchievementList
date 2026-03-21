@@ -1,5 +1,6 @@
 import { Achievement } from "../achievement.js";
-import { getCompletePath } from "../utils.js";
+import { getCompletePath, convertDate } from "../utils.js";
+
 export class AchievementHolder {
     myHTML;
     achievement;
@@ -21,7 +22,7 @@ export class AchievementHolder {
             newHTML=newHTML+"<span class=\"achievementName\">"+achievement.name+"</span>";
             newHTML=newHTML+"<span class=\"achievementDesc\">"+achievement.description+"</span>";
             if (achievement.unlocked) {
-                newHTML=newHTML+"<span class=\"achievementDate\">"+achievement.unlockDate+"</span>";
+                newHTML=newHTML+"<span class=\"achievementDate\">"+convertDate(achievement.unlockDate)+"</span>";
             } else {
                 newHTML=newHTML+"<span class=\"achievementDate\">Unobtained</span>";
             }
