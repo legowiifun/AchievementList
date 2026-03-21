@@ -8,10 +8,10 @@
         <button id="backButton" onclick="initialize.setView(initialize.previousState, initialize.previousIdx);">back</button>
         <div id="background"><!--TODO - Cool looking background--></div>
         <div id="content"></div>
-        <script type="module" src="../js/initialize.js"></script>
+        <script type="module" src="../js/APIThroughWindow.js"></script>
         <script>
             window.addEventListener("DOMContentLoaded",()=> {
-                if (window.initialize) window.initialize.main();
+                if (window.app) window.app.initJSON.main();
             });
         </script>
     </body>

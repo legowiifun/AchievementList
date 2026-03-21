@@ -1,0 +1,67 @@
+import { AddGameViewer } from './views/addGameViewer.js';
+import {GameViewer} from './views/gameViewer.js';
+import { AchievementSetViewer } from './views/achievementSetViewer.js';
+import { AchievementViewer } from './views/achievementViewer.js';
+import { EditAchievementView } from './views/editAchievementView.js';
+import { windowAPI } from './APIThroughWindow.js';
+/**
+ * Handles switching between different application views
+ */
+export class ViewManager {
+    views = {
+        gamesView: "GamesView",
+        achievementSetsView: "AchievementSetsView",
+        achievementsView: "AchievementsView",
+        editAchievementView: "EditAchievementView",
+        addGameView: "AddGameView"
+    };
+    currentState="";
+    previousState="";
+    previousIdx=0;
+    currentIdx=0;
+    gameIdx=0;
+    achievementSetIdx=0;
+    achievementIdx=0;
+
+    /**
+     * @param {string} view 
+     * @param {number} idx 
+     */
+    setView(view, idx=0) {
+        if (this.currentState==view) {
+            return;
+        }
+        console.log("Setting view to ",view, idx);
+        document.getElementById("backButton").removeAttribute("hidden");
+        switch (view) {
+            case this.views.gamesView: 
+                document.getElementById("backButton").setAttribute("hidden",true);
+                this.previousState="";
+                new GameViewer(windowAPI.myGames);
+                break;
+            case this.views.achievementSetsView:
+                this.gameIdx=idx;
+                this.previousState=this.views.gamesView;
+                new AchievementSetViewer(windowAPI.myGames[idx].achievementSets);
+                break;
+            case this.views.achievementsView:
+                this.achievementSetIdx=idx;
+                this.previousState=this.views.achievementSetsView;
+                this.previousIdx=this.gameIdx;
+                new AchievementViewer(windowAPI.myGames[this.gameIdx].achievementSets[idx].achievements);
+                break;
+            case this.views.editAchievementView:
+                this.achievementIdx=idx;
+                this.previousState=this.views.achievementsView;
+                this.previousIdx=this.achievementSetIdx;
+                new EditAchievementView(windowAPI.myGames[this.gameIdx].achievementSets[this.achievementSetIdx].achievements[idx]);
+                break;
+            case this.views.addGameView:
+                this.previousState=this.views.gamesView;
+                new AddGameViewer();
+                break;
+        }
+        this.currentIdx=idx;
+        this.currentState=view;
+    }
+}

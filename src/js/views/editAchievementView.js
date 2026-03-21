@@ -1,5 +1,6 @@
 import { editJson } from "../utils.js";
 import { Achievement } from "../achievement.js";
+import { windowAPI } from "../APIThroughWindow.js";
 
 export class EditAchievementView {
     /**
@@ -25,7 +26,7 @@ export class EditAchievementView {
                     achievement.unlockDate=newDate;
                     achievement.unlocked=newUnlocked;
                     editJson(achievement.achievementSet.game.saveJSONLocation,achievement.achievementSet.game.createSaveJSON());
-                    window.initialize.setView(window.initialize.views.achievementsView, window.initialize.achievementSetIdx);
+                    windowAPI.viewManager.setView(windowAPI.viewManager.views.achievementsView, windowAPI.viewManager.achievementSetIdx);
                 } else {
 
                 }
@@ -33,7 +34,7 @@ export class EditAchievementView {
                 achievement.unlocked=newUnlocked;
                 achievement.unlockDate=undefined;
                 editJson(achievement.achievementSet.game.saveJSONLocation,achievement.achievementSet.game.createSaveJSON());
-                window.initialize.setView(window.initialize.views.achievementsView, window.initialize.achievementSetIdx);
+                windowAPI.viewManager.setView(windowAPI.viewManager.views.achievementsView, windowAPI.viewManager.achievementSetIdx);
             }
         });
     }

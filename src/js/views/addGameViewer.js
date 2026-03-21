@@ -1,3 +1,4 @@
+import { windowAPI } from "../APIThroughWindow.js";
 import { getFilePath, editJson, getJson } from "../utils.js";
 export class AddGameViewer {
     constructor() {
@@ -56,12 +57,12 @@ export class AddGameViewer {
                     //validate the JSON file
                     getJson(path).then((value)=> {
                         let json=JSON.parse(value);
-                        let gameIdx=window.initialize.initGame(json,platform,path);
+                        let gameIdx=windowAPI.initJSON.initGame(json,platform,path);
                         if (gameIdx!=-1) {
-                            window.initialize.myGames[gameIdx].saveJSONLocation=("saves\\"+window.initialize.myGames[gameIdx].name+platform+"AchievementsData.json");
-                            console.log(window.initialize.createGamesJSON());
-                            editJson("games.json",window.initialize.createGamesJSON());
-                            window.initialize.setView(window.initialize.views.gamesView, 0);
+                            windowAPI.myGames[gameIdx].saveJSONLocation=("saves\\"+windowAPI.myGames[gameIdx].name+platform+"AchievementsData.json");
+                            console.log(windowAPI.createGamesJSON());
+                            editJson("games.json",windowAPI.createGamesJSON());
+                            windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView, 0);
                         }
                     }).catch((err) => {
                         console.error("CANNOT READ JSON FILE!",err);
