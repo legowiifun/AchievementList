@@ -102,4 +102,29 @@ export class Game {
 
         return JSON.stringify(json);
     }
+    /**
+     * @returns {Date}
+     */
+    getLastCompletedAchievementDate() {
+        let lastCompletion=undefined;
+        for (let i=0;i<this.achievementSets.length;i++) {
+            for (let j=0;j<this.achievementSets[i].achievements.length;j++) {
+                //first date
+                if (lastCompletion==undefined) {
+                    if (this.achievementSets[i].achievements[j].unlocked) {
+                        lastCompletion=this.achievementSets[i].achievements[j].unlockDate;
+                    }
+                }
+                //check if it is unlocked
+                if (this.achievementSets[i].achievements[j].unlocked) {
+                    //compare the dates
+                    //if it is more milliseconds than the current one
+                    if (this.achievementSets[i].achievements[j].unlockDate.getTime()>lastCompletion.getTime()) {
+                        lastCompletion=this.achievementSets[i].achievements[j].unlockDate;
+                    }
+                }
+            }
+        }
+        return lastCompletion;
+    }
 }

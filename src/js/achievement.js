@@ -8,12 +8,15 @@ export class Achievement {
      */
     achievementSet=null;
     unlocked=false;
-    unlockDate="";
+    /**
+     * @type {Date}
+     */
+    unlockDate=undefined;
     img="";
     outOf=undefined;
     doneOutOf=undefined;
     
-    constructor(name, description, achievementSet, img, outOf, unlocked=false, unlockDate="") {
+    constructor(name, description, achievementSet, img, outOf, unlocked=false, unlockDate=undefined) {
         this.name=name;
         this.description=description;
         this.achievementSet=achievementSet;
