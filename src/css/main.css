@@ -83,3 +83,10 @@ ul {
 .unobtainedAchImg {
     filter:grayscale(100%);
 }
+
+body {
+    background-image: linear-gradient(to bottom, gray, blue);
+    min-height:100vh;
+    margin:0;
+    box-sizing: border-box;
+}
