@@ -62,7 +62,7 @@ export class initialize {
                     } else {
                         this.myGames[gameIdx].saveJSONLocation=saveName;
                         getJson(saveName).then((result)=>{
-                            this.initSaves(JSON.parse(result),gameIdx, saveName);
+                            this.initSaves(JSON.parse(result),gameIdx);
                         }).then(()=>{
                             console.log("Current view: ",this.currentState);
                             this.setView(this.views.gamesView);
@@ -143,7 +143,7 @@ export class initialize {
         this.myGames.push(newGame);
         return(this.myGames.length-1);
     }
-    initSaves(save, gameIdx, saveName) {
+    initSaves(save, gameIdx) {
         if (save.length==undefined) {
             console.error("Saves JSON is not an array!");
             return;
