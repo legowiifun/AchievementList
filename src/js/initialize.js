@@ -60,6 +60,7 @@ export class initialize {
                     if (saveName==undefined) {
                         console.error("Current game is not formatted properly. I can not read it!");                
                     } else {
+                        this.myGames[gameIdx].saveJSONLocation=saveName;
                         getJson(saveName).then((result)=>{
                             this.initSaves(JSON.parse(result),gameIdx, saveName);
                         }).then(()=>{
@@ -147,7 +148,7 @@ export class initialize {
             console.error("Saves JSON is not an array!");
             return;
         }
-        this.myGames[gameIdx].saveJSONLocation=saveName;
+        
         for (let i=0;i<save.length;i++) {
             if (save[i].length==undefined) {
                 console.error("Save for this achievement set is not an array!");

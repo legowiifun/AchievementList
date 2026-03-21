@@ -7,6 +7,6 @@
     {
         "jsonName": "TestGame1\\TestGame1.json",
         "platform": "Steam",
-        "save": "TestGame1\\TestSave.json"
+        "save": "TestGame1\\TestSave1.json"
     }
 ]
