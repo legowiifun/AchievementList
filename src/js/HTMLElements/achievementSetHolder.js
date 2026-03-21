@@ -7,7 +7,7 @@ export class AchievementSetHolder {
      * @param {AchievementSet} achievementSet 
      */
     constructor(achievementSet, idx) {
-        let newHTML = "<li class=\"achievementSetEntry\" onClick=\"initialize.setView(initialize.views.achievementsView, "+idx+");\">";
+        let newHTML = "<li class=\"achievementSetEntry\" onClick=\"window.app.viewManager.setView(window.app.viewManager.views.achievementsView, "+idx+");\">";
         getCompletePath(achievementSet.img).then((result)=>{
             newHTML=newHTML+"<img class=\"setImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
             newHTML=newHTML+"<span class=\"setName\">"+achievementSet.name+"</span>";

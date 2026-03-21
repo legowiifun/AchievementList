@@ -2,7 +2,7 @@ import { getCompletePath } from "../utils.js";
 export class GameHolder {
     myHTML;
     constructor(game, idx) {
-        let newHTML = "<li class=\"gameEntry\" onClick=\"initialize.setView(initialize.views.achievementSetsView, "+idx+");\">";
+        let newHTML = "<li class=\"gameEntry\" onClick=\"window.app.viewManager.setView(window.app.viewManager.views.achievementSetsView, "+idx+");\">";
         getCompletePath(game.img).then((result)=>{
             newHTML=newHTML+"<img class=\"gameImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
             newHTML=newHTML+"<span class=\"gameName\">"+game.name+"</span>";

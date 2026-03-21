@@ -26,7 +26,7 @@ export class AchievementHolder {
             } else {
                 newHTML=newHTML+"<span class=\"achievementDate\">Unobtained</span>";
             }
-            newHTML=newHTML+"<button id=\"achievementEdit\" onclick=\"initialize.setView(initialize.views.editAchievementView, "
+            newHTML=newHTML+"<button id=\"achievementEdit\" onclick=\"window.app.viewManager.setView(window.app.viewManager.views.editAchievementView, "
             newHTML=newHTML+idx;
             newHTML=newHTML+")\">Edit</button>";
             newHTML=newHTML+"</li>";
