@@ -23,7 +23,7 @@ export class EditAchievementView {
             achievement.unlockDate=document.getElementById("editAchievementDate").valueAsDate;
             achievement.unlocked=document.getElementById("editAchievementCheckbox").checked;
             editJson(achievement.achievementSet.game.saveJSONLocation,achievement.achievementSet.game.createSaveJSON());
-            window.initialize.setView(window.initialize.views.achievementsView, window.initialize.achievementIdx);
+            window.initialize.setView(window.initialize.views.achievementsView, window.initialize.achievementSetIdx);
         });
     }
 }
