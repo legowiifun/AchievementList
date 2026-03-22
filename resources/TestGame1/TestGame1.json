@@ -31,8 +31,34 @@
                 {
                     "name": "Test achievement!",
                     "description": "Can you see this achievement!",
-                    "img":"img.png",
-                    "requiredForPlat":false
+                    "img":"img.png"
+                }
+            ]
+        },
+        {
+            "image":"img.png",
+            "name":"achievementSetTest3",
+            "requiredForPlat":true,
+            "achievements":[
+                {
+                    "name":"My test achievement!",
+                    "description": "This is a random achievement to test games with more achievements!",
+                    "img":"img.png"
+                },
+                {
+                    "name":"My test achievement 2!",
+                    "description": "This is a random achievement to test games with more achievements!",
+                    "img":"img.png"
+                },
+                {
+                    "name":"My test achievement 3!",
+                    "description": "This is a random achievement to test games with more achievements!",
+                    "img":"img.png"
+                },
+                {
+                    "name":"My test achievement 4!",
+                    "description": "This is a random achievement to test games with more achievements!",
+                    "img":"img.png"
                 }
             ]
         }
