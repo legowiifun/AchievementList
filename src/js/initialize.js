@@ -53,7 +53,12 @@ export class Initialize {
                             }).then(()=>{
                                 console.log("Current view: ",windowAPI.viewManager.currentState);
                                 windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
-                                windowAPI.sortGames(false);
+                                let currentSort = localStorage.getItem("Sort");
+                                if (currentSort==null) {
+                                    currentSort=windowAPI.currentSort;
+                                }
+                                windowAPI.currentSort=currentSort;
+                                //windowAPI.sortGames(false);
                             }).catch((err)=> {
                                 console.error("Failed to read "+saveName+"!",err);
                             });

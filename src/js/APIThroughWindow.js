@@ -35,6 +35,7 @@ export class APIThroughWindow {
     }
 
     sortGames(refreshAfter=true) {
+        console.log("Sorting games with algorithm: ",this.currentSort, this.myGames);
         this.myGames.sort(
             /**
              * @param {Game} a 
@@ -89,20 +90,48 @@ export class APIThroughWindow {
                     }
                     case "Last Obtained Achievement Date Ascending":{
                         //if a is before b
-                        if (a.getLastCompletedAchievementDate().getTime()<b.getLastCompletedAchievementDate().getTime()) {
+                        let aCompleted=a.getLastCompletedAchievementDate();
+                        let bCompleted=b.getLastCompletedAchievementDate();
+                        let aTime;
+                        if (aCompleted==undefined) {
+                            aTime=0;
+                        } else {
+                            aTime=aCompleted.getTime();
+                        }
+                        let bTime;
+                        if (bCompleted==undefined) {
+                            bTime=0;
+                        } else {
+                            bTime=bCompleted.getTime();
+                        }
+                        if (aTime<bTime) {
                             return 1;
                         }
-                        if (a.getLastCompletedAchievementDate().getTime()>b.getLastCompletedAchievementDate().getTime()) {
+                        if (aTime>bTime) {
                             return -1;
                         }
                         return 0;
                     }
                     case "Last Obtained Achievement Date Descending":{
-                        //if a is before b
-                        if (a.getLastCompletedAchievementDate().getTime()<b.getLastCompletedAchievementDate().getTime()) {
+                        //if a is after b
+                        let aCompleted=a.getLastCompletedAchievementDate();
+                        let bCompleted=b.getLastCompletedAchievementDate();
+                        let aTime;
+                        if (aCompleted==undefined) {
+                            aTime=0;
+                        } else {
+                            aTime=aCompleted.getTime();
+                        }
+                        let bTime;
+                        if (bCompleted==undefined) {
+                            bTime=0;
+                        } else {
+                            bTime=bCompleted.getTime();
+                        }
+                        if (aTime<bTime) {
                             return -1;
                         }
-                        if (a.getLastCompletedAchievementDate().getTime()>b.getLastCompletedAchievementDate().getTime()) {
+                        if (aTime>bTime) {
                             return 1;
                         }
                         return 0;

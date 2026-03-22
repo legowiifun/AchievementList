@@ -1,6 +1,7 @@
 import {GameHolder} from '../HTMLElements/gameHolder.js';
 import { windowAPI } from '../APIThroughWindow.js';
 import { Game } from '../game.js';
+import { editJson } from '../utils.js';
 export class GameViewer {
     constructor(gamesArray) {
         let gamesList = document.createElement('ul');
@@ -44,19 +45,21 @@ export class GameViewer {
         gameViewerSorting.appendChild(sortOption);
 
         //set the default value
-        gameViewerSorting.value=windowAPI.currentSort;
+        gameViewerSorting.value=localStorage.getItem("Sort");
         //add event listener to sort games
         gameViewerSorting.addEventListener('change', function(event) {
-            windowAPI.currentSort = document.getElementById("gameViewerSorting").value;
+            localStorage.setItem("Sort",gameViewerSorting.value);
+            windowAPI.currentSort = gameViewerSorting.value;
             windowAPI.sortGames();
         });
         
         document.getElementById("content").appendChild(gamesList);
+        windowAPI.currentSort = gameViewerSorting.value;
+        windowAPI.sortGames(false);
         document.getElementById("sideBar").appendChild(addGameButton);
         document.getElementById("sideBar").appendChild(gameViewerSorting);
         for (let i=0;i<gamesArray.length;i++) {
             new GameHolder(gamesArray[i], i, gamesList);
         }
-
     }
 }
