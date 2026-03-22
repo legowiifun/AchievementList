@@ -60,7 +60,7 @@ export class AddGameViewer {
                 }
                 //get the file down to just the contents
                 let path=getFilePath(file);
-                let idx=path.indexOf("\\resources\\")+11;
+                let idx=path.lastIndexOf("\\resources\\")+11;
                 if (idx!=-1) {
                     path=path.substring(idx);
                     if (windowAPI.viewConsoleLogs) {
