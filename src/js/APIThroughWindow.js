@@ -32,7 +32,7 @@ export class APIThroughWindow {
             newGamesJSON.push(newGamesObj);
         }
         console.log("Creating games JSON: ",newGamesJSON);
-        return JSON.stringify(newGamesJSON);
+        return JSON.stringify(newGamesJSON, null, 4);
     }
 
     sortGames(refreshAfter=true) {
