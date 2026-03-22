@@ -18,6 +18,22 @@ body {
     align-content: center;
 }
 /**
+* The titlebar is a div for a custom titlebar
+*/
+#titlebar {
+    height: 60px;
+    background:gray;
+    color:white;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    app-region:drag;
+}
+.noDrag {
+    app-region: no-drag;
+    margin:10px;
+}
+/**
 * The topBar has a constant height, and a background color. 
 */
 #topBar {

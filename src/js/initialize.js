@@ -1,5 +1,5 @@
 import { Game } from './game.js';
-import { getJson } from './utils.js';
+import { getJson,openDevTools } from './utils.js';
 import { windowAPI } from './APIThroughWindow.js';
 
 /**
@@ -11,10 +11,23 @@ export class Initialize {
      */
     gamesJson;
 
+    hideDevTools=true;
+
     /**
      * @returns {void}
      */
     main() {
+        //developer toolbar
+        if (!this.hideDevTools) {
+            let devBtn=document.getElementById("developerBtn");
+            devBtn.hidden=false;
+            devBtn.addEventListener('click',()=> {
+                openDevTools();
+            });
+        }
+        document.getElementById("refreshBtn").addEventListener('click',()=> {
+            location.reload();
+        });
         getJson("games.json").then((result)=>{
             this.gamesJson=JSON.parse(result);
         }).then(()=>{

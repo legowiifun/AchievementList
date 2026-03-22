@@ -3,8 +3,8 @@ const {contextBridge, ipcRenderer, webUtils} = require('electron');
 contextBridge.exposeInMainWorld('electron', {
   send: (channel, data)=>ipcRenderer.send(channel, data),
   invoke: (channel, data) => ipcRenderer.invoke(channel, data),
-  receive: (channel, func) => ipcRenderer.on(channel, (event, ...args) => func(...args))
-
+  receive: (channel, func) => ipcRenderer.on(channel, (event, ...args) => func(...args)),
+  openDevTools: ()=>ipcRenderer.invoke("openDevTools")
 });
 contextBridge.exposeInMainWorld('resources', {
   getPath: ipcRenderer.invoke("resourcesPath"),

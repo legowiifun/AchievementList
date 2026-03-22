@@ -1,5 +1,7 @@
 //export the APIs as internal functions
-
+export function openDevTools() {
+    window.electron.openDevTools();
+}
 export async function getJson(name) {
     return window.resources.getJson(name);
 }

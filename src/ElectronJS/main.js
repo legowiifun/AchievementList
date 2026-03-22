@@ -5,14 +5,16 @@ const fs = require('fs');
 
 //run `npm run make` to create an exe file
 //run `npm run start` to run the program
-
+let win;
 const createWindow = () => {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    titleBarStyle:'hidden',
+    ...(process.platform != 'darwin' ? {titleBarOverlay: true}: {})
   });
 
   win.loadFile('src/html/index.html');
@@ -49,7 +51,10 @@ app.whenReady().then(() => {
       return {action: 'deny'};
     });
   });
-
+  ipcMain.handle('openDevTools', (event)=>{
+      win.webContents.openDevTools();
+    }
+  );
   ipcMain.on('toMain', (event, arg)=>console.log(arg));
   ipcMain.handle('get-data', async () => 'Data from main');
   ipcMain.handle('resourcesPath', async () => {return process.resourcesPath;});
