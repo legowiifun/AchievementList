@@ -2,57 +2,65 @@ import { windowAPI } from "../APIThroughWindow.js";
 import { getFilePath, editJson, getJson } from "../utils.js";
 export class AddGameViewer {
     constructor() {
-        let newHTML="<p> JSON location: ";
-            newHTML+="<input type=\"file\" name=\"gameJSON\" accept=\".json\" id=\"addGameJSONInput\">";
-        newHTML+="</p>";
-        newHTML+="<p> Platform: ";
-            newHTML+="<select id=\"addGameSelectViewer\">"
-                newHTML+="<option value=\"PlayStation 3\">PlayStation 3</option>";
-                newHTML+="<option value=\"PlayStation 4\">PlayStation 4</option>";
-                newHTML+="<option value=\"PlayStation Vita\">PlayStation Vita</option>";
-                newHTML+="<option value=\"PlayStation 5\">PlayStation 5</option>";
-                newHTML+="<option value=\"XBox\">XBox</option>";
-                newHTML+="<option value=\"XBox 360\">XBox 360</option>";
-                newHTML+="<option value=\"XBox 1\">XBox 1</option>";
-                newHTML+="<option value=\"XBox Series X\">XBox Series X</option>";
-                newHTML+="<option value=\"Steam\">Steam</option>";
-                newHTML+="<option value=\"GOG\">GOG</option>";
-                newHTML+="<option value=\"Other\">Other</option>";
-            newHTML+="</select>";
-            newHTML+="<input type=\"text\" id=\"addGameTextInput\" hidden>";
-        newHTML+="</p>";
-        newHTML=newHTML+"<button id=\"addGameSaveButton\""
-            newHTML=newHTML+">DONE</button>";
-        document.getElementById("content").innerHTML=newHTML;
-
         let file;
-        document.getElementById("addGameJSONInput").addEventListener('change', function(event) {
+        
+        let jsonLocationParagraph = document.createElement('p');
+        jsonLocationParagraph.innerHTML="JSON location: ";
+        let jsonLocationInput=document.createElement('input');
+        jsonLocationInput.name="gameJSON";
+        jsonLocationInput.type="file";
+        jsonLocationInput.accept=".json";
+        jsonLocationInput.id="addgameJSONInput";
+        jsonLocationInput.addEventListener('change', function(event) {
             file=event.target.files[0];
         });
-        document.getElementById("addGameSelectViewer").addEventListener('change', function(event) {
-            if (document.getElementById("addGameSelectViewer").value=="Other") {
-                document.getElementById("addGameTextInput").removeAttribute("hidden");
+        jsonLocationParagraph.appendChild(jsonLocationInput);
+        document.getElementById("content").appendChild(jsonLocationParagraph);
+
+        let platformParagraph=document.createElement('p');
+        platformParagraph.innerHTML="Platform: ";
+        let platformSelect = document.createElement('select');
+        platformSelect.id="addGameSelectViewer";
+        let options = ["PlayStation 3", "PlayStation 4", "PlayStation Vita", "PlayStation 5", "XBox", "XBox 360", "XBox One", "XBox Series X", "Steam", "GOG", "Other"];
+        for (let i=0;i<options.length;i++) {
+            let optionSelect = document.createElement('option');
+            optionSelect.value=options[i];
+            optionSelect.innerHTML=options[i];
+            platformSelect.appendChild(optionSelect);
+        }
+        let platformTextInput=document.createElement('input');
+        platformTextInput.type="text";
+        platformTextInput.id="addGameTextInput";
+        platformTextInput.hidden=true;
+        platformSelect.addEventListener('change', function(event) {
+            if (platformSelect.value=="Other") {
+                platformTextInput.hidden=false;
             } else {
-                if (!document.getElementById("addGameTextInput").hasAttribute("hidden")) {
-                    document.getElementById("addGameTextInput").setAttribute("hidden",true);
-                }
+                platformTextInput.hidden=true;
             }
         });
+        platformParagraph.appendChild(platformSelect);
+        platformParagraph.appendChild(platformTextInput);
+        document.getElementById("content").appendChild(platformParagraph);
+
+        let saveButton = document.createElement('button');
+        saveButton.id="addGameSaveButton";
+        saveButton.innerHTML="DONE";
         //add the event listener to the button
-        document.getElementById("addGameSaveButton").addEventListener("click",()=> {
+        saveButton.addEventListener("click",()=> {
             if (file!=undefined) {
                 console.log("JSON location=",getFilePath(file));
-                console.log("Selected platform=",document.getElementById("addGameSelectViewer").value);
+                console.log("Selected platform=",platformSelect.value);
                 //get the file down to just the contents
                 let path=getFilePath(file);
                 let idx=path.indexOf("\\resources\\")+11;
                 if (idx!=-1) {
                     path=path.substring(idx);
                     console.log(path);
-                    console.log("addGameTextInput value: ", document.getElementById("addGameTextInput").value);
-                    let platform=document.getElementById("addGameSelectViewer").value;
+                    console.log("addGameTextInput value: ", platformTextInput.value);
+                    let platform=platformSelect.value;
                     if (platform=="Other") {
-                        platform=document.getElementById("addGameTextInput").value;
+                        platform=platformTextInput.value;
                     }
                     //validate the JSON file
                     getJson(path).then((value)=> {
@@ -72,5 +80,6 @@ export class AddGameViewer {
                 }
             }
         });
+        document.getElementById("content").appendChild(saveButton);
     }
 }
