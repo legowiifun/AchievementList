@@ -5,16 +5,35 @@ export class AchievementSetHolder {
     /**
      * 
      * @param {AchievementSet} achievementSet 
+     * @param {number} idx
+     * @param {HTMLUListElement} parentElement  
      */
-    constructor(achievementSet, idx) {
-        let newHTML = "<li class=\"achievementSetEntry\" onClick=\"window.app.viewManager.setView(window.app.viewManager.views.achievementsView, "+idx+");\">";
+    constructor(achievementSet, idx, parentElement) {
+        let achievementSetEntry=document.createElement('li');
+        achievementSetEntry.classList.add("achievementSetEntry");
+        achievementSetEntry.addEventListener('click', ()=> {
+            window.app.viewManager.setView(window.app.viewManager.views.achievementsView, idx);
+        })
+
         getCompletePath(achievementSet.img).then((result)=>{
-            newHTML=newHTML+"<img class=\"setImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
-            newHTML=newHTML+"<span class=\"setName\">"+achievementSet.name+"</span>";
-            newHTML=newHTML+"<span class=\"percent\" id=\""+achievementSet.name+"Percent\">"+achievementSet.getPercentageCompleted()+"%</span>";
-            newHTML=newHTML+"</li>";
-            this.myHTML=newHTML;
-            document.getElementById("achievementSetsList").innerHTML=document.getElementById("achievementSetsList").innerHTML+this.myHTML;
+            let setImg=document.createElement('img');
+            setImg.height=100;
+            setImg.width=100;
+            setImg.src=result;
+            setImg.classList.add("setImg");
+            achievementSetEntry.appendChild(setImg);
+
+            let setName = document.createElement('span');
+            setName.classList.add("setName");
+            setName.innerHTML=achievementSet.name;
+            achievementSetEntry.appendChild(setName);
+
+            let percent = document.createElement('span');
+            percent.classList.add("percent");
+            percent.innerHTML=achievementSet.getPercentageCompleted()+"%";
+            achievementSetEntry.appendChild(percent);
+
+            parentElement.appendChild(achievementSetEntry);
         });
     }
 }
