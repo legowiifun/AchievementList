@@ -99,6 +99,15 @@ body {
 }
 
 /**
+* form elements should be large, and easy to read
+*/
+.formElement {
+    font-size:large;
+    font-weight: 1000;
+    color:white;
+}
+
+/**
 * Unordered lists should not show the dots
 */
 ul {

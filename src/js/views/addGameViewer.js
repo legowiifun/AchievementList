@@ -17,6 +17,7 @@ export class AddGameViewer {
             file=event.target.files[0];
         });
         jsonLocationParagraph.appendChild(jsonLocationInput);
+        jsonLocationParagraph.classList.add("formElement");
         document.getElementById("content").appendChild(jsonLocationParagraph);
 
         let platformParagraph=document.createElement('p');
@@ -44,6 +45,7 @@ export class AddGameViewer {
         });
         platformParagraph.appendChild(platformSelect);
         platformParagraph.appendChild(platformTextInput);
+        platformParagraph.classList.add("formElement");
         document.getElementById("content").appendChild(platformParagraph);
 
         let saveButton = document.createElement('button');

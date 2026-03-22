@@ -13,6 +13,7 @@ export class EditAchievementView {
         editAchievementdate.type="datetime-local";
         editAchievementdate.id="editAchievementDate";
         dateParagraph.appendChild(editAchievementdate);
+        dateParagraph.classList.add("formElement");
         document.getElementById("content").appendChild(dateParagraph);
 
         let checkboxParagraph=document.createElement('p');
@@ -21,7 +22,9 @@ export class EditAchievementView {
         editAchievementCheckbox.type="checkbox";
         editAchievementCheckbox.id="editAchievementCheckbox";
         checkboxParagraph.appendChild(editAchievementCheckbox);
+        checkboxParagraph.classList.add("formElement");
         document.getElementById("content").appendChild(checkboxParagraph);
+
         let editAchievementOutofInput=undefined;
         if (achievement.outOf!=undefined) {
             let outOfParagraph=document.createElement('p');
@@ -30,6 +33,7 @@ export class EditAchievementView {
             editAchievementOutofInput.type="number";
             editAchievementOutofInput.id="editAchievementOutofInput";
             outOfParagraph.appendChild(editAchievementOutofInput);
+            outOfParagraph.classList.add("formElement");
             document.getElementById("content").appendChild(outOfParagraph);
         }
 

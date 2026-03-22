@@ -1,6 +1,3 @@
-Before beta release
-- Add a background
-
 After
 - Improve the UI
 - Add a way to create a mosaic
