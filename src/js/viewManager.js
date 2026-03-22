@@ -33,6 +33,7 @@ export class ViewManager {
             return;
         }
         document.getElementById('content').innerHTML="";
+        document.getElementById("sideBar").innerHTML="";
         console.log("Setting view to ",view, idx);
         document.getElementById("backButton").removeAttribute("hidden");
         switch (view) {

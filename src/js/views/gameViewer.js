@@ -52,8 +52,8 @@ export class GameViewer {
         });
         
         document.getElementById("content").appendChild(gamesList);
-        document.getElementById("content").appendChild(addGameButton);
-        document.getElementById("content").appendChild(gameViewerSorting);
+        document.getElementById("sideBar").appendChild(addGameButton);
+        document.getElementById("sideBar").appendChild(gameViewerSorting);
         for (let i=0;i<gamesArray.length;i++) {
             new GameHolder(gamesArray[i], i, gamesList);
         }

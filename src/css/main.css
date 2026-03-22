@@ -86,7 +86,46 @@ ul {
 
 body {
     background-image: linear-gradient(to bottom, gray, blue);
-    min-height:100vh;
+    height:100vh;
     margin:0;
     box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex-wrap:nowrap;
+    justify-content: center;
+    align-items: stretch;
+    align-content: center;
+}
+#topBar {
+    height:100px;
+    background-color: white;
+}
+#mainContent {
+    display:flex;
+    flex-direction: row;
+    flex-grow:1;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+}
+#sideBar {
+    width:200px;
+    background-color: gray;
+    height: 100%;
+    overflow-x:hidden;
+
+    display:flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+#content {
+    overflow-y:auto;
+    overflow-x:hidden;
+    height:90vh;
+    flex-grow:1;
+}
+html {
+    height:100%;
 }
