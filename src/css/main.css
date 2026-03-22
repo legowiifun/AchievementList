@@ -1,51 +1,112 @@
-.gameEntry {
-    background-color:gray;
-    cursor:pointer;
-    color:white;
-    margin:10px;
-    border-radius: 25px;
-    width: 70%;
-    height:10%;
-    border:5px solid black;
-    padding:20px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap:wrap;
-    align-items:center;
-    justify-content: space-around;
+html {
+    height:100%;
 }
-.achievementSetEntry {
-    background-color:gray;
-    cursor:pointer;
-    color:white;    
-    margin:10px;
-    border-radius: 25px;
-    width: 70%;
-    height:10%;
-    border:5px solid black;
-    padding:20px;
+/**
+* The body has a gradient, height, and uses a flex layout. It has the topBar and mainContent divs, that are in a column layout
+*/
+body {
+    background-image: linear-gradient(to bottom, gray, blue);
+    height:100vh;
+    margin:0;
+    box-sizing: border-box;
+    overflow: hidden;
     display: flex;
-    flex-direction: row;
-    flex-wrap:wrap;
-    align-items:center;
-    justify-content: space-around;
+    flex-direction: column;
+    flex-wrap:nowrap;
+    justify-content: center;
+    align-items: stretch;
+    align-content: center;
 }
-.achievementEntry {
-    background-color:gray;
-    color:white;
-    margin:10px;
+/**
+* The topBar has a constant height, and a background color. 
+*/
+#topBar {
+    height:100px;
+    background-color: white;
+}
+/**
+* The back button has a different font size, and a thick border around it
+*/
+#backButton {
+    font-size:xx-large;
     border-radius: 25px;
-    width: 70%;
-    height:10%;
-    border:5px solid black;
-    padding:20px;
-    display: flex;
+    border:10px solid black;
+    cursor:pointer;
+}
+/**
+* The mainContent has its own flex layout, containing the sideBar and content divs, which change depending on what screen you are on. 
+* It is formatted as a flex-row
+*/
+#mainContent {
+    display:flex;
     flex-direction: row;
-    flex-wrap:wrap;
-    align-items:center;
-    justify-content: space-around;    
+    flex-grow:1;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+}
+/**
+* The sidebar is a flex column, with a set height, width, and it uses the flex layout to center the items in it
+*/
+#sideBar {
+    width:200px;
+    background-color: gray;
+    height: 100%;
+    overflow-x:hidden;
+
+    display:flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+/**
+* The content div only has styles to ensure that the scroll bar works properly, and to help it grow properly
+*/
+#content {
+    overflow-y:auto;
+    overflow-x:hidden;
+    height:90vh;
+    flex-grow:1;
 }
 
+/**
+* The displayHolder class controls game displays, achievement set displays, and achievement displays
+* It has a text color, BG color, border, and is a flex row, with its own set of items
+*/
+.displayHolder {
+    color:white;
+    margin:10px;
+    border-radius: 25px;
+    width: 70%;
+    height:10%;
+    border:5px solid black;
+    padding:20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content: space-around;
+    background-color:gray;
+}
+/**
+* gameEntries and achievementSetEntries change the cursor when hovering over them
+*/
+.gameEntry {
+    cursor:pointer;
+}
+.achievementSetEntry {
+    cursor:pointer;
+}
+
+/**
+* Unordered lists should not show the dots
+*/
+ul {
+    list-style-type:none;
+}
+/**
+* These are internal classes for the different display elements
+*/
 .gameName {
     font-weight:1000;
     font-size:xx-large;
@@ -71,61 +132,7 @@
 .achievementDate {
     font-size:large;
 }
-ul {
-    list-style-type:none;
-}
-#backButton {
-    font-size:xx-large;
-    border-radius: 25px;
-    border:10px solid black;
-    cursor:pointer;
-}
+
 .unobtainedAchImg {
     filter:grayscale(100%);
-}
-
-body {
-    background-image: linear-gradient(to bottom, gray, blue);
-    height:100vh;
-    margin:0;
-    box-sizing: border-box;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    flex-wrap:nowrap;
-    justify-content: center;
-    align-items: stretch;
-    align-content: center;
-}
-#topBar {
-    height:100px;
-    background-color: white;
-}
-#mainContent {
-    display:flex;
-    flex-direction: row;
-    flex-grow:1;
-    align-items: center;
-    align-content: center;
-    height: 100%;
-}
-#sideBar {
-    width:200px;
-    background-color: gray;
-    height: 100%;
-    overflow-x:hidden;
-
-    display:flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-}
-#content {
-    overflow-y:auto;
-    overflow-x:hidden;
-    height:90vh;
-    flex-grow:1;
-}
-html {
-    height:100%;
 }

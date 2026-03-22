@@ -5,7 +5,9 @@ export class AddGameViewer {
         let file;
         
         let jsonLocationParagraph = document.createElement('p');
+        jsonLocationParagraph.id="jsonLocationParagraph";
         jsonLocationParagraph.innerHTML="JSON location: ";
+        jsonLocationParagraph.classList.add()
         let jsonLocationInput=document.createElement('input');
         jsonLocationInput.name="gameJSON";
         jsonLocationInput.type="file";
@@ -18,6 +20,7 @@ export class AddGameViewer {
         document.getElementById("content").appendChild(jsonLocationParagraph);
 
         let platformParagraph=document.createElement('p');
+        platformParagraph.id="platformParagraph";
         platformParagraph.innerHTML="Platform: ";
         let platformSelect = document.createElement('select');
         platformSelect.id="addGameSelectViewer";

@@ -14,6 +14,7 @@ export class GameHolder {
             window.app.viewManager.setView(window.app.viewManager.views.achievementSetsView, idx);
         });
         gameEntry.classList.add("gameEntry");
+        gameEntry.classList.add("displayHolder");
         getCompletePath(game.img).then((result)=>{
             let gameImg = document.createElement('img');
             gameImg.width=100;

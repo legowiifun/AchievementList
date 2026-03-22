@@ -11,6 +11,7 @@ export class AchievementSetHolder {
     constructor(achievementSet, idx, parentElement) {
         let achievementSetEntry=document.createElement('li');
         achievementSetEntry.classList.add("achievementSetEntry");
+        achievementSetEntry.classList.add("displayHolder");
         achievementSetEntry.addEventListener('click', ()=> {
             window.app.viewManager.setView(window.app.viewManager.views.achievementsView, idx);
         })
