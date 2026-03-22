@@ -1,37 +1,60 @@
 import { Achievement } from "../achievement.js";
 import { getCompletePath, convertDate } from "../utils.js";
-
+import { windowAPI } from "../APIThroughWindow.js"
 export class AchievementHolder {
     myHTML;
     achievement;
     /**
      * 
      * @param {Achievement} achievement
+     * @param {number} idx 
+     * @param {HTMLUListElement} parentElement 
      */
-    constructor(achievement, idx) {
+    constructor(achievement, idx, parentElement) {
         this.achievement=achievement;
-        let newHTML = "<li class=\"achievementEntry\" id=\"";
-        newHTML=newHTML+achievement.name;
-        newHTML=newHTML+"\">";
+        let achievementEntry = document.createElement('li');
+        achievementEntry.classList.add("achievementEntry");
         getCompletePath(achievement.img).then((result)=>{
-            if (achievement.unlocked) {
-                newHTML=newHTML+"<img class=\"achievementImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
-            } else {
-                newHTML=newHTML+"<img class=\"achievementImg unobtainedAchImg\" wdith=\"100\" height=\"100\" src=\""+result+"\">";
+            let achievementImg = document.createElement('img');
+            achievementImg.height=100;
+            achievementImg.width=100;
+            achievementImg.src=result;
+            achievementImg.classList.add("achievementImg");
+            if (!achievement.unlocked) {
+                achievementImg.classList.add("unobtainedAchImg");
             }
-            newHTML=newHTML+"<span class=\"achievementName\">"+achievement.name+"</span>";
-            newHTML=newHTML+"<span class=\"achievementDesc\">"+achievement.description+"</span>";
+            achievementEntry.appendChild(achievementImg);
+
+            let achievementName = document.createElement('span');
+            achievementName.classList.add("achievementName");
+            achievementName.innerHTML=achievement.name;
+            achievementEntry.appendChild(achievementName);
+
+            let achievementDesc = document.createElement('span');
+            achievementDesc.classList.add("achievementDesc");
+            achievementDesc.innerHTML=achievement.description;
+            achievementEntry.appendChild(achievementDesc);
+            
+            let achievementDate = document.createElement('span');
+            achievementDate.classList.add("achievementDate");
             if (achievement.unlocked) {
-                newHTML=newHTML+"<span class=\"achievementDate\">"+convertDate(achievement.unlockDate)+"</span>";
+                achievementDate.innerHTML=convertDate(achievement.unlockDate,0);
             } else {
-                newHTML=newHTML+"<span class=\"achievementDate\">Unobtained</span>";
+                achievementDate.innerHTML="Unobtained";
             }
-            newHTML=newHTML+"<button id=\"achievementEdit\" onclick=\"window.app.viewManager.setView(window.app.viewManager.views.editAchievementView, "
-            newHTML=newHTML+idx;
-            newHTML=newHTML+")\">Edit</button>";
-            newHTML=newHTML+"</li>";
-            this.myHTML=newHTML;
-            document.getElementById("achievementList").innerHTML=document.getElementById("achievementList").innerHTML+this.myHTML;
+            achievementEntry.appendChild(achievementDate);
+
+            
+
+            let achievementEdit = document.createElement('button');
+            achievementEdit.id="achievementEdit";
+            achievementEdit.innerHTML="Edit";
+            achievementEdit.addEventListener('click', ()=> {
+                windowAPI.viewManager.setView(windowAPI.viewManager.views.editAchievementView, idx);
+            });
+            achievementEntry.appendChild(achievementEdit);
+
+            parentElement.appendChild(achievementEntry);
         });
     }
 }

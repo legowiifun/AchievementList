@@ -1,10 +1,11 @@
 import {AchievementHolder} from '../HTMLElements/achievementHolder.js'
 export class AchievementViewer {
     constructor(achievementArray) {
-        let HTML = "<ul id=\"achievementList\"></ul>";
-        document.getElementById("content").innerHTML=HTML;
+        let achievementList = document.createElement('ul');
+        achievementList.id="achievementList";
         for (let i=0;i<achievementArray.length;i++) {
-            new AchievementHolder(achievementArray[i], i);
+            new AchievementHolder(achievementArray[i], i,achievementList);
         }
+        document.getElementById("content").appendChild(achievementList);
     }
 }
