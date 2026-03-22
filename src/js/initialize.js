@@ -91,7 +91,7 @@ export class Initialize {
             return -1;
         }
         let newGame=new Game(name,img,platform,platImg, JSONLocation);
-        
+        let skippedSets=0;
         for (let i=0;i<game.achievements.length;i++) {
             let skipAchievements=true;
             //check for the onlyOn array
@@ -105,6 +105,7 @@ export class Initialize {
                 //if there is not an onlyOn array, do not skip this achievement set
                 skipAchievements=false;
             }
+            
             if (!skipAchievements) {
                 console.log("Adding achievement set ",achievements[i].name);
                 newGame.addAchievementSet(achievements[i].name,achievements[i].image,achievements[i].requiredForPlat);
@@ -120,13 +121,14 @@ export class Initialize {
                     }
                     if (!skipAchievement) {
                         console.log("Adding achievement ",achievements[i].achievements[j].name);
-                        newGame.addAchievementByIndex(i,achievements[i].achievements[j].name,achievements[i].achievements[j].description,achievements[i].achievements[j].img,achievements[i].achievements[j].outOf);
+                        newGame.addAchievementByIndex(i-skippedSets,achievements[i].achievements[j].name,achievements[i].achievements[j].description,achievements[i].achievements[j].img,achievements[i].achievements[j].outOf);
                     } else {
                         console.log("Skipping adding achievement ",achievements[i].achievements[j].name);
                     }
                 }
             } else {
                 console.log("Skipping adding achievement set ",achievements[i].name);
+                skippedSets++;
             }
         }
         windowAPI.myGames.push(newGame);
