@@ -34,6 +34,22 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+
+  app.on('web-contents-created', (event, contents)=> {
+    contents.on('will-attach-webview', (event, webPreferences, params)=> {
+      delete webPreferences.preload;
+
+      webPreferences.nodeIntegration=false;
+      event.preventDefault();
+    });
+    contents.on('will-navigate', (event, navigationUrl)=> {
+      event.preventDefault();
+    });
+    contents.setWindowOpenHandler(({url})=> {
+      return {action: 'deny'};
+    });
+  });
+
   ipcMain.on('toMain', (event, arg)=>console.log(arg));
   ipcMain.handle('get-data', async () => 'Data from main');
   ipcMain.handle('resourcesPath', async () => {return process.resourcesPath;});
