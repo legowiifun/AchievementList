@@ -52,15 +52,19 @@ export class AddGameViewer {
         //add the event listener to the button
         saveButton.addEventListener("click",()=> {
             if (file!=undefined) {
-                console.log("JSON location=",getFilePath(file));
-                console.log("Selected platform=",platformSelect.value);
+                if (windowAPI.viewConsoleLogs) {
+                    console.log("JSON location=",getFilePath(file));
+                    console.log("Selected platform=",platformSelect.value);
+                }
                 //get the file down to just the contents
                 let path=getFilePath(file);
                 let idx=path.indexOf("\\resources\\")+11;
                 if (idx!=-1) {
                     path=path.substring(idx);
-                    console.log(path);
-                    console.log("addGameTextInput value: ", platformTextInput.value);
+                    if (windowAPI.viewConsoleLogs) {
+                        console.log(path);
+                        console.log("addGameTextInput value: ", platformTextInput.value);
+                    }
                     let platform=platformSelect.value;
                     if (platform=="Other") {
                         platform=platformTextInput.value;
@@ -71,7 +75,9 @@ export class AddGameViewer {
                         let gameIdx=windowAPI.initJSON.initGame(json,platform,path);
                         if (gameIdx!=-1) {
                             windowAPI.myGames[gameIdx].saveJSONLocation=("saves\\"+windowAPI.myGames[gameIdx].name+platform+"AchievementsData.json");
-                            console.log(windowAPI.createGamesJSON());
+                            if (windowAPI.viewConsoleLogs) {
+                                console.log(windowAPI.createGamesJSON());
+                            }
                             editJson("games.json",windowAPI.createGamesJSON());
                             windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView, 0);
                         }

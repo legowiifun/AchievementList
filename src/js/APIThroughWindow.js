@@ -12,6 +12,8 @@ export class APIThroughWindow {
         });
     }
 
+    viewConsoleLogs=false;
+
     viewManager = new ViewManager();
     initJSON = new Initialize();
     /**
@@ -31,12 +33,16 @@ export class APIThroughWindow {
             newGamesObj.save=this.myGames[i].saveJSONLocation;
             newGamesJSON.push(newGamesObj);
         }
-        console.log("Creating games JSON: ",newGamesJSON);
+        if (this.viewConsoleLogs) {
+            console.log("Creating games JSON: ",newGamesJSON);
+        }
         return JSON.stringify(newGamesJSON, null, 4);
     }
 
     sortGames(refreshAfter=true) {
-        console.log("Sorting games with algorithm: ",this.currentSort, this.myGames);
+        if (this.viewConsoleLogs) {
+            console.log("Sorting games with algorithm: ",this.currentSort, this.myGames);
+        }
         this.myGames.sort(
             /**
              * @param {Game} a 

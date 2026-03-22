@@ -48,7 +48,9 @@ export class GameViewer {
         gameViewerSorting.value=localStorage.getItem("Sort");
         //add event listener to sort games
         gameViewerSorting.addEventListener('change', function(event) {
-            console.log("Resorting games with algorithm ",gameViewerSorting.value);
+            if (windowAPI.viewConsoleLogs) {
+                console.log("Resorting games with algorithm ",gameViewerSorting.value);
+            }
             localStorage.setItem("Sort",gameViewerSorting.value);
             windowAPI.currentSort = gameViewerSorting.value;
             windowAPI.sortGames();

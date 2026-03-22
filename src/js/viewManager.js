@@ -34,7 +34,9 @@ export class ViewManager {
         }
         document.getElementById('content').innerHTML="";
         document.getElementById("sideBar").innerHTML="";
-        console.log("Setting view to ",view, idx);
+        if (windowAPI.viewConsoleLogs) {
+            console.log("Setting view to ",view, idx);
+        }
         document.getElementById("backButton").removeAttribute("hidden");
         switch (view) {
             case this.views.gamesView: 

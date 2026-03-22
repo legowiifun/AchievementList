@@ -1,4 +1,5 @@
 import { AchievementSet } from "./achievementSet.js";
+import { windowAPI } from "./APIThroughWindow.js";
 
 export class Game {
     name="";
@@ -82,7 +83,9 @@ export class Game {
             jsonAchievements.push(achievementSetObj);
         }
         json.achievements=jsonAchievements;
-        console.log("Creating game JSON for game "+this.name+": ",json);
+        if (windowAPI.viewConsoleLogs) {
+            console.log("Creating game JSON for game "+this.name+": ",json);
+        }
         return JSON.stringify(json, null, 4);
     }
     createSaveJSON() {
@@ -100,7 +103,9 @@ export class Game {
             }
             json.push(achievementArr);
         }
-        console.log("Creating save JSON for game "+this.name+": ",json);
+        if (windowAPI.viewConsoleLogs) {
+            console.log("Creating save JSON for game "+this.name+": ",json);
+        }
         return JSON.stringify(json, null, 4);
     }
     /**

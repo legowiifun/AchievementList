@@ -76,7 +76,9 @@ export class Initialize {
      * @param {object} game 
      */
     initGame(game, platform, JSONLocation) {
-        console.log("initializing game: ",game)
+        if (windowAPI.viewConsoleLogs) {
+            console.log("initializing game: ",game);
+        }
         let name=game.name;
         if (name==undefined) {
             console.error("I can not read this name!");
@@ -103,7 +105,9 @@ export class Initialize {
             let skipAchievements=true;
             //check for the onlyOn array
             if (achievements[i].onlyOn!=undefined) {
-                console.log("OnlyOn=",achievements[i].onlyOn);
+                if (windowAPI.viewConsoleLogs) {
+                    console.log("OnlyOn=",achievements[i].onlyOn);
+                }
                 if (achievements[i].onlyOn.find((value)=>{return value==platform})!=undefined) {
                     //if you find the platform in the only on array, skip the achievement set
                     skipAchievements=false;
@@ -114,7 +118,9 @@ export class Initialize {
             }
             
             if (!skipAchievements) {
-                console.log("Adding achievement set ",achievements[i].name);
+                if (windowAPI.viewConsoleLogs) {
+                    console.log("Adding achievement set ",achievements[i].name);
+                }
                 newGame.addAchievementSet(achievements[i].name,achievements[i].image,achievements[i].requiredForPlat);
                 for (let j=0;j<achievements[i].achievements.length;j++) {
                     let skipAchievement=true;
@@ -127,14 +133,20 @@ export class Initialize {
                         skipAchievement=false;
                     }
                     if (!skipAchievement) {
-                        console.log("Adding achievement ",achievements[i].achievements[j].name);
+                        if (windowAPI.viewConsoleLogs) {
+                            console.log("Adding achievement ",achievements[i].achievements[j].name);
+                        }
                         newGame.addAchievementByIndex(i-skippedSets,achievements[i].achievements[j].name,achievements[i].achievements[j].description,achievements[i].achievements[j].img,achievements[i].achievements[j].outOf);
                     } else {
-                        console.log("Skipping adding achievement ",achievements[i].achievements[j].name);
+                        if (windowAPI.viewConsoleLogs) {
+                            console.log("Skipping adding achievement ",achievements[i].achievements[j].name);
+                        }
                     }
                 }
             } else {
-                console.log("Skipping adding achievement set ",achievements[i].name);
+                if (windowAPI.viewConsoleLogs) {
+                    console.log("Skipping adding achievement set ",achievements[i].name);
+                }
                 skippedSets++;
             }
         }
@@ -146,7 +158,9 @@ export class Initialize {
             console.error("Saves JSON is not an array!");
             return;
         }
-        console.log("initializing save: ",save);
+        if (windowAPI.viewConsoleLogs) {
+            console.log("initializing save: ",save);
+        }
         for (let i=0;i<save.length;i++) {
             if (save[i].length==undefined) {
                 console.error("Save for this achievement set is not an array!");
@@ -178,7 +192,9 @@ export class Initialize {
 
     setInitialView() {
         //set the proper view
-        console.log("Current view: ",windowAPI.viewManager.currentState);
+        if (windowAPI.viewConsoleLogs) {
+            console.log("Current view: ",windowAPI.viewManager.currentState);
+        }
         windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
         let currentSort = localStorage.getItem("Sort");
         if (currentSort==null) {
