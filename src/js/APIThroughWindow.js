@@ -31,6 +31,7 @@ export class APIThroughWindow {
             newGamesObj.save=this.myGames[i].saveJSONLocation;
             newGamesJSON.push(newGamesObj);
         }
+        console.log("Creating games JSON: ",newGamesJSON);
         return JSON.stringify(newGamesJSON);
     }
 

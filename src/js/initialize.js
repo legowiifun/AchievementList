@@ -18,20 +18,21 @@ export class Initialize {
         getJson("games.json").then((result)=>{
             this.gamesJson=JSON.parse(result);
         }).then(()=>{
-            this.init();
+            this.init().catch((err)=> {
+                console.error("Failed to initialize JSON files",err);
+            });
         }).catch((err)=> {
             console.error("Failed to read games.json!",err);
         });
     }
 
-    /**
-     * @returns {void}
-     */
-    init() {
+    async init() {
         if (this.gamesJson.length==undefined) {
             console.error("Games.json is not an array!");
             return;
         }
+
+        //for each game in gamesJson
         for (let i=0;i<this.gamesJson.length;i++) {
             let gameIdx=i;
             //add a new game
@@ -39,42 +40,43 @@ export class Initialize {
             if (jsonName==undefined) {
                 console.error("Current game is not formatted properly. I can not read it!");              
             } else {
-                getJson(jsonName).then((result)=>{
-                    gameIdx=this.initGame(JSON.parse(result),this.gamesJson[i].platform, jsonName);
-                }).then(()=> {
+                //get the main JSON file
+                let thisJson;
+                try {
+                    thisJson=await getJson(jsonName);
+                
+                    gameIdx=this.initGame(JSON.parse(thisJson),this.gamesJson[i].platform, jsonName);
+                    //if there was not an error
                     if (gameIdx!=-1) {
+                        //get the save file
                         let saveName = this.gamesJson[i].save;
                         if (saveName==undefined) {
                             console.error("Current game is not formatted properly. I can not read it!");                
                         } else {
+                            //store the save file name for later use
                             windowAPI.myGames[gameIdx].saveJSONLocation=saveName;
-                            getJson(saveName).then((result)=>{
-                                this.initSaves(JSON.parse(result),gameIdx);
-                            }).then(()=>{
-                                console.log("Current view: ",windowAPI.viewManager.currentState);
-                                windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
-                                let currentSort = localStorage.getItem("Sort");
-                                if (currentSort==null) {
-                                    currentSort=windowAPI.currentSort;
-                                }
-                                windowAPI.currentSort=currentSort;
-                                //windowAPI.sortGames(false);
-                            }).catch((err)=> {
-                                console.error("Failed to read "+saveName+"!",err);
-                            });
+                            //get the save file
+                            try {
+                                let saveJSON = await getJson(saveName)
+                                this.initSaves(JSON.parse(saveJSON),gameIdx);
+                            } catch(error) {
+                                //if you can not get the save file, it does not exist   
+                            }
                         }
                     }
-                }).catch((err)=> {
-                    console.error("Failed to read "+jsonName+"!",err);
-                });
+                } catch(error) {
+                    console.error("Can not read JSON file!");
+                }
             }
         }
+        this.setInitialView();
     }
 
     /**
      * @param {object} game 
      */
     initGame(game, platform, JSONLocation) {
+        console.log("initializing game: ",game)
         let name=game.name;
         if (name==undefined) {
             console.error("I can not read this name!");
@@ -144,7 +146,7 @@ export class Initialize {
             console.error("Saves JSON is not an array!");
             return;
         }
-        
+        console.log("initializing save: ",save);
         for (let i=0;i<save.length;i++) {
             if (save[i].length==undefined) {
                 console.error("Save for this achievement set is not an array!");
@@ -172,5 +174,17 @@ export class Initialize {
                 }
             }
         }
+    }
+
+    setInitialView() {
+        //set the proper view
+        console.log("Current view: ",windowAPI.viewManager.currentState);
+        windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
+        let currentSort = localStorage.getItem("Sort");
+        if (currentSort==null) {
+            currentSort=windowAPI.currentSort;
+        }
+        windowAPI.currentSort=currentSort;
+        //windowAPI.sortGames(false);
     }
 }

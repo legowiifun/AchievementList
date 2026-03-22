@@ -82,6 +82,7 @@ export class Game {
             jsonAchievements.push(achievementSetObj);
         }
         json.achievements=jsonAchievements;
+        console.log("Creating game JSON for game "+this.name+": ",json);
         return JSON.stringify(json);
     }
     createSaveJSON() {
@@ -99,7 +100,7 @@ export class Game {
             }
             json.push(achievementArr);
         }
-
+        console.log("Creating save JSON for game "+this.name+": ",json);
         return JSON.stringify(json);
     }
     /**
