@@ -45,7 +45,10 @@ export class EditAchievementView {
         achievementSaveBtn.addEventListener("click",()=> {
             let newDate=new Date(editAchievementdate.value);
             let newUnlocked=editAchievementCheckbox.checked;
-            let newOutOf=editAchievementOutofInput.valueAsNumber;
+            let newOutOf;
+            if (achievement.outOf!=undefined) {
+                newOutOf=editAchievementOutofInput.valueAsNumber;
+            }
             if (newUnlocked) {
                 if (!isNaN(newDate.getTime())&&(!isNaN(newOutOf)||achievement.outOf==undefined)) {
                     achievement.unlockDate=newDate;
