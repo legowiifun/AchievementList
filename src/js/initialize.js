@@ -11,7 +11,7 @@ export class Initialize {
      */
     gamesJson;
 
-    hideDevTools=true;
+    hideDevTools=false;
 
     /**
      * @returns {void}
@@ -25,6 +25,12 @@ export class Initialize {
                 openDevTools();
             });
         }
+        document.getElementById("gamesView").addEventListener('click',()=>{
+            windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
+        });
+        document.getElementById("editJSON").addEventListener('click',()=>{
+            windowAPI.viewManager.setView(windowAPI.viewManager.views.selectJSONView);
+        });
         document.getElementById("refreshBtn").addEventListener('click',()=> {
             location.reload();
         });

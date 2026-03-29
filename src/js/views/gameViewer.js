@@ -1,8 +1,10 @@
 import {GameHolder} from '../HTMLElements/gameHolder.js';
 import { windowAPI } from '../APIThroughWindow.js';
 import { Game } from '../game.js';
-import { editJson } from '../utils.js';
 export class GameViewer {
+    /**
+     * @param {Game[]} gamesArray 
+     */
     constructor(gamesArray) {
         let gamesList = document.createElement('ul');
         gamesList.id="gamesList";

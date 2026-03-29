@@ -7,7 +7,6 @@ export class AddGameViewer {
         let jsonLocationParagraph = document.createElement('p');
         jsonLocationParagraph.id="jsonLocationParagraph";
         jsonLocationParagraph.innerHTML="JSON location: ";
-        jsonLocationParagraph.classList.add()
         let jsonLocationInput=document.createElement('input');
         jsonLocationInput.name="gameJSON";
         jsonLocationInput.type="file";

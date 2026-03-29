@@ -4,6 +4,7 @@ import { AchievementSetViewer } from './views/achievementSetViewer.js';
 import { AchievementViewer } from './views/achievementViewer.js';
 import { EditAchievementView } from './views/editAchievementView.js';
 import { windowAPI } from './APIThroughWindow.js';
+import { SelectJSONView } from './views/JSONEditing/selectJSONView.js';
 /**
  * Handles switching between different application views
  */
@@ -13,7 +14,8 @@ export class ViewManager {
         achievementSetsView: "AchievementSetsView",
         achievementsView: "AchievementsView",
         editAchievementView: "EditAchievementView",
-        addGameView: "AddGameView"
+        addGameView: "AddGameView",
+        selectJSONView: "SelectJSONView"
     };
     currentState="";
     previousState="";
@@ -64,6 +66,11 @@ export class ViewManager {
             case this.views.addGameView:
                 this.previousState=this.views.gamesView;
                 new AddGameViewer();
+                break;
+            case this.views.selectJSONView:
+                document.getElementById("backButton").setAttribute("hidden",true);
+                this.previousState="";
+                new SelectJSONView();
                 break;
         }
         this.currentIdx=idx;
