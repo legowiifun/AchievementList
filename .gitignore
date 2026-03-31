@@ -141,4 +141,4 @@ vite.config.ts.timestamp-*
 .vite/
 
 # resources folder - sometimes I want to add these, NOT always
-#resources/*
+resources/*
