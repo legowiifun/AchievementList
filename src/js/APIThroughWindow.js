@@ -12,7 +12,10 @@ export class APIThroughWindow {
         });
     }
 
-    viewConsoleLogs=false;
+    mainContent=document.getElementById("content");
+    sideBar = document.getElementById("sideBar");
+
+    viewConsoleLogs=true;
 
     viewManager = new ViewManager();
     initJSON = new Initialize();
