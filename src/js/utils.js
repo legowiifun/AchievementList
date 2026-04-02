@@ -1,13 +1,33 @@
+import { windowAPI } from "./APIThroughWindow.js";
 //export the APIs as internal functions
 export function openDevTools() {
     window.electron.openDevTools();
 }
+/**
+ * @returns {Promise<{canceled: boolean, filePath: string, bookmark: string}>}
+ */
+export async function fileSelection() {
+    return window.resources.fileSelection();
+}
+/**
+ * @param {string} name 
+ * @returns {Promise<string>}
+ */
 export async function getJson(name) {
     return window.resources.getJson(name);
 }
+/**
+ * @param {string} name 
+ * @returns {Promise<string>}
+ */
 export async function getCompletePath(name) {
     return window.resources.getCompletePath(name);
 }
+/**
+ * @param {string} name 
+ * @param {string} content 
+ * @returns {Promise<void>}
+ */
 export async function editJson(name, content) {
     return window.resources.editJson(name, content);
 }
@@ -22,6 +42,23 @@ export let getPath = window.resources.getPath;
  */
 export function getFilePath(file) {
     return window.resources.getFilePath(file);
+}
+
+/**
+ * 
+ * @param {string} file 
+ * @returns string
+ */
+export function getPathFromResources(file) {
+    let path = file;
+    let idx=path.lastIndexOf("\\resources\\")+11;
+    if (idx!=-1) {
+        path=path.substring(idx);
+        if (windowAPI.viewConsoleLogs) {
+            console.log(path);
+        }
+    }
+    return path;
 }
 
 /**

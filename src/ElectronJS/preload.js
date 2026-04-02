@@ -19,5 +19,8 @@ contextBridge.exposeInMainWorld('resources', {
   },
   getFilePath: (file)=> {
     return webUtils.getPathForFile(file);
+  },
+  fileSelection: ()=> {
+    return ipcRenderer.invoke("fileSelection");
   }
 });

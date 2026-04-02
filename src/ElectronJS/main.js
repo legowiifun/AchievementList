@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron/main');
-const { ipcMain, session } = require('electron');
+const { ipcMain, session, dialog } = require('electron');
 const path = require('node:path');
 const fs = require('fs');
 
@@ -57,7 +57,13 @@ app.whenReady().then(() => {
   );
   ipcMain.on('toMain', (event, arg)=>console.log(arg));
   ipcMain.handle('get-data', async () => 'Data from main');
-  ipcMain.handle('resourcesPath', async () => {return process.resourcesPath;});
+  ipcMain.handle('resourcesPath', async () => {
+    if (app.isPackaged) {
+      return process.resourcesPath;
+    } else {
+      return process.cwd();
+    }
+  });
 
   ipcMain.handle('getJSON', async (event, name) => {
     let dataPath;
@@ -92,6 +98,15 @@ app.whenReady().then(() => {
     console.log("Editing JSON from ",dataPath);
     await fs.promises.mkdir(path.dirname(dataPath),{recursive:true});
     await fs.promises.writeFile(dataPath,content);
+  });
+  ipcMain.handle("fileSelection", async () => {
+    let defaultPath;
+    if (app.isPackaged) {
+      defaultPath=path.join(process.resourcesPath,"resources");
+    } else {
+      defaultPath=path.join(process.cwd(),"resources");
+    }
+    return dialog.showSaveDialog({defaultPath:defaultPath,properties:['createDirectory','showOverwriteConfirmation']});
   });
 });
 
