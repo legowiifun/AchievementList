@@ -33,6 +33,7 @@ export class editGameJSONView {
         let nameInput=document.createElement('input');
         nameInput.name="gameName";
         nameInput.id="nameInput";
+        nameInput.value=this.json.name;
         nameInput.addEventListener('change', function(event) {
             self.json.name=nameInput.value;
         });
@@ -101,7 +102,7 @@ export class editGameJSONView {
         addBtn.innerText="Add an Achievement Set";
         addBtn.addEventListener("click",()=>{
             this.list.appendChild(this.createAchievementSetView(undefined,this.list.childElementCount));
-            this.json.file.push(new gamesJSONObj());
+            this.json.achievements.push(new achievementSetObject());
         });
         windowAPI.mainContent.appendChild(addBtn);
 
@@ -153,69 +154,81 @@ export class editGameJSONView {
     createAchievementSetView(obj, index) {
         let self = this;
         let listItem = document.createElement('li');
-
-        //file selection box for JSONs
-        let gamePath;
+        
+        //set the name
+        let nameParagraph = document.createElement('p');
+        nameParagraph.id="nameParagraph";
+        nameParagraph.innerText="Game name";
+        let nameInput=document.createElement('input');
+        nameInput.name="gameName";
+        nameInput.id="nameInput";
         if (obj!=undefined) {
-            gamePath=obj.jsonName;
+            nameInput.value=obj.name;
         }
-        let gameJsonLocationParagraph = document.createElement('p');
-        gameJsonLocationParagraph.id="jsonLocationParagraph";
-        gameJsonLocationParagraph.innerHTML="Game JSON file";
-        let gameJsonLocationInput=document.createElement('input');
-        gameJsonLocationInput.name="gameJSON";
-        gameJsonLocationInput.type="file";
-        gameJsonLocationInput.accept=".json";
-        gameJsonLocationInput.id="gamesJSONGameInput";
-        gameJsonLocationInput.addEventListener('change', function(event) {
+        nameInput.addEventListener('change', function(event) {
+            self.json.achievements[index].name=nameInput.value;
+        });
+        nameParagraph.appendChild(nameInput);
+        nameParagraph.classList.add("formElement");
+        listItem.appendChild(nameParagraph);
+
+        let imgPath;
+        if (obj!=undefined) {
+            imgPath = obj.image;
+        }
+        //set the img
+        let imgParagraph = document.createElement('p');
+        imgParagraph.id="imgParagraph";
+        imgParagraph.innerText="Game Image";
+        let imgInput=document.createElement('input');
+        imgInput.name="imgInput";
+        imgInput.type="file";
+        imgInput.accept=".png, .jpeg, .jpg, .gif, .webp, .avif, .svg, .bmp, .ico";
+        imgInput.id="imgInput";
+        imgInput.addEventListener('change', function(event) {
             let file=event.target.files[0];
             if (file!=undefined) {
-                gamePath=getPathFromResources(getFilePath(file));
+                imgPath=getPathFromResources(getFilePath(file));
             } else {
-                gamePath=undefined;
+                imgPath=undefined;
             }
             if (windowAPI.viewConsoleLogs) {
                 console.log("JSON file",self.json.file, index);
             }
-            self.json.file[index].jsonName=gamePath;
+            self.json.img=imgPath;
         });
-        gameJsonLocationParagraph.appendChild(gameJsonLocationInput);
-        gameJsonLocationParagraph.classList.add("formElement");
-        listItem.appendChild(gameJsonLocationParagraph);
+        imgParagraph.appendChild(imgInput);
+        imgParagraph.classList.add("formElement");
+        listItem.appendChild(imgParagraph);
 
-        let savePath;
+        //required for plat?
+        let reqForPlatParagraph = document.createElement('p');
+        reqForPlatParagraph.id="reqForPlatParagraph";
+        reqForPlatParagraph.innerText="Is this achievement set required for the platinum?";
+        let reqForPlatInput=document.createElement('input');
+        reqForPlatInput.name="requiredForPlat";
+        reqForPlatInput.id="reqForPlatInput";
+        reqForPlatInput.type="checkbox";
         if (obj!=undefined) {
-            savePath=obj.save;
+            reqForPlatInput.value=obj.name;
         }
-        let saveJsonLocationParagraph = document.createElement('p');
-        saveJsonLocationParagraph.id="jsonLocationParagraph";
-        saveJsonLocationParagraph.innerHTML="Game Save JSON File";
-        let saveJsonLocationInput=document.createElement('input');
-        saveJsonLocationInput.name="gameJSON";
-        saveJsonLocationInput.type="file";
-        saveJsonLocationInput.accept=".json";
-        saveJsonLocationInput.id="gamesJSONSaveInput";
-        saveJsonLocationInput.addEventListener('change', function(event) {
-            let file=event.target.files[0];
-            if (file!=undefined) {
-                //get the file down to just the contents
-                savePath=getPathFromResources(getFilePath(file));
-            } else {
-                savePath=undefined;
-            }
-            self.json.file[index].save=savePath;
+        reqForPlatInput.addEventListener('change', function(event) {
+            self.json.achievements[index].name=reqForPlatInput.checked;
         });
-        saveJsonLocationParagraph.appendChild(saveJsonLocationInput);
-        saveJsonLocationParagraph.classList.add("formElement");
-        listItem.appendChild(saveJsonLocationParagraph);
+        reqForPlatParagraph.appendChild(reqForPlatInput);
+        reqForPlatParagraph.classList.add("formElement");
+        listItem.appendChild(reqForPlatParagraph);
 
-        //console.log(obj);
-        //input box, with other select for platform
+        //only on
+        //selection box
+        //can select multiple
+        //if select other, create list of others, any size
         let platformParagraph=document.createElement('p');
         platformParagraph.id="platformParagraph";
         platformParagraph.innerHTML="Platform: ";
         let platformSelect = document.createElement('select');
-        platformSelect.id="addGameSelectViewer";
+        platformSelect.id="achievementSelectPlatform";
+        platformSelect.multiple=true;
         let options = ["PlayStation 3", "PlayStation 4", "PlayStation Vita", "PlayStation 5", "XBox", "XBox 360", "XBox One", "XBox Series X", "Steam", "GOG", "Other"];
         for (let i=0;i<options.length;i++) {
             let optionSelect = document.createElement('option');
@@ -223,47 +236,99 @@ export class editGameJSONView {
             optionSelect.innerHTML=options[i];
             platformSelect.appendChild(optionSelect);
         }
+        platformSelect.size=1;
 
-        let platformTextInput=document.createElement('input');
-        platformTextInput.type="text";
-        platformTextInput.id="addGameTextInput";
-        platformTextInput.hidden=true;
+        let platformList = document.createElement('ul');
+        platformList.hidden=true;
+
+        let platformTextInputCount = document.createElement('input');
+        platformTextInputCount.type="number";
+        platformTextInputCount.id="platformCountTextInput";
+        platformTextInputCount.hidden=true;
         platformSelect.addEventListener('change', function(event) {
-            if (platformSelect.value=="Other") {
-                platformTextInput.hidden=false;
-            } else {
-                platformTextInput.hidden=true;
-                self.json.file[index].platform=platformSelect.value;
+            //console.log(platformSelect.selectedOptions);
+            let flag=false;
+            for (let i=0;i<platformSelect.selectedOptions.length&&!flag;i++) {
+                if (platformSelect.selectedOptions.item(i).innerText=="Other") {
+                    platformTextInputCount.hidden=false;
+                    platformList.hidden=false;
+                    console.log("Found Other!");
+                    flag=true;
+                }
+            }
+            if (!flag) {
+                platformTextInputCount.hidden=true;
+                platformList.hidden=true;
+            }
+            self.json.achievements[index].onlyOn=Array.from(platformSelect.selectedOptions).map((option)=> {
+                if (option!="Other") {
+                    return option.innerText;
+                }
+            });
+            //self.json.file[index].platform=platformSelect.value;
+        });
+        platformTextInputCount.addEventListener('change',function(event) {
+            platformList.innerHTML="";
+            for (let i=0;i<platformTextInputCount.value;i++) {
+                let platformTextInput=document.createElement('input');
+                platformTextInput.type="text";
+                platformTextInput.id="addGameTextInput";
+                platformTextInput.addEventListener('change', function() {
+                    self.json.achievements[index].onlyOn[i+platformSelect.selectedOptions.length]=platformTextInput.value;
+                });
+                platformList.appendChild(document.createElement('li').appendChild(platformTextInput));
             }
         });
-        platformTextInput.addEventListener('change', function() {
-            self.json.file[index].platform=platformTextInput.value;
-        });
-        if (obj!=undefined) {
-            if (options.find((value)=>{
-                return value==obj.platform;
-            })) {
-                platformSelect.value=obj.platform;
-            } else {
-                platformSelect.value="Other";
-                platformTextInput.value=obj.platform;
-            }
-        }
         platformParagraph.appendChild(platformSelect);
-        platformParagraph.appendChild(platformTextInput);
+        platformParagraph.appendChild(platformTextInputCount);
+        platformParagraph.appendChild(platformList);
         platformParagraph.classList.add("formElement");
         listItem.appendChild(platformParagraph);
 
+        if (obj!=undefined) {
+            let platformsArr=[];
+            for (let i=0;i<obj.onlyOn.length;i++) {
+                if (options.find((value)=> {
+                    return value==obj.onlyOn[i];
+                })) {
+                    document.querySelector(`#platformSelect option[value="${val}"]`).selected=true;
+                } else {
+                    platformsArr.push(obj.onlyOn[i]);
+                }
+            }
+            
+            if (platformsArr.length!=0) {
+                document.querySelector(`#platformSelect option[value="Other"]`).selected=true;
+                platformSelect.dispatchEvent(new Event('change'));
+                platformTextInputCount=platformsArr.length;
+                platformTextInputCount.dispatchEvent(new Event('change'));
+                for (let i=0;i<platformsArr.length;i++) {
+                    platformList.children[i].children[0].value=platformsArr[i];
+                }
+            }
+        }
+        //achievements in the set
+
+
+        //console.log(obj);
+
         //delete the game
-        let deleteGameBtn = document.createElement('button');
-        deleteGameBtn.id="removeGameFromJsonBtn";
-        deleteGameBtn.innerText="Remove this game";
-        deleteGameBtn.addEventListener("click",()=>{
-            this.json.file.splice(index,1);
+        let deleteSetBtn = document.createElement('button');
+        deleteSetBtn.id="removeAchievementSetFromJsonBtn";
+        deleteSetBtn.innerText="Remove this achievement Set";
+        deleteSetBtn.addEventListener("click",()=>{
+            this.json.achievements.splice(index,1);
             listItem.remove();
         });
-        listItem.appendChild(deleteGameBtn);
+        listItem.appendChild(deleteSetBtn);
         
         return listItem;
+    }
+    /**
+     * @param {achievementObject} obj 
+     * @param {Number} index 
+     */
+    createAchievementView(obj, index) {
+        
     }
 }
