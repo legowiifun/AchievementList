@@ -2,8 +2,8 @@ import { windowAPI } from "../../APIThroughWindow.js";
 import { getFilePath } from "../../utils.js";
 export class SelectJSONView {
     constructor() {
-        let file;
-        
+        //let file;
+        let path;
         let jsonLocationParagraph = document.createElement('p');
         jsonLocationParagraph.id="jsonLocationParagraph";
         jsonLocationParagraph.innerHTML="JSON to edit (leave blank to create a new JSON file): ";
@@ -13,7 +13,18 @@ export class SelectJSONView {
         jsonLocationInput.accept=".json";
         jsonLocationInput.id="addgameJSONInput";
         jsonLocationInput.addEventListener('change', function(event) {
-            file=event.target.files[0];
+            let file=event.target.files[0];
+            if (file!=undefined) {
+                //get the file down to just the contents
+                path=getFilePath(file);
+                let idx=path.lastIndexOf("\\resources\\")+11;
+                if (idx!=-1) {
+                    path=path.substring(idx);
+                    if (windowAPI.viewConsoleLogs) {
+                        console.log(path);
+                    }
+                }
+            }
         });
         jsonLocationParagraph.appendChild(jsonLocationInput);
         jsonLocationParagraph.classList.add("formElement");
@@ -58,25 +69,24 @@ export class SelectJSONView {
         saveButton.innerHTML="DONE";
         //add the event listener to the button
         saveButton.addEventListener("click",()=> {
-            let path;
+            
             let radioVal=document.querySelector('input[name="JSONType"]:checked').value;
-
-            if (file!=undefined) {
-                //get the file down to just the contents
-                path=getFilePath(file);
-                let idx=path.lastIndexOf("\\resources\\")+11;
-                if (idx!=-1) {
-                    path=path.substring(idx);
-                    if (windowAPI.viewConsoleLogs) {
-                        console.log(path);
-                    }
-                }
+            //set view to the proper version of edit JSON view, passing in the JSON value
+            if (windowAPI.viewConsoleLogs) {
+                console.log("checked ",radioVal);
+                console.log("JSON location=",path);
             }
-                            //set view to the proper version of edit JSON view, passing in the JSON value
-                if (windowAPI.viewConsoleLogs) {
-                    console.log("checked ",radioVal);
-                    console.log("JSON location=",path);
-                }
+            windowAPI.viewManager.JSONSelectionPath = path;
+            switch(radioVal) {
+                case "GamesJSON":
+                    windowAPI.viewManager.setView(windowAPI.viewManager.views.editGamesJSONView);
+                    break;
+                case "gameJSON":
+                    
+                    break;
+                case "saveJSON":
+                    break;
+            }
         });
         document.getElementById("content").appendChild(saveButton);
     }

@@ -5,6 +5,7 @@ import { AchievementViewer } from './views/achievementViewer.js';
 import { EditAchievementView } from './views/editAchievementView.js';
 import { windowAPI } from './APIThroughWindow.js';
 import { SelectJSONView } from './views/JSONEditing/selectJSONView.js';
+import { editGamesJSONView } from './views/JSONEditing/editGamesJSONView.js';
 /**
  * Handles switching between different application views
  */
@@ -15,7 +16,10 @@ export class ViewManager {
         achievementsView: "AchievementsView",
         editAchievementView: "EditAchievementView",
         addGameView: "AddGameView",
-        selectJSONView: "SelectJSONView"
+        selectJSONView: "SelectJSONView",
+        editGamesJSONView: "editGamesJSONView",
+        editGameJSONView: "editGameJSONView",
+        editSaveJSONView: "editSaveJSONView"
     };
     currentState="";
     previousState="";
@@ -24,6 +28,8 @@ export class ViewManager {
     gameIdx=0;
     achievementSetIdx=0;
     achievementIdx=0;
+
+    JSONSelectionPath="";
 
     /**
      * @param {string} view 
@@ -71,6 +77,10 @@ export class ViewManager {
                 document.getElementById("backButton").setAttribute("hidden",true);
                 this.previousState="";
                 new SelectJSONView();
+                break;
+            case this.views.editGamesJSONView:
+                this.previousState=this.views.selectJSONView;
+                new editGamesJSONView(this.JSONSelectionPath);
                 break;
         }
         this.currentIdx=idx;
