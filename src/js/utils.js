@@ -1,4 +1,7 @@
 import { windowAPI } from "./APIThroughWindow.js";
+import { gamesJSON, gamesJSONObj } from "./JSONObjects/gamesJSON.js";
+import {gameJSON} from "./JSONObjects/gameJSON.js"
+import {saveJSON, saveObject} from "./JSONObjects/saveJSON.js"
 //export the APIs as internal functions
 export function openDevTools() {
     window.electron.openDevTools();
@@ -43,11 +46,137 @@ export let getPath = window.resources.getPath;
 export function getFilePath(file) {
     return window.resources.getFilePath(file);
 }
-
+/**
+ * @param {string | gamesJSONObj[]} file
+ * @return {boolean}
+ */
+export function validateGamesJSON(file) {
+    let newFile = new gamesJSON();
+    if (typeof file=='string') {
+        try {
+            newFile.file=JSON.parse(file);
+        } catch (err) {
+            return false;
+        }
+    } else {
+        newFile.file=file;
+    }
+    //validate the JSON file
+    if (!Array.isArray(newFile.file)) {
+        return false;
+    }
+    for (let i=0;i<newFile.file.length;i++) {
+        //check that each parameter is not undefined
+        if (newFile.file[i].jsonName==undefined) {
+            return false;
+        }
+        if (newFile.file[i].platform==undefined) {
+            return false;
+        }
+        if (newFile.file[i].save==undefined) {
+            return false;
+        }
+    }
+    return true;
+}
+/**
+ * @param {string | gameJSON} file
+ * @return {boolean}
+ */
+export function validateGameJSON(file) {
+    let newFile = new gameJSON();
+    if (typeof file=='string') {
+        try {
+            newFile=JSON.parse(file);
+        } catch (err) {
+            return false;
+        }
+    } else {
+        newFile=file;
+    }
+    //validate the JSON file
+    if (newFile.platImg==undefined) {
+        return false;
+    }
+    if (newFile.img==undefined) {
+        return false;
+    }
+    if (newFile.name==undefined) {
+        return false;
+    }
+    if (newFile.achievements==undefined) {
+        return false;
+    }
+    if (!Array.isArray(newFile.achievements)) {
+        return false;
+    }
+    for (let i=0;i<newFile.achievements.length;i++) {
+        if (newFile.achievements[i].name==undefined) {
+            return false;
+        }
+        if (newFile.achievements[i].image==undefined) {
+            return false;
+        }
+        if (newFile.achievements[i].achievements==undefined) {
+            return false;
+        }
+        if (!Array.isArray(newFile.achievements[i].achievements)) {
+            return false;
+        }
+        for (let j=0;j<newFile.achievements[i].achievements.length;j++) {
+            if (newFile.achievements[i].achievements[j].description==undefined) {
+                return false;
+            }
+            if (newFile.achievements[i].achievements[j].img==undefined) {
+                return false;
+            }
+            if (newFile.achievements[i].achievements[j].name==undefined) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+/**
+ * @param {string | saveObject[][]} file
+ * @return {boolean}
+ */
+export function validateSaveJSON(file) {
+    let newFile = new saveJSON();
+    if (typeof file=='string') {
+        try {
+            newFile.file=JSON.parse(file);
+        } catch (err) {
+            return false;
+        }
+    } else {
+        newFile.file=file;
+    }
+    if (!Array.isArray(newFile.file)) {
+        return false;
+    }
+    for (let i=0;i<newFile.file.length;i++) {
+        if (newFile.file[i]==undefined) {
+            return false;
+        }
+        if (!Array.isArray(newFile.file[i])) {
+            return false;
+        }
+        for (let j=0;j<newFile.file[i].length;j++) {
+            if (newFile.file[i][j].obtained==undefined) {
+                return false;
+            }
+            if (newFile.file[i][j].obtainedDate==undefined) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
 /**
  * 
  * @param {string} file 
- * @returns string
+ * @returns {string}
  */
 export function getPathFromResources(file) {
     let path = file;
