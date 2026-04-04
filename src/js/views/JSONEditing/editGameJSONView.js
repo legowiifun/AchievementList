@@ -188,7 +188,7 @@ export class editGameJSONView {
         reqForPlatInput.id="reqForPlatInput";
         reqForPlatInput.type="checkbox";
         if (obj!=undefined) {
-            reqForPlatInput.value=obj.name;
+            reqForPlatInput.checked=obj.requiredForPlat;
         }
         reqForPlatInput.addEventListener('change', function(event) {
             self.json.achievements[index].requiredForPlat=reqForPlatInput.checked;
