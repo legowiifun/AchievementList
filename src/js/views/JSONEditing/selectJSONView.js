@@ -82,9 +82,10 @@ export class SelectJSONView {
                     windowAPI.viewManager.setView(windowAPI.viewManager.views.editGamesJSONView);
                     break;
                 case "gameJSON":
-                    
+                    windowAPI.viewManager.setView(windowAPI.viewManager.views.editGameJSONView);
                     break;
                 case "saveJSON":
+                    windowAPI.viewManager.setView(windowAPI.viewManager.views.editSaveJSONView);
                     break;
             }
         });

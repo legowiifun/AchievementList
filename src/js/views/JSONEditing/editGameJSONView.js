@@ -1,11 +1,11 @@
-import {gamesJSON, gamesJSONObj} from '../../JSONObjects/gamesJSON.js';
+import {gameJSON, achievementObject, achievementSetObject} from '../../JSONObjects/gameJSON.js';
 import { getJson, getFilePath, editJson, fileSelection, getPathFromResources, validateGameJSON, validateSaveJSON } from '../../utils.js';
 import { windowAPI } from '../../APIThroughWindow.js';
-export class editGamesJSONView {
+export class editGameJSONView {
     /**
-     * @type {gamesJSON}
+     * @type {gameJSON}
      */
-    json = new gamesJSON();
+    json = new gameJSON();
     /**
      * @type {HTMLUListElement}
      */
@@ -14,33 +14,93 @@ export class editGamesJSONView {
      * @param {string} path 
      */
     constructor(path) {
+        let self=this;
         this.list = document.createElement('ul');
         //parse the JSON - if it exists
         if (path!=undefined) {
             getJson(path).then((jsonStr)=> {
-                this.json.file = JSON.parse(jsonStr);
-                //it should be an array
-                //validate
-                if (!Array.isArray(this.json.file)) {
-                    console.error("JSON file ",path,"is not an array");
-                    windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
-                } else {
-                    //it is an array, parse the elements of it
-                    for (let i=0;i<this.json.file.length;i++) {
-                        this.list.appendChild(this.createEditGameView(this.json.file[i],i));
-                    }
+                this.json = JSON.parse(jsonStr);
+                for (let i=0;i<this.json.achievements.length;i++) {
+                    this.list.appendChild(this.createAchievementSetView(this.json.achievements[i],i));
                 }
             });
         }
+        
+        //set the name
+        let nameParagraph = document.createElement('p');
+        nameParagraph.id="nameParagraph";
+        nameParagraph.innerText="Game name";
+        let nameInput=document.createElement('input');
+        nameInput.name="gameName";
+        nameInput.id="nameInput";
+        nameInput.addEventListener('change', function(event) {
+            self.json.name=nameInput.value;
+        });
+        nameParagraph.appendChild(nameInput);
+        nameParagraph.classList.add("formElement");
+        windowAPI.mainContent.appendChild(nameParagraph);
+
+        let imgPath = this.json.img;
+        //set the img
+        let imgParagraph = document.createElement('p');
+        imgParagraph.id="imgParagraph";
+        imgParagraph.innerText="Game Image";
+        let imgInput=document.createElement('input');
+        imgInput.name="imgInput";
+        imgInput.type="file";
+        imgInput.accept=".png, .jpeg, .jpg, .gif, .webp, .avif, .svg, .bmp, .ico";
+        imgInput.id="imgInput";
+        imgInput.addEventListener('change', function(event) {
+            let file=event.target.files[0];
+            if (file!=undefined) {
+                imgPath=getPathFromResources(getFilePath(file));
+            } else {
+                imgPath=undefined;
+            }
+            if (windowAPI.viewConsoleLogs) {
+                console.log("JSON file",self.json.file, index);
+            }
+            self.json.img=imgPath;
+        });
+        imgParagraph.appendChild(imgInput);
+        imgParagraph.classList.add("formElement");
+        windowAPI.mainContent.appendChild(imgParagraph);
+
+        let platImgPath = this.json.img;
+        //set the plat img
+        let platImgParagraph = document.createElement('p');
+        platImgParagraph.id="platImgParagraph";
+        platImgParagraph.innerText="Game Platinum Image";
+        let platImgInput=document.createElement('input');
+        platImgInput.name="platImgInput";
+        platImgInput.type="file";
+        platImgInput.accept=".png, .jpeg, .jpg, .gif, .webp, .avif, .svg, .bmp, .ico";
+        platImgInput.id="imgInput";
+        platImgInput.addEventListener('change', function(event) {
+            let file=event.target.files[0];
+            if (file!=undefined) {
+                platImgPath=getPathFromResources(getFilePath(file));
+            } else {
+                platImgPath=undefined;
+            }
+            if (windowAPI.viewConsoleLogs) {
+                console.log("JSON file",self.json.file, index);
+            }
+            self.json.platImg=platImgPath;
+        });
+        platImgParagraph.appendChild(platImgInput);
+        platImgParagraph.classList.add("formElement");
+        windowAPI.mainContent.appendChild(platImgParagraph);
+
         //add the list to the main content
         windowAPI.mainContent.appendChild(this.list);
-        
-        //button to add a game
+
+        //button to add an achievement set
         let addBtn = document.createElement('button');
         addBtn.id="addGameToGamesJSONBtn";
-        addBtn.innerText="Add a game";
+        addBtn.innerText="Add an Achievement Set";
         addBtn.addEventListener("click",()=>{
-            this.list.appendChild(this.createEditGameView(undefined,this.list.childElementCount));
+            this.list.appendChild(this.createAchievementSetView(undefined,this.list.childElementCount));
             this.json.file.push(new gamesJSONObj());
         });
         windowAPI.mainContent.appendChild(addBtn);
@@ -52,7 +112,7 @@ export class editGamesJSONView {
         //add the event listener to the button
         saveButton.addEventListener("click",()=> {
             //get gameJSON
-            for (let i=0;i<this.json.file.length;i++) {
+            /*for (let i=0;i<this.json.file.length;i++) {
                 getJson(this.json.file[i].jsonName).then((val)=> {
                     if (!validateGameJSON(val)) {
                         windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
@@ -81,16 +141,16 @@ export class editGamesJSONView {
                 }).catch(()=> {
                     windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
                 });
-            }
+            }*/
 
         });
         windowAPI.mainContent.appendChild(saveButton);
     }
     /**
-     * 
-     * @param {gamesJSONObj} obj 
+     * @param {achievementSetObject} obj
+     * @param {Number} index 
      */
-    createEditGameView(obj, index) {
+    createAchievementSetView(obj, index) {
         let self = this;
         let listItem = document.createElement('li');
 

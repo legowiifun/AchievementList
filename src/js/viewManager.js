@@ -6,6 +6,7 @@ import { EditAchievementView } from './views/editAchievementView.js';
 import { windowAPI } from './APIThroughWindow.js';
 import { SelectJSONView } from './views/JSONEditing/selectJSONView.js';
 import { editGamesJSONView } from './views/JSONEditing/editGamesJSONView.js';
+import { editGameJSONView } from './views/JSONEditing/editGameJSONView.js';
 /**
  * Handles switching between different application views
  */
@@ -81,6 +82,10 @@ export class ViewManager {
             case this.views.editGamesJSONView:
                 this.previousState=this.views.selectJSONView;
                 new editGamesJSONView(this.JSONSelectionPath);
+                break;
+            case this.views.editGameJSONView:
+                this.previousState=this.views.selectJSONView;
+                new editGameJSONView(this.JSONSelectionPath);
                 break;
         }
         this.currentIdx=idx;
