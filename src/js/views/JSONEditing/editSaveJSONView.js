@@ -145,7 +145,7 @@ export class editSaveJSONView {
             obtainedDateInput.valueAsDate=obj.obtainedDate;
         }
         obtainedDateInput.addEventListener('change', function(event) {
-            self.json.file[index1][index2].obtainedDate=obtainedDateInput.value;
+            self.json.file[index1][index2].obtainedDate=new Date(editAchievementdate.value).toString();
         });
         obtainedDateParagraph.appendChild(obtainedDateInput);
         obtainedDateParagraph.classList.add("formElement");
