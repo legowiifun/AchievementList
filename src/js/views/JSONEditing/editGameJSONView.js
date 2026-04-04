@@ -60,9 +60,6 @@ export class editGameJSONView {
             } else {
                 imgPath=undefined;
             }
-            if (windowAPI.viewConsoleLogs) {
-                console.log("JSON file",self.json.file, index);
-            }
             self.json.img=imgPath;
         });
         imgParagraph.appendChild(imgInput);
@@ -85,9 +82,6 @@ export class editGameJSONView {
                 platImgPath=getPathFromResources(getFilePath(file));
             } else {
                 platImgPath=undefined;
-            }
-            if (windowAPI.viewConsoleLogs) {
-                console.log("JSON file",self.json.file, index);
             }
             self.json.platImg=platImgPath;
         });
@@ -114,38 +108,20 @@ export class editGameJSONView {
         saveButton.innerHTML="DONE";
         //add the event listener to the button
         saveButton.addEventListener("click",()=> {
-            //get gameJSON
-            /*for (let i=0;i<this.json.file.length;i++) {
-                getJson(this.json.file[i].jsonName).then((val)=> {
-                    if (!validateGameJSON(val)) {
-                        windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
-                    }
-                    getJson(this.json.file[i].save).then((val2)=> {
-                        if (!validateSaveJSON(val2)) {
-                            windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
-                        }
-                        //get the path
-                        let JSONPath=path;
-                        if (JSONPath==undefined) {
-                            fileSelection().then((val)=> {
-                                console.log(val);
-                                JSONPath=getPathFromResources(val.filePath);
-                            }).then(()=> {
-                                editJson(JSONPath,JSON.stringify(this.json.file,null,4));
-                                windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
-                            });
-                        } else {
-                            editJson(JSONPath,JSON.stringify(this.json.file,null,4));
-                            windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
-                        }
-                    }).catch(()=>{
-                        windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
-                    });
-                }).catch(()=> {
+            //get the path
+            let JSONPath=path;
+            if (JSONPath==undefined) {
+                fileSelection().then((val)=> {
+                console.log(val);
+                JSONPath=getPathFromResources(val.filePath);
+                }).then(()=> {
+                    editJson(JSONPath,JSON.stringify(this.json,null,4));
                     windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
                 });
-            }*/
-
+            } else {
+                editJson(JSONPath,JSON.stringify(this.json,null,4));
+                windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
+            }
         });
         windowAPI.mainContent.appendChild(saveButton);
     }
@@ -215,7 +191,7 @@ export class editGameJSONView {
             reqForPlatInput.value=obj.name;
         }
         reqForPlatInput.addEventListener('change', function(event) {
-            self.json.achievements[index].name=reqForPlatInput.checked;
+            self.json.achievements[index].requiredForPlat=reqForPlatInput.checked;
         });
         reqForPlatParagraph.appendChild(reqForPlatInput);
         reqForPlatParagraph.classList.add("formElement");
@@ -323,7 +299,7 @@ export class editGameJSONView {
         addBtn.id="addAchievementToAchievementSetBtn";
         addBtn.innerText="Add an Achievement";
         addBtn.addEventListener("click",()=>{
-            achievementList.appendChild(this.createAchievementView(undefined, index, listItem.childElementCount));
+            achievementList.appendChild(this.createAchievementView(undefined, index, achievementList.childElementCount));
             this.json.achievements[index].achievements.push(new achievementObject());
         });
         listItem.appendChild(addBtn);
@@ -362,6 +338,7 @@ export class editGameJSONView {
         nameInput.addEventListener('change', function(event) {
             self.json.achievements[index1].achievements[index2].name=nameInput.value;
         });
+        
         nameParagraph.appendChild(nameInput);
         nameParagraph.classList.add("formElement");
         listItem.appendChild(nameParagraph);
@@ -402,9 +379,6 @@ export class editGameJSONView {
                 imgPath=getPathFromResources(getFilePath(file));
             } else {
                 imgPath=undefined;
-            }
-            if (windowAPI.viewConsoleLogs) {
-                console.log("JSON file",self.json, index);
             }
             self.json.achievements[index1].achievements[index2].img=imgPath;
         });
