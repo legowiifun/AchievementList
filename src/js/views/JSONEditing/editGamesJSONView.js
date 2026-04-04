@@ -25,7 +25,7 @@ export class editGamesJSONView {
                     console.error("JSON file ",path,"is not an array");
                     windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
                 } else {
-                    //it is an array, parse teh elements of it
+                    //it is an array, parse the elements of it
                     for (let i=0;i<this.json.file.length;i++) {
                         this.list.appendChild(this.createEditGameView(this.json.file[i],i));
                     }
@@ -51,7 +51,6 @@ export class editGamesJSONView {
         saveButton.innerHTML="DONE";
         //add the event listener to the button
         saveButton.addEventListener("click",()=> {
-            //TODO: validate that game JSON and save JSON are properly formatted
             //get gameJSON
             for (let i=0;i<this.json.file.length;i++) {
                 getJson(this.json.file[i].jsonName).then((val)=> {
