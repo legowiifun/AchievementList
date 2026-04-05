@@ -31,6 +31,9 @@ export class Initialize {
         document.getElementById("editJSON").addEventListener('click',()=>{
             windowAPI.viewManager.setView(windowAPI.viewManager.views.selectJSONView);
         });
+        document.getElementById("mosaic").addEventListener('click',()=>{
+            windowAPI.viewManager.setView(windowAPI.viewManager.views.mosaicView);
+        });
         document.getElementById("refreshBtn").addEventListener('click',()=> {
             location.reload();
         });

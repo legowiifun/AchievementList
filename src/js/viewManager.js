@@ -8,6 +8,7 @@ import { SelectJSONView } from './views/JSONEditing/selectJSONView.js';
 import { editGamesJSONView } from './views/JSONEditing/editGamesJSONView.js';
 import { editGameJSONView } from './views/JSONEditing/editGameJSONView.js';
 import { editSaveJSONView } from './views/JSONEditing/editSaveJSONView.js';
+import { MosaicViewer } from './views/mosaicView.js';
 /**
  * Handles switching between different application views
  */
@@ -21,7 +22,8 @@ export class ViewManager {
         selectJSONView: "SelectJSONView",
         editGamesJSONView: "editGamesJSONView",
         editGameJSONView: "editGameJSONView",
-        editSaveJSONView: "editSaveJSONView"
+        editSaveJSONView: "editSaveJSONView",
+        mosaicView: "mosaicView"
     };
     currentState="";
     previousState="";
@@ -91,6 +93,11 @@ export class ViewManager {
             case this.views.editSaveJSONView:
                 this.previousState=this.views.selectJSONView;
                 new editSaveJSONView(this.JSONSelectionPath);
+                break;
+            case this.views.mosaicView:
+                document.getElementById("backButton").setAttribute("hidden",true);
+                this.previousState="";
+                new MosaicViewer(windowAPI.myGames);
                 break;
         }
         this.currentIdx=idx;
