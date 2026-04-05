@@ -161,3 +161,7 @@ ul {
 .unobtainedAchImg {
     filter:grayscale(100%);
 }
+
+#MosaicCanvas {
+    width:75%;
+}

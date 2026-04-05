@@ -133,6 +133,7 @@ export class MosaicViewer {
         windowAPI.mainContent.appendChild(createBtn);
         // canvas
         let canvasElement = document.createElement('canvas');
+        canvasElement.id="MosaicCanvas";
         canvasElement.width=3000;
         canvasElement.height=1500;
         
@@ -182,7 +183,6 @@ export class MosaicViewer {
             let gameSize=625;
             canvasElement.width=gameSize*columns;
             canvasElement.height=gameSize*rows;            
-            //TODO: create canvas
             let context = canvasElement.getContext("2d");
             let gameIdx = 0;
             //self.createImgTag(games[gameIdx],context,0,0,gameSize);
