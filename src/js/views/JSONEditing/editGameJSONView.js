@@ -307,6 +307,8 @@ export class editGameJSONView {
                 achievementList.appendChild(this.createAchievementView(obj.achievements[i],index,i));
             }
         }
+        listItem.appendChild(achievementList);
+
         //button to add an achievement
         let addBtn = document.createElement('button');
         addBtn.id="addAchievementToAchievementSetBtn";
@@ -327,7 +329,7 @@ export class editGameJSONView {
         });
         listItem.appendChild(deleteSetBtn);
 
-        listItem.appendChild(achievementList);
+        
         
         return listItem;
     }

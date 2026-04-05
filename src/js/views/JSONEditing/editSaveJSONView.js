@@ -84,6 +84,7 @@ export class editSaveJSONView {
                 achievementList.appendChild(this.createAchievementSaveView(obj.achievements[i],index,i));
             }
         }
+        listItem.appendChild(achievementList);
         //button to add an achievement
         let addBtn = document.createElement('button');
         addBtn.id="addAchievementToAchievementSetBtn";
@@ -104,7 +105,7 @@ export class editSaveJSONView {
         });
         listItem.appendChild(deleteSetBtn);
 
-        listItem.appendChild(achievementList);
+        
         
         return listItem;
     }
