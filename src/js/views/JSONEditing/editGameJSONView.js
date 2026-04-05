@@ -110,11 +110,11 @@ export class editGameJSONView {
         saveButton.addEventListener("click",()=> {
             //set empty onlyOn's to undefined
             for (let i=0;i<this.json.achievements.length;i++) {
-                if (this.json.achievements[i].onlyOn.length==0) {
+                if (this.json.achievements[i].onlyOn!=undefined&&this.json.achievements[i].onlyOn.length==0) {
                     this.json.achievements[i].onlyOn=undefined;
                 }
                 for (let j=0;j<this.json.achievements[i].achievements.length;j++) {
-                    if (this.json.achievements[i].achievements[j].onlyOn.length==0) {
+                    if (this.json.achievements[i].achievements[j].onlyOn!=undefined&&this.json.achievements[i].achievements[j].onlyOn.length==0) {
                         this.json.achievements[i].achievements[j].onlyOn=undefined;
                     }
                 }

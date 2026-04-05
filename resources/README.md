@@ -1,13 +1,25 @@
 ## Read this to add new games/achievements to the viewer
 
 # Adding a new game
-To add a new game, you first need to create gameName.json, and put it in this folder. It can be in subfolders of this folder. If you don't know JSON, feel free to look at the example to learn, or copy a set of files someone else created for the same game. 
+To add a new game, there are two approaches. Both of them first require you to store the game images, and the icons for every achievement the game has in this folder.
+
+## Adding new games manually
+To do it manually, you need to create gameName.json somewhere in this folder. It can be in subfolders of this folder. If you don't know JSON, feel free to look at the example to learn, or copy a set of files someone else created for the same game. 
 
 In this json file, you create a JSON object with ```{}```. Inside here are 3 main properties. First, is "name". This is the name of the game. Next is "img". For this,you first store the game art somewhere in this folder, and put the path to it, starting in the resources folder, here. For example, if it is just in the resources folder, as a neighbor of this file, you put "img.jpg". This program supports a variety of file types. There is also "platImg", which is formatted the same way, and stores the image to use in a planned mosaic creator (WIP). Last is "achievements". This is a JSON array described below, containing a number of JSON objects wrapped in ```{}```. The entire thing is wrapped in ```[]```. 
 
 These achievement sets have several properties you can configure. For "image", you store the image of the achievement set somewhere, and put the path to it, starting in the resources folder, here. For example, if it is just in the resources folder, as a neighbor of this file, you put "img.jpg". This program supports a variety of file types. For "name", you put the name of the achievement set that is displayed on the screen. "requiredForPlat" is an optional property, but if you include it, put true if this achievement set is required for the "platinum", and false if it is not. "onlyOn" is another optional property, where you put ```[]```, and inside, put the name of each platform it is available on in quotation marks. Lastly, for "achievements", you put [], and then fill out the inside of that. 
 
 Inside achievements arrays, you put a list of {}'s, one for each achievement in the set. They are separated by commas. There are several configurable properties for these achievements. For "name", you put the name of the achievement. For "description", you put the description of the achievement. "outOf" is an optional property, where you put a number. This is useful for achievements that are "Kill 500 enemies", etc.. "onlyOn" is another optional property, where you put ```[]```, and inside, put the name of each platform it is available on in quotation marks. Lastly, for img, you first store the achievement art somewhere in this folder, and put the path to it, starting in the resources folder, here. For example, if it is just in the resources folder, as a neighbor of this file, you put "img.jpg". This program supports a variety of file types. 
+
+## Adding new games using the GUI
+This program provides a GUI-based interface to edit and create game JSON files. First, click on the button "Edit JSON files" on the top bar. Then, if you are editing an already existing games achievements, you can use the file chooser. Otherwise, leave it blank. Then, select "individual game JSON files" from the list of options, and click "DONE" to bring up the GUI. 
+
+First, there are options to fill out the game name, and to choose a file for the game's image and the game's platinum image. There is also a button for adding a new achievement set. 
+
+When adding a new achievement set, you can fill in the name, choose an image, there is a checkbox for if it is required for the platinum, and you can select which platforms the achievement set is available on. This is a multi-select box. If "Other" is one of your options, a number input will pop up, and a number of text inputs will appear depending on the number placed in the number input, for any number of "Other" platforms. There is also a button for adding a new achievement, and a button to remove this achievement set. 
+
+When adding a new achievement, you can fill out the name and description. You can also choose an image, and you can set an out of number. Lastly, you can use a multi-select box similar to the one for achievement sets to set the achievement as only available on certain platforms. 
 
 Next, there are two options. You can manually modify the other JSON files, or you can automatically do it with in-built tools.
 
