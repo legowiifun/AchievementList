@@ -190,16 +190,16 @@ export class MosaicViewer {
                 console.log("Creating mosaic. Game size=",gameSize,"Rows=",rows,"Columns=",columns);
                 console.log("Games=",games.length);
             }
-            for (let i=0;(i<columns)&&(gameIdx<games.length);i++) {
+            for (let i=0;(i<rows)&&(gameIdx<games.length);i++) {
                 if (windowAPI.viewConsoleLogs) {
                     console.log("Going through canvas column ",i);
                 }
                 //go through each column, and each row
-                for (let j=0;j<(rows)&&(gameIdx<games.length);j++) {
+                for (let j=0;j<(columns)&&(gameIdx<games.length);j++) {
                     if (windowAPI.viewConsoleLogs) {
-                        console.log("Adding ",games[gameIdx]," to canvas at location ",gameSize*i,gameSize*j, "size=",gameSize);
+                        console.log("Adding ",games[gameIdx]," to canvas at location ",gameSize*j,gameSize*i, "size=",gameSize);
                     }
-                    self.createImgTag(games[gameIdx],context,gameSize*i,gameSize*j,gameSize);
+                    self.createImgTag(games[gameIdx],context,gameSize*j,gameSize*i,gameSize);
                     
                     gameIdx++;
                 }
