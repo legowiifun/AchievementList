@@ -19,6 +19,18 @@ export class Game {
         this.platImg=platImg;
         this.gameJSONLocation=gameJSONLocation;
     }
+    havePlat() {
+        let hasAPlat=false;
+        for (let i=0;i<this.achievementSets.length;i++) {
+            if (this.achievementSets[i].requiredForPlat) {
+                hasAPlat=true;
+                if (this.achievementSets[i].getPercentageCompleted()!=100) {
+                    return false;
+                }
+            }
+        }
+        return hasAPlat;
+    }
     getPercentageCompleted() {
         let totalAchievements=this.getAchievementCount();
         let completedAchievements=this.getCompletedAchievementCount();
