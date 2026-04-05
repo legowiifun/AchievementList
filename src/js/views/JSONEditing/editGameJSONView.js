@@ -108,12 +108,25 @@ export class editGameJSONView {
         saveButton.innerHTML="DONE";
         //add the event listener to the button
         saveButton.addEventListener("click",()=> {
+            //set empty onlyOn's to undefined
+            for (let i=0;i<this.json.achievements.length;i++) {
+                if (this.json.achievements[i].onlyOn.length==0) {
+                    this.json.achievements[i].onlyOn=undefined;
+                }
+                for (let j=0;j<this.json.achievements[i].achievements.length;j++) {
+                    if (this.json.achievements[i].achievements[j].onlyOn.length==0) {
+                        this.json.achievements[i].achievements[j].onlyOn=undefined;
+                    }
+                }
+            }
             //get the path
             let JSONPath=path;
             if (JSONPath==undefined) {
                 fileSelection().then((val)=> {
-                console.log(val);
-                JSONPath=getPathFromResources(val.filePath);
+                    if (windowAPI.viewConsoleLogs) {
+                        console.log(val);
+                    }
+                    JSONPath=getPathFromResources(val.filePath);
                 }).then(()=> {
                     editJson(JSONPath,JSON.stringify(this.json,null,4));
                     windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);

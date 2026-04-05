@@ -53,8 +53,10 @@ export class editSaveJSONView {
             let JSONPath=path;
             if (JSONPath==undefined) {
                 fileSelection().then((val)=> {
-                console.log(val);
-                JSONPath=getPathFromResources(val.filePath);
+                    if (windowAPI.viewConsoleLogs) {
+                        console.log(val);
+                    }
+                    JSONPath=getPathFromResources(val.filePath);
                 }).then(()=> {
                     editJson(JSONPath,JSON.stringify(this.json.file,null,4));
                     windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
