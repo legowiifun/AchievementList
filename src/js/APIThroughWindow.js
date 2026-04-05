@@ -42,18 +42,18 @@ export class APIThroughWindow {
         return JSON.stringify(newGamesJSON, null, 4);
     }
 
-    sortGames(refreshAfter=true) {
+    sortGames(refreshAfter=true, sortAlgo=this.currentSort,gamesToSort=this.myGames) {
         if (this.viewConsoleLogs) {
-            console.log("Sorting games with algorithm: ",this.currentSort, this.myGames);
+            console.log("Sorting games with algorithm: ",sortAlgo, this.myGames);
         }
-        this.myGames.sort(
+        gamesToSort.sort(
             /**
              * @param {Game} a 
              * @param {Game} b 
              */
             (a, b)=> {
                 
-                switch(this.currentSort){
+                switch(sortAlgo){
                     case "Alphabetical Ascending":{
                         let nameA=a.name.toLowerCase();
                         let nameB=b.name.toLowerCase();
