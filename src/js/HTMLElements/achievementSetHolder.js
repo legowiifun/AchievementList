@@ -26,12 +26,12 @@ export class AchievementSetHolder {
 
             let setName = document.createElement('span');
             setName.classList.add("setName");
-            setName.innerHTML=achievementSet.name;
+            setName.innerText=achievementSet.name;
             achievementSetEntry.appendChild(setName);
 
             let percent = document.createElement('span');
             percent.classList.add("percent");
-            percent.innerHTML=achievementSet.getPercentageCompleted()+"%";
+            percent.innerText=achievementSet.getPercentageCompleted()+"%";
             achievementSetEntry.appendChild(percent);
 
             parentElement.appendChild(achievementSetEntry);

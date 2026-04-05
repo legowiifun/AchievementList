@@ -25,17 +25,17 @@ export class GameHolder {
 
             let gameName=document.createElement('span');
             gameName.classList.add("gameName");
-            gameName.innerHTML=game.name;
+            gameName.innerText=game.name;
             gameEntry.appendChild(gameName);
 
             let platform=document.createElement('span');
             platform.classList.add("platform");
-            platform.innerHTML=game.platform;
+            platform.innerText=game.platform;
             gameEntry.appendChild(platform);
 
             let percent=document.createElement('span');
             percent.classList.add("percent");
-            percent.innerHTML=game.getPercentageCompleted()+"%";
+            percent.innerText=game.getPercentageCompleted()+"%";
             gameEntry.appendChild(percent);
 
             parentElement.appendChild(gameEntry);

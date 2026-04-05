@@ -28,20 +28,20 @@ export class AchievementHolder {
 
             let achievementName = document.createElement('span');
             achievementName.classList.add("achievementName");
-            achievementName.innerHTML=achievement.name;
+            achievementName.innerText=achievement.name;
             achievementEntry.appendChild(achievementName);
 
             let achievementDesc = document.createElement('span');
             achievementDesc.classList.add("achievementDesc");
-            achievementDesc.innerHTML=achievement.description;
+            achievementDesc.innerText=achievement.description;
             achievementEntry.appendChild(achievementDesc);
             
             let achievementDate = document.createElement('span');
             achievementDate.classList.add("achievementDate");
             if (achievement.unlocked) {
-                achievementDate.innerHTML=convertDate(achievement.unlockDate,0);
+                achievementDate.innerText=convertDate(achievement.unlockDate,0);
             } else {
-                achievementDate.innerHTML="Unobtained";
+                achievementDate.innerText="Unobtained";
             }
             achievementEntry.appendChild(achievementDate);
 
@@ -49,7 +49,7 @@ export class AchievementHolder {
 
             let achievementEdit = document.createElement('button');
             achievementEdit.id="achievementEdit";
-            achievementEdit.innerHTML="Edit";
+            achievementEdit.innerText="Edit";
             achievementEdit.addEventListener('click', ()=> {
                 windowAPI.viewManager.setView(windowAPI.viewManager.views.editAchievementView, idx);
             });
