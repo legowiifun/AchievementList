@@ -167,7 +167,7 @@ export class MosaicViewer {
                     }
                 }
             });
-
+	    //TODO: filter games by date that the user reached the target percentage/plat
             windowAPI.sortGames(false,"Last Obtained Achievement Date Descending",games);
 
             let rows;

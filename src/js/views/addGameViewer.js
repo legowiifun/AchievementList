@@ -75,7 +75,7 @@ export class AddGameViewer {
                         let json=JSON.parse(value);
                         let gameIdx=windowAPI.initJSON.initGame(json,platform,path);
                         if (gameIdx!=-1) {
-                            windowAPI.myGames[gameIdx].saveJSONLocation=("saves\\"+windowAPI.myGames[gameIdx].name+platform+"AchievementsData.json");
+                            windowAPI.myGames[gameIdx].saveJSONLocation=("","saves\\"+windowAPI.myGames[gameIdx].name+platform+"AchievementsData.json").replaceAll(/[/?%*:|"<>]/g,'');
                             if (windowAPI.viewConsoleLogs) {
                                 console.log(windowAPI.createGamesJSON());
                             }
