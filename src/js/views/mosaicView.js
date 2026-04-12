@@ -221,8 +221,8 @@ export class MosaicViewer {
             let rows;
             let columns;
             if (autoFitCheckbox.checked) {
-                //TODO: algorithm to automatically calculate rows and columns
-                columns=10;
+                //want it as square as possible
+                columns=Math.ceil(Math.sqrt(games.length));
                 rows=Math.ceil(games.length/columns);
             } else {
                 columns=columnCountInput.valueAsNumber;

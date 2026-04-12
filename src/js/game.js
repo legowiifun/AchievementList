@@ -197,7 +197,6 @@ export class Game {
             return (this.getLastCompletedAchievementDate());
         }
         //otherwise, return
-        console.log("Checking for achievements: ",allAchievements,achievementsNeeded);
         let percentDate = allAchievements[achievementsNeeded-1].unlockDate;
         return percentDate;
     }
