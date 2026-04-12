@@ -1,3 +1,4 @@
+import { Achievement } from "./achievement.js";
 import { AchievementSet } from "./achievementSet.js";
 import { windowAPI } from "./APIThroughWindow.js";
 
@@ -139,6 +140,89 @@ export class Game {
                     //if it is more milliseconds than the current one
                     if (this.achievementSets[i].achievements[j].unlockDate.getTime()>lastCompletion.getTime()) {
                         lastCompletion=this.achievementSets[i].achievements[j].unlockDate;
+                    }
+                }
+            }
+        }
+        return lastCompletion;
+    }
+    /**
+     * @param {Number} percent 
+     * @returns {Date | undefined}
+     * Returns a Date if you have reached that percentage in that particular game, undefined otherwise
+     */
+    getDateForPercentage(percent) {
+        //compress into one list
+        /**
+         * @type {Achievement[]}
+         */
+        let allAchievements = [];
+        for (let i=0;i<this.achievementSets.length;i++) {
+            for (let j=0;j<this.achievementSets[i].achievements.length;j++) {
+                allAchievements.push(this.achievementSets[i].achievements[j]);
+            }
+        }
+        //sort achievements by date
+        allAchievements.sort((a,b)=>{
+            let aCompleted=a.unlockDate;
+            let bCompleted=b.unlockDate;
+            let aTime;
+            if (aCompleted==undefined||a.unlocked==false) {
+                aTime=0;
+                return 1;
+            } else {
+                aTime=aCompleted.getTime();
+            }
+            let bTime;
+            if (bCompleted==undefined||b.unlocked==false) {
+                bTime=0;
+                return -1;
+            } else {
+                bTime=bCompleted.getTime();
+            }
+            if (aTime<bTime) {
+                return -1;
+            }
+            if (aTime>bTime) {
+                return 1;
+            }
+            return 0;
+        });
+
+        //calculate how many achievements for that percent
+        //percent is (achievement count/total count)*100
+        let achievementsNeeded=Math.ceil((percent/100)*allAchievements.length);
+        //if the index is bigger, just return the final date
+        if (achievementsNeeded-1>allAchievements.length) {
+            return (this.getLastCompletedAchievementDate());
+        }
+        //otherwise, return
+        console.log("Checking for achievements: ",allAchievements,achievementsNeeded);
+        let percentDate = allAchievements[achievementsNeeded-1].unlockDate;
+        return percentDate;
+    }
+    getDateForPlat() {
+        if (this.havePlat()==false) {
+            return undefined;
+        }
+        let lastCompletion=undefined;
+        for (let i=0;i<this.achievementSets.length;i++) {
+            if (this.achievementSets[i].requiredForPlat) {
+                for (let j=0;j<this.achievementSets[i].achievements.length;j++) {
+                
+                    //first date
+                    if (lastCompletion==undefined) {
+                        if (this.achievementSets[i].achievements[j].unlocked) {
+                            lastCompletion=this.achievementSets[i].achievements[j].unlockDate;
+                        }
+                    }
+                    //check if it is unlocked
+                    if (this.achievementSets[i].achievements[j].unlocked) {
+                        //compare the dates
+                        //if it is more milliseconds than the current one
+                        if (this.achievementSets[i].achievements[j].unlockDate.getTime()>lastCompletion.getTime()) {
+                            lastCompletion=this.achievementSets[i].achievements[j].unlockDate;
+                        }
                     }
                 }
             }

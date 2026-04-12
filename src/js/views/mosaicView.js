@@ -167,9 +167,57 @@ export class MosaicViewer {
                     }
                 }
             });
-	    //TODO: filter games by date that the user reached the target percentage/plat
-            windowAPI.sortGames(false,"Last Obtained Achievement Date Descending",games);
-
+            if (havePlatCheckbox.checked) {
+                games.sort((a, b)=> {
+                    let aCompleted=a.getDateForPlat();
+                    let bCompleted=b.getDateForPlat();
+                    let aTime;
+                    if (aCompleted==undefined) {
+                        aTime=0;
+                    } else {
+                        aTime=aCompleted.getTime();
+                    }
+                    let bTime;
+                    if (bCompleted==undefined) {
+                        bTime=0;
+                    } else {
+                        bTime=bCompleted.getTime();
+                    }
+                    if (aTime<bTime) {
+                        return -1;
+                    }
+                    if (aTime>bTime) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            } else {
+                console.log(games);
+                games.sort((a, b)=> {
+                    let aCompleted=a.getDateForPercentage(percentageInput.valueAsNumber);
+                    let bCompleted=b.getDateForPercentage(percentageInput.valueAsNumber);
+                    let aTime;
+                    if (aCompleted==undefined) {
+                        aTime=0;
+                    } else {
+                        aTime=aCompleted.getTime();
+                    }
+                    let bTime;
+                    if (bCompleted==undefined) {
+                        bTime=0;
+                    } else {
+                        bTime=bCompleted.getTime();
+                    }
+                    if (aTime<bTime) {
+                        return -1;
+                    }
+                    if (aTime>bTime) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                console.log(games);
+            }
             let rows;
             let columns;
             if (autoFitCheckbox.checked) {
@@ -186,19 +234,9 @@ export class MosaicViewer {
             let context = canvasElement.getContext("2d");
             let gameIdx = 0;
             //self.createImgTag(games[gameIdx],context,0,0,gameSize);
-            if (windowAPI.viewConsoleLogs) {
-                console.log("Creating mosaic. Game size=",gameSize,"Rows=",rows,"Columns=",columns);
-                console.log("Games=",games.length);
-            }
             for (let i=0;(i<rows)&&(gameIdx<games.length);i++) {
-                if (windowAPI.viewConsoleLogs) {
-                    console.log("Going through canvas column ",i);
-                }
                 //go through each column, and each row
                 for (let j=0;j<(columns)&&(gameIdx<games.length);j++) {
-                    if (windowAPI.viewConsoleLogs) {
-                        console.log("Adding ",games[gameIdx]," to canvas at location ",gameSize*j,gameSize*i, "size=",gameSize);
-                    }
                     self.createImgTag(games[gameIdx],context,gameSize*j,gameSize*i,gameSize);
                     
                     gameIdx++;
