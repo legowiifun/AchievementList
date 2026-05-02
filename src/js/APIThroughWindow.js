@@ -16,6 +16,7 @@ export class APIThroughWindow {
     sideBar = document.getElementById("sideBar");
 
     viewConsoleLogs=true;
+    hideDevTools=false;
 
     viewManager = new ViewManager();
     initJSON = new Initialize();

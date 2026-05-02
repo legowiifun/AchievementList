@@ -11,14 +11,12 @@ export class Initialize {
      */
     gamesJson;
 
-    hideDevTools=false;
-
     /**
      * @returns {void}
      */
     main() {
         //developer toolbar
-        if (!this.hideDevTools) {
+        if (!windowAPI.hideDevTools) {
             let devBtn=document.getElementById("developerBtn");
             devBtn.hidden=false;
             devBtn.addEventListener('click',()=> {
