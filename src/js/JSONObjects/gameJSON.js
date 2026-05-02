@@ -38,6 +38,10 @@ export class achievementObject {
      * @type {string[]}
      */
     onlyOn=[];
+    /**
+     * @type {boolean | undefined}
+     */
+    hidden=false;
 }
 export class achievementSetObject {
     /**

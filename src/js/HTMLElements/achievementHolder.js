@@ -15,6 +15,7 @@ export class AchievementHolder {
         let achievementEntry = document.createElement('li');
         achievementEntry.classList.add("achievementEntry");
         achievementEntry.classList.add("displayHolder");
+        
         getCompletePath(achievement.img).then((result)=>{
             let achievementImg = document.createElement('img');
             achievementImg.height=100;

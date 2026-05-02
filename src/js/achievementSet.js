@@ -35,8 +35,8 @@ export class AchievementSet {
     getAchievementCount() {
         return this.achievements.length;
     }
-    addAchievement(name, description, img, outOf, unlocked=false, unlockDate="") {
-        let newAchievement = new Achievement(name,description,this,img,outOf, unlocked,unlockDate);
+    addAchievement(name, description, img, outOf, hidden=false, unlocked=false, unlockDate="") {
+        let newAchievement = new Achievement(name,description,this,img,outOf,hidden, unlocked,unlockDate);
         this.achievements.push(newAchievement);
     }
 }

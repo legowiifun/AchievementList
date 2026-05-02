@@ -156,7 +156,7 @@ export class Initialize {
                         if (windowAPI.viewConsoleLogs) {
                             console.log("Adding achievement ",achievements[i].achievements[j].name);
                         }
-                        newGame.addAchievementByIndex(i-skippedSets,achievements[i].achievements[j].name,achievements[i].achievements[j].description,achievements[i].achievements[j].img,achievements[i].achievements[j].outOf);
+                        newGame.addAchievementByIndex(i-skippedSets,achievements[i].achievements[j].name,achievements[i].achievements[j].description,achievements[i].achievements[j].img,achievements[i].achievements[j].outOf,achievements[i].achievements[j].hidden);
                     } else {
                         if (windowAPI.viewConsoleLogs) {
                             console.log("Skipping adding achievement ",achievements[i].achievements[j].name);
