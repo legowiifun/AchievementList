@@ -1,4 +1,3 @@
-import {AchievementHolder} from '../HTMLElements/achievementHolder.js'
 import { Achievement } from "../achievement.js";
 import { getCompletePath, convertDate } from "../utils.js";
 import { windowAPI } from "../APIThroughWindow.js"
@@ -24,7 +23,7 @@ export class AchievementViewer {
         let achievementEntry = document.createElement('li');
         achievementEntry.classList.add("achievementEntry");
         achievementEntry.classList.add("displayHolder");
-        if (achievement.hidden) {
+        if (achievement.hidden&&!achievement.unlocked) {
             let achievementImg = document.createElement('img');
             achievementImg.height=100;
             achievementImg.src="../Default Resources/Hidden Achievement.png";
