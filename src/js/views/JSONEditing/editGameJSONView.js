@@ -419,6 +419,25 @@ export class editGameJSONView {
         outOfParagrah.classList.add("formElement");
         listItem.appendChild(outOfParagrah);
 
+        //hidden
+        let hiddenParagraph = document.createElement('p');
+        hiddenParagraph.id="hiddenParagraph";
+        hiddenParagraph.innerText="Is this achievement a hidden achievement?";
+        let hiddenInput=document.createElement('input');
+        hiddenInput.name="requiredForPlat";
+        hiddenInput.id="hiddenInput";
+        hiddenInput.type="checkbox";
+        if (obj!=undefined) {
+            hiddenInput.checked=obj.requiredForPlat;
+        }
+        hiddenInput.addEventListener('change', function(event) {
+            self.json.achievements[index1].achievements[index2].hidden=hiddenInput.checked;
+        });
+        hiddenParagraph.appendChild(hiddenInput);
+        hiddenParagraph.classList.add("formElement");
+        listItem.appendChild(hiddenParagraph);
+
+
         //onlyon
         //selection box
         //can select multiple
