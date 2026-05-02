@@ -19,7 +19,6 @@ export class AchievementSetHolder {
         getCompletePath(achievementSet.img).then((result)=>{
             let setImg=document.createElement('img');
             setImg.height=100;
-            setImg.width=100;
             setImg.src=result;
             setImg.classList.add("setImg");
             achievementSetEntry.appendChild(setImg);

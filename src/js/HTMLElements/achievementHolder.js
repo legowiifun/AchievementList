@@ -18,7 +18,6 @@ export class AchievementHolder {
         getCompletePath(achievement.img).then((result)=>{
             let achievementImg = document.createElement('img');
             achievementImg.height=100;
-            achievementImg.width=100;
             achievementImg.src=result;
             achievementImg.classList.add("achievementImg");
             if (!achievement.unlocked) {

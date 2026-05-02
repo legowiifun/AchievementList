@@ -17,7 +17,6 @@ export class GameHolder {
         gameEntry.classList.add("displayHolder");
         getCompletePath(game.img).then((result)=>{
             let gameImg = document.createElement('img');
-            gameImg.width=100;
             gameImg.height=100;
             gameImg.src=result;
             gameImg.classList.add("gameImg");
