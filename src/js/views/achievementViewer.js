@@ -32,24 +32,40 @@ export class AchievementViewer {
 
             let achievementName = document.createElement('span');
             achievementName.classList.add("achievementName");
-            achievementName.innerText=achievement.name;
+            achievementName.innerText="Hidden";
             achievementEntry.appendChild(achievementName);
 
             let achievementDesc = document.createElement('span');
             achievementDesc.classList.add("achievementDesc");
-            achievementDesc.innerText=achievement.description;
+            achievementDesc.innerText="Hidden";
             achievementEntry.appendChild(achievementDesc);
             
             let achievementDate = document.createElement('span');
             achievementDate.classList.add("achievementDate");
-            if (achievement.unlocked) {
-                achievementDate.innerText=convertDate(achievement.unlockDate,0);
-            } else {
-                achievementDate.innerText="Unobtained";
-            }
+            achievementDate.innerText="Unobtained";
             achievementEntry.appendChild(achievementDate);
 
-            
+            let showHiddenAchievement = document.createElement('button');
+            let isHidden=true;
+            showHiddenAchievement.id="showHidden";
+            showHiddenAchievement.innerText="Show";
+            showHiddenAchievement.addEventListener('click',()=> {
+                isHidden=!isHidden;
+                if (isHidden) {
+                    achievementImg.src="../Default Resources/Hidden Achievement.png";
+                    achievementImg.classList.remove("unobtainedAchImg");
+                    achievementName.innerText="Hidden";
+                    achievementDesc.innerText="Hidden";
+                } else {
+                    achievementImg.classList.add("unobtainedAchImg");
+                    achievementName.innerText=achievement.name;
+                    achievementDesc.innerText=achievement.description;
+                    getCompletePath(achievement.img).then((result)=>{
+                        achievementImg.src=result;
+                    });
+                }
+            });
+            achievementEntry.appendChild(showHiddenAchievement);
 
             let achievementEdit = document.createElement('button');
             achievementEdit.id="achievementEdit";
