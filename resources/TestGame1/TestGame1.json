@@ -58,7 +58,8 @@
                 {
                     "name":"My test achievement 4!",
                     "description": "This is a random achievement to test games with more achievements!",
-                    "img":"img.png"
+                    "img":"img.png", 
+                    "hidden": true
                 }
             ]
         }

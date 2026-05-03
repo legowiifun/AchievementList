@@ -43,6 +43,10 @@ export class Initialize {
             });
         }).catch((err)=> {
             console.error("Failed to read games.json!",err);
+            this.gamesJson=[];
+            this.init().catch((err)=> {
+                console.error("Failed to initialize JSON files",err);
+            });
         });
     }
 
