@@ -108,6 +108,18 @@ app.whenReady().then(() => {
     }
     return dialog.showSaveDialog({defaultPath:defaultPath,properties:['createDirectory','showOverwriteConfirmation']});
   });
+
+  ipcMain.handle("getPathMinusFiles",async () => {
+    let dataPath;
+    if (app.isPackaged) {
+      dataPath=path.join(process.resourcesPath, "resources","a");
+    } else {
+      dataPath=path.join(process.cwd(),"resources","a");
+    }
+    dataPath=dataPath.slice(0,dataPath.length-1);
+    return dataPath;
+  });
+
 });
 
 app.on('window-all-closed', () => {

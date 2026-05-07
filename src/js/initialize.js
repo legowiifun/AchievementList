@@ -1,5 +1,5 @@
 import { Game } from './game.js';
-import { getJson,openDevTools } from './utils.js';
+import { getJson,openDevTools, getPathMinusFiles } from './utils.js';
 import { windowAPI } from './APIThroughWindow.js';
 
 /**
@@ -51,6 +51,7 @@ export class Initialize {
     }
 
     async init() {
+        await getPathMinusFiles();
         if (this.gamesJson.length==undefined) {
             console.error("Games.json is not an array!");
             return;

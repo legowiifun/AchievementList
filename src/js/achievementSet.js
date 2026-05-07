@@ -1,6 +1,6 @@
 import { Achievement } from "./achievement.js";
 import { Game } from "./game.js";
-import { getCompletePath } from "./utils.js";
+import { getCompletePath, getPathMinusFiles } from "./utils.js";
 
 export class AchievementSet {
     name="";
@@ -17,9 +17,10 @@ export class AchievementSet {
     constructor(name, game, img,requiredForPlat=false) {
         this.name=name;
         this.game=game;
-        getCompletePath(img).then((result)=> {
+        this.img=getPathMinusFiles()+img;
+        /*getCompletePath(img).then((result)=> {
             this.img=result;
-        });
+        });*/
         this.requiredForPlat=requiredForPlat;
     }
     getPercentageCompleted() {

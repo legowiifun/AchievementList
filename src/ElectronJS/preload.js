@@ -22,5 +22,8 @@ contextBridge.exposeInMainWorld('resources', {
   },
   fileSelection: ()=> {
     return ipcRenderer.invoke("fileSelection");
+  },
+  getPathMinusFiles: ()=> {
+    return ipcRenderer.invoke("getPathMinusFiles");
   }
 });

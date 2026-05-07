@@ -46,6 +46,19 @@ export let getPath = window.resources.getPath;
 export function getFilePath(file) {
     return window.resources.getFilePath(file);
 }
+let pathMinusFiles=undefined;
+/**
+ * @returns {string}
+ */
+export function getPathMinusFiles() {
+    if (pathMinusFiles==undefined) {
+        window.resources.getPathMinusFiles().then((result)=> {
+            pathMinusFiles=result;
+        });
+    }
+    return pathMinusFiles;
+}
+window.getPathMinusFiles=getPathMinusFiles;
 /**
  * @param {string | gamesJSONObj[]} file
  * @return {boolean}

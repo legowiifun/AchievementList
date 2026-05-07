@@ -1,5 +1,5 @@
 import { AchievementSet } from "./achievementSet.js";
-import { getCompletePath } from "./utils.js";
+import { getCompletePath, getPathMinusFiles } from "./utils.js";
 
 export class Achievement {
     name="";
@@ -32,9 +32,10 @@ export class Achievement {
         this.name=name;
         this.description=description;
         this.achievementSet=achievementSet;
-        getCompletePath(img).then((result)=> {
+        this.img=getPathMinusFiles()+img;
+        /*getCompletePath(img).then((result)=> {
             this.img=result;
-        });
+        });*/
         this.outOf=outOf;
         this.unlocked=unlocked;
         this.unlockDate=unlockDate;
