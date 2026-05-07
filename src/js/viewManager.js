@@ -32,6 +32,10 @@ export class ViewManager {
     gameIdx=0;
     achievementSetIdx=0;
     achievementIdx=0;
+    
+    gameScrollPos=0;
+    achievementSetScrollPos=0;
+    achievementScrollPos=0;
 
     JSONSelectionPath="";
 
@@ -43,6 +47,15 @@ export class ViewManager {
     setView(view, idx=0, refresh=false) {
         if (this.currentState==view&&!refresh) {
             return;
+        }
+        if (this.currentState==this.views.gamesView) {
+            this.gameScrollPos=windowAPI.mainContent.scrollTop;
+        }
+        else if (this.currentState==this.views.achievementSetsView) {
+            this.achievementSetScrollPos=windowAPI.mainContent.scrollTop;
+        }
+        else if (this.currentState==this.views.achievementsView) {
+            this.achievementScrollPos=windowAPI.mainContent.scrollTop;
         }
         document.getElementById('content').innerHTML="";
         document.getElementById("sideBar").innerHTML="";
@@ -60,12 +73,18 @@ export class ViewManager {
                 this.gameIdx=idx;
                 this.previousState=this.views.gamesView;
                 new AchievementSetViewer(windowAPI.myGames[idx].achievementSets);
+                if (this.currentState==this.views.achievementsView) {
+                    windowAPI.mainContent.scrollTo(0,this.achievementSetScrollPos);
+                }
                 break;
             case this.views.achievementsView:
                 this.achievementSetIdx=idx;
                 this.previousState=this.views.achievementSetsView;
                 this.previousIdx=this.gameIdx;
                 new AchievementViewer(windowAPI.myGames[this.gameIdx].achievementSets[idx].achievements);
+                if (this.currentState==this.views.editAchievementView) {
+                    windowAPI.mainContent.scrollTo(0,this.achievementScrollPos);
+                }
                 break;
             case this.views.editAchievementView:
                 this.achievementIdx=idx;
@@ -99,6 +118,10 @@ export class ViewManager {
                 this.previousState="";
                 new MosaicViewer(windowAPI.myGames);
                 break;
+        }
+        if (this.currentState==this.views.achievementSetsView&&view==this.views.gamesView) {
+            console.log("Setting scroll to to ",this.gameScrollPos);
+            windowAPI.mainContent.scrollTo(0,this.gameScrollPos);
         }
         this.currentIdx=idx;
         this.currentState=view;
