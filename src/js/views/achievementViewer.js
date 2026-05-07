@@ -60,9 +60,7 @@ export class AchievementViewer {
                     achievementImg.classList.add("unobtainedAchImg");
                     achievementName.innerText=achievement.name;
                     achievementDesc.innerText=achievement.description;
-                    getCompletePath(achievement.img).then((result)=>{
-                        achievementImg.src=result;
-                    });
+                    achievementImg.src=achievement.img;
                 }
             });
             achievementEntry.appendChild(showHiddenAchievement);
@@ -77,47 +75,43 @@ export class AchievementViewer {
 
             return achievementEntry;
         } else {
-            getCompletePath(achievement.img).then((result)=>{
-                let achievementImg = document.createElement('img');
-                achievementImg.height=100;
-                achievementImg.src=result;
-                achievementImg.classList.add("achievementImg");
-                if (!achievement.unlocked) {
-                    achievementImg.classList.add("unobtainedAchImg");
-                }
-                achievementEntry.appendChild(achievementImg);
+            let achievementImg = document.createElement('img');
+            achievementImg.height=100;
+            achievementImg.src=achievement.img;
+            achievementImg.classList.add("achievementImg");
+            if (!achievement.unlocked) {
+                achievementImg.classList.add("unobtainedAchImg");
+            }
+            achievementEntry.appendChild(achievementImg);
 
-                let achievementName = document.createElement('span');
-                achievementName.classList.add("achievementName");
-                achievementName.innerText=achievement.name;
-                achievementEntry.appendChild(achievementName);
+            let achievementName = document.createElement('span');
+            achievementName.classList.add("achievementName");
+            achievementName.innerText=achievement.name;
+            achievementEntry.appendChild(achievementName);
 
-                let achievementDesc = document.createElement('span');
-                achievementDesc.classList.add("achievementDesc");
-                achievementDesc.innerText=achievement.description;
-                achievementEntry.appendChild(achievementDesc);
-                
-                let achievementDate = document.createElement('span');
-                achievementDate.classList.add("achievementDate");
-                if (achievement.unlocked) {
-                    achievementDate.innerText=convertDate(achievement.unlockDate,0);
-                } else {
-                    achievementDate.innerText="Unobtained";
-                }
-                achievementEntry.appendChild(achievementDate);
+            let achievementDesc = document.createElement('span');
+            achievementDesc.classList.add("achievementDesc");
+            achievementDesc.innerText=achievement.description;
+            achievementEntry.appendChild(achievementDesc);
+            
+            let achievementDate = document.createElement('span');
+            achievementDate.classList.add("achievementDate");
+            if (achievement.unlocked) {
+                achievementDate.innerText=convertDate(achievement.unlockDate,0);
+            } else {
+                achievementDate.innerText="Unobtained";
+            }
+            achievementEntry.appendChild(achievementDate);
 
-                
+            
 
-                let achievementEdit = document.createElement('button');
-                achievementEdit.id="achievementEdit";
-                achievementEdit.innerText="Edit";
-                achievementEdit.addEventListener('click', ()=> {
-                    windowAPI.viewManager.setView(windowAPI.viewManager.views.editAchievementView, idx);
-                });
-                achievementEntry.appendChild(achievementEdit);
-
-                
+            let achievementEdit = document.createElement('button');
+            achievementEdit.id="achievementEdit";
+            achievementEdit.innerText="Edit";
+            achievementEdit.addEventListener('click', ()=> {
+                windowAPI.viewManager.setView(windowAPI.viewManager.views.editAchievementView, idx);
             });
+            achievementEntry.appendChild(achievementEdit);
             return achievementEntry;
         }
     }

@@ -1,6 +1,7 @@
 import { Achievement } from "./achievement.js";
 import { AchievementSet } from "./achievementSet.js";
 import { windowAPI } from "./APIThroughWindow.js";
+import { getCompletePath } from "./utils.js";
 
 export class Game {
     name="";
@@ -15,9 +16,13 @@ export class Game {
     saveJSONLocation=""
     constructor(name, img, platform, platImg, gameJSONLocation) {
         this.name=name;
-        this.img=img;
+        getCompletePath(img).then((result)=> {
+            this.img=result;
+        });
         this.platform=platform;
-        this.platImg=platImg;
+        getCompletePath(platImg).then((result)=> {
+            this.platImg=result;
+        });
         this.gameJSONLocation=gameJSONLocation;
     }
     havePlat() {

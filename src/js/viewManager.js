@@ -68,6 +68,11 @@ export class ViewManager {
                 document.getElementById("backButton").setAttribute("hidden",true);
                 this.previousState="";
                 new GameViewer(windowAPI.myGames);
+                if (this.currentState==this.views.achievementSetsView) {
+                    windowAPI.mainContent.scrollTo(0,this.gameScrollPos);
+                } else {
+                    windowAPI.mainContent.scrollTo(0,0);
+                }
                 break;
             case this.views.achievementSetsView:
                 this.gameIdx=idx;
@@ -75,6 +80,8 @@ export class ViewManager {
                 new AchievementSetViewer(windowAPI.myGames[idx].achievementSets);
                 if (this.currentState==this.views.achievementsView) {
                     windowAPI.mainContent.scrollTo(0,this.achievementSetScrollPos);
+                } else {
+                    windowAPI.mainContent.scrollTo(0,0);
                 }
                 break;
             case this.views.achievementsView:
@@ -84,6 +91,8 @@ export class ViewManager {
                 new AchievementViewer(windowAPI.myGames[this.gameIdx].achievementSets[idx].achievements);
                 if (this.currentState==this.views.editAchievementView) {
                     windowAPI.mainContent.scrollTo(0,this.achievementScrollPos);
+                } else {
+                    windowAPI.mainContent.scrollTo(0,0);
                 }
                 break;
             case this.views.editAchievementView:
@@ -91,37 +100,40 @@ export class ViewManager {
                 this.previousState=this.views.achievementsView;
                 this.previousIdx=this.achievementSetIdx;
                 new EditAchievementView(windowAPI.myGames[this.gameIdx].achievementSets[this.achievementSetIdx].achievements[idx]);
+                windowAPI.mainContent.scrollTo(0,0);
                 break;
             case this.views.addGameView:
                 this.previousState=this.views.gamesView;
                 new AddGameViewer();
+                windowAPI.mainContent.scrollTo(0,0);
                 break;
             case this.views.selectJSONView:
                 document.getElementById("backButton").setAttribute("hidden",true);
                 this.previousState="";
                 new SelectJSONView();
+                windowAPI.mainContent.scrollTo(0,0);
                 break;
             case this.views.editGamesJSONView:
                 this.previousState=this.views.selectJSONView;
                 new editGamesJSONView(this.JSONSelectionPath);
+                windowAPI.mainContent.scrollTo(0,0);
                 break;
             case this.views.editGameJSONView:
                 this.previousState=this.views.selectJSONView;
                 new editGameJSONView(this.JSONSelectionPath);
+                windowAPI.mainContent.scrollTo(0,0);
                 break;
             case this.views.editSaveJSONView:
                 this.previousState=this.views.selectJSONView;
                 new editSaveJSONView(this.JSONSelectionPath);
+                windowAPI.mainContent.scrollTo(0,0);
                 break;
             case this.views.mosaicView:
                 document.getElementById("backButton").setAttribute("hidden",true);
                 this.previousState="";
                 new MosaicViewer(windowAPI.myGames);
+                windowAPI.mainContent.scrollTo(0,0);
                 break;
-        }
-        if (this.currentState==this.views.achievementSetsView&&view==this.views.gamesView) {
-            console.log("Setting scroll to to ",this.gameScrollPos);
-            windowAPI.mainContent.scrollTo(0,this.gameScrollPos);
         }
         this.currentIdx=idx;
         this.currentState=view;

@@ -1,5 +1,4 @@
 import { Game } from "../game.js";
-import { getCompletePath } from "../utils.js";
 export class GameHolder {
     myHTML;
     /**
@@ -18,6 +17,7 @@ export class GameHolder {
         let gameImg = document.createElement('img');
         gameImg.height=100;
         gameImg.classList.add("gameImg");
+        gameImg.src=game.img;
         gameEntry.appendChild(gameImg);
 
         let gameName=document.createElement('span');
@@ -34,10 +34,7 @@ export class GameHolder {
         percent.classList.add("percent");
         percent.innerText=game.getPercentageCompleted()+"%";
         gameEntry.appendChild(percent);
-        
-        getCompletePath(game.img).then((result)=>{
-            gameImg.src=result;            
-        });
+    
         parentElement.appendChild(gameEntry);
     }
 }

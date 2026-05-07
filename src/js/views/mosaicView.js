@@ -267,13 +267,10 @@ export class MosaicViewer {
      */
     createImgTag(game,context,locationX,locationY,size) {
         let imgTag = document.createElement("img");
-        getCompletePath(game.platImg).then((result)=>{
-            imgTag.src=result;
-            imgTag.width=size;
-            imgTag.height=size;
-        }).then(()=> {
-            context.drawImage(imgTag,locationX,locationY,size,size);
-        });
+        imgTag.src=game.platImg;
+        imgTag.width=size;
+        imgTag.height=size;
+        context.drawImage(imgTag,locationX,locationY,size,size);
         return imgTag;
     }
 }
