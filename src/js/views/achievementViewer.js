@@ -1,6 +1,7 @@
 import { Achievement } from "../achievement.js";
 import { getCompletePath, convertDate } from "../utils.js";
 import { windowAPI } from "../APIThroughWindow.js"
+import { settings } from "../settingsManager.js";
 
 export class AchievementViewer {
     constructor(achievementArray) {
@@ -97,7 +98,7 @@ export class AchievementViewer {
             let achievementDate = document.createElement('span');
             achievementDate.classList.add("achievementDate");
             if (achievement.unlocked) {
-                achievementDate.innerText=convertDate(achievement.unlockDate,0);
+                achievementDate.innerText=convertDate(achievement.unlockDate,settings.dateType);
             } else {
                 achievementDate.innerText="Unobtained";
             }
