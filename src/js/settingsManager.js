@@ -43,7 +43,7 @@ export function saveSettings() {
 export function createSettings() {
     let item = localStorage.getItem("Settings");
     try {
-        json = JSON.parse(item);
+        let json = JSON.parse(item);
         if (json==null) {
             settings=new Settings();
             saveSettings();
@@ -52,8 +52,8 @@ export function createSettings() {
             settings=json;
             return settings;
         }
-    } catch {
-        console.log("Settings Parse failure");
+    } catch(error) {
+        console.log("Settings Parse failure",error);
         settings=new Settings();
         saveSettings();
         return settings;
