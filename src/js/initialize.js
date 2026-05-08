@@ -18,12 +18,12 @@ export class Initialize {
     main() {
         createSettings();
         //developer toolbar
+        let devBtn=document.getElementById("developerBtn");
+        devBtn.addEventListener('click',()=> {
+            openDevTools();
+        });
         if (settings.showDevToolsBtn) {
-            let devBtn=document.getElementById("developerBtn");
             devBtn.hidden=false;
-            devBtn.addEventListener('click',()=> {
-                openDevTools();
-            });
         }
         document.getElementById("gamesView").addEventListener('click',()=>{
             windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);
