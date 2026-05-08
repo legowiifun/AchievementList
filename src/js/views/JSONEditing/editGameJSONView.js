@@ -1,6 +1,7 @@
 import {gameJSON, achievementObject, achievementSetObject} from '../../JSONObjects/gameJSON.js';
 import { getJson, getFilePath, editJson, fileSelection, getPathFromResources, validateGameJSON, validateSaveJSON } from '../../utils.js';
 import { windowAPI } from '../../APIThroughWindow.js';
+import { settings } from '../../settingsManager.js';
 export class editGameJSONView {
     /**
      * @type {gameJSON}
@@ -123,7 +124,7 @@ export class editGameJSONView {
             let JSONPath=path;
             if (JSONPath==undefined) {
                 fileSelection().then((val)=> {
-                    if (windowAPI.viewConsoleLogs) {
+                    if (settings.printConsoleLogs) {
                         console.log(val);
                     }
                     JSONPath=getPathFromResources(val.filePath);
@@ -183,7 +184,7 @@ export class editGameJSONView {
             } else {
                 imgPath=undefined;
             }
-            if (windowAPI.viewConsoleLogs) {
+            if (settings.printConsoleLogs) {
                 console.log("JSON file",self.json, index);
             }
             self.json.achievements[index].image=imgPath;

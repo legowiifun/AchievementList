@@ -2,6 +2,7 @@ import { windowAPI } from "./APIThroughWindow.js";
 import { gamesJSON, gamesJSONObj } from "./JSONObjects/gamesJSON.js";
 import {gameJSON} from "./JSONObjects/gameJSON.js"
 import {saveJSON, saveObject} from "./JSONObjects/saveJSON.js"
+import { settings } from './settingsManager.js';
 //export the APIs as internal functions
 export function openDevTools() {
     window.electron.openDevTools();
@@ -196,7 +197,7 @@ export function getPathFromResources(file) {
     let idx=path.lastIndexOf("\\resources\\")+11;
     if (idx!=-1) {
         path=path.substring(idx);
-        if (windowAPI.viewConsoleLogs) {
+        if (settings.printConsoleLogs) {
             console.log(path);
         }
     }

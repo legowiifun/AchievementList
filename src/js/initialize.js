@@ -1,6 +1,7 @@
 import { Game } from './game.js';
 import { getJson,openDevTools, getPathMinusFiles } from './utils.js';
 import { windowAPI } from './APIThroughWindow.js';
+import { createSettings, settings } from './settingsManager.js';
 
 /**
  * Handles initializing the application JSON files
@@ -15,8 +16,9 @@ export class Initialize {
      * @returns {void}
      */
     main() {
+        createSettings();
         //developer toolbar
-        if (!windowAPI.hideDevTools) {
+        if (settings.showDevToolsBtn) {
             let devBtn=document.getElementById("developerBtn");
             devBtn.hidden=false;
             devBtn.addEventListener('click',()=> {
@@ -101,7 +103,7 @@ export class Initialize {
      * @param {object} game 
      */
     initGame(game, platform, JSONLocation) {
-        if (windowAPI.viewConsoleLogs) {
+        if (settings.printConsoleLogs) {
             console.log("initializing game: ",game);
         }
         let name=game.name;
@@ -130,7 +132,7 @@ export class Initialize {
             let skipAchievements=true;
             //check for the onlyOn array
             if (achievements[i].onlyOn!=undefined) {
-                if (windowAPI.viewConsoleLogs) {
+                if (settings.printConsoleLogs) {
                     console.log("OnlyOn=",achievements[i].onlyOn);
                 }
                 if (achievements[i].onlyOn.find((value)=>{return value==platform})!=undefined) {
@@ -143,7 +145,7 @@ export class Initialize {
             }
             
             if (!skipAchievements) {
-                if (windowAPI.viewConsoleLogs) {
+                if (settings.printConsoleLogs) {
                     console.log("Adding achievement set ",achievements[i].name);
                 }
                 newGame.addAchievementSet(achievements[i].name,achievements[i].image,achievements[i].requiredForPlat);
@@ -158,18 +160,18 @@ export class Initialize {
                         skipAchievement=false;
                     }
                     if (!skipAchievement) {
-                        if (windowAPI.viewConsoleLogs) {
+                        if (settings.printConsoleLogs) {
                             console.log("Adding achievement ",achievements[i].achievements[j].name);
                         }
                         newGame.addAchievementByIndex(i-skippedSets,achievements[i].achievements[j].name,achievements[i].achievements[j].description,achievements[i].achievements[j].img,achievements[i].achievements[j].outOf,achievements[i].achievements[j].hidden);
                     } else {
-                        if (windowAPI.viewConsoleLogs) {
+                        if (settings.printConsoleLogs) {
                             console.log("Skipping adding achievement ",achievements[i].achievements[j].name);
                         }
                     }
                 }
             } else {
-                if (windowAPI.viewConsoleLogs) {
+                if (settings.printConsoleLogs) {
                     console.log("Skipping adding achievement set ",achievements[i].name);
                 }
                 skippedSets++;
@@ -183,7 +185,7 @@ export class Initialize {
             console.error("Saves JSON is not an array!");
             return;
         }
-        if (windowAPI.viewConsoleLogs) {
+        if (settings.printConsoleLogs) {
             console.log("initializing save: ",save);
         }
         for (let i=0;i<save.length;i++) {
@@ -217,7 +219,7 @@ export class Initialize {
 
     setInitialView() {
         //set the proper view
-        if (windowAPI.viewConsoleLogs) {
+        if (settings.printConsoleLogs) {
             console.log("Current view: ",windowAPI.viewManager.currentState);
         }
         windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView);

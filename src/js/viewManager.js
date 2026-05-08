@@ -9,6 +9,7 @@ import { editGamesJSONView } from './views/JSONEditing/editGamesJSONView.js';
 import { editGameJSONView } from './views/JSONEditing/editGameJSONView.js';
 import { editSaveJSONView } from './views/JSONEditing/editSaveJSONView.js';
 import { MosaicViewer } from './views/mosaicView.js';
+import { settings } from './settingsManager.js';
 /**
  * Handles switching between different application views
  */
@@ -59,7 +60,7 @@ export class ViewManager {
         }
         document.getElementById('content').innerHTML="";
         document.getElementById("sideBar").innerHTML="";
-        if (windowAPI.viewConsoleLogs) {
+        if (settings.printConsoleLogs) {
             console.log("Setting view to ",view, idx);
         }
         document.getElementById("backButton").removeAttribute("hidden");

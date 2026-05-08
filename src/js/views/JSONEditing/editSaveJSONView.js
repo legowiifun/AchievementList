@@ -1,6 +1,7 @@
 import {saveJSON, saveObject} from '../../JSONObjects/saveJSON.js';
 import { getJson, getFilePath, editJson, fileSelection, getPathFromResources, validateGameJSON, validateSaveJSON } from '../../utils.js';
 import { windowAPI } from '../../APIThroughWindow.js';
+import { settings } from '../.././settingsManager.js';
 export class editSaveJSONView {
     /**
      * @type {saveJSON}
@@ -53,7 +54,7 @@ export class editSaveJSONView {
             let JSONPath=path;
             if (JSONPath==undefined) {
                 fileSelection().then((val)=> {
-                    if (windowAPI.viewConsoleLogs) {
+                    if (settings.printConsoleLogs) {
                         console.log(val);
                     }
                     JSONPath=getPathFromResources(val.filePath);

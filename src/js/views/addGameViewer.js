@@ -1,5 +1,6 @@
 import { windowAPI } from "../APIThroughWindow.js";
 import { getFilePath, editJson, getJson } from "../utils.js";
+import { settings } from '.././settingsManager.js';
 export class AddGameViewer {
     constructor() {
         let file;
@@ -53,7 +54,7 @@ export class AddGameViewer {
         //add the event listener to the button
         saveButton.addEventListener("click",()=> {
             if (file!=undefined) {
-                if (windowAPI.viewConsoleLogs) {
+                if (settings.printConsoleLogs) {
                     console.log("JSON location=",getFilePath(file));
                     console.log("Selected platform=",platformSelect.value);
                 }
@@ -62,7 +63,7 @@ export class AddGameViewer {
                 let idx=path.lastIndexOf("\\resources\\")+11;
                 if (idx!=-1) {
                     path=path.substring(idx);
-                    if (windowAPI.viewConsoleLogs) {
+                    if (settings.printConsoleLogs) {
                         console.log(path);
                         console.log("addGameTextInput value: ", platformTextInput.value);
                     }
@@ -76,7 +77,7 @@ export class AddGameViewer {
                         let gameIdx=windowAPI.initJSON.initGame(json,platform,path);
                         if (gameIdx!=-1) {
                             windowAPI.myGames[gameIdx].saveJSONLocation=("","saves\\"+windowAPI.myGames[gameIdx].name+platform+"AchievementsData.json").replaceAll(/[/?%*:|"<>]/g,'');
-                            if (windowAPI.viewConsoleLogs) {
+                            if (settings.printConsoleLogs) {
                                 console.log(windowAPI.createGamesJSON());
                             }
                             editJson("games.json",windowAPI.createGamesJSON());

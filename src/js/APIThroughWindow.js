@@ -1,5 +1,6 @@
 import { Initialize } from "./initialize.js";
 import { ViewManager } from "./viewManager.js";
+import { settings } from './settingsManager.js';
 
 /**
  * Exports an API to the window
@@ -14,9 +15,6 @@ export class APIThroughWindow {
 
     mainContent=document.getElementById("content");
     sideBar = document.getElementById("sideBar");
-
-    viewConsoleLogs=true;
-    hideDevTools=false;
 
     viewManager = new ViewManager();
     initJSON = new Initialize();
@@ -37,14 +35,14 @@ export class APIThroughWindow {
             newGamesObj.save=this.myGames[i].saveJSONLocation;
             newGamesJSON.push(newGamesObj);
         }
-        if (this.viewConsoleLogs) {
+        if (settings.printConsoleLogs) {
             console.log("Creating games JSON: ",newGamesJSON);
         }
         return JSON.stringify(newGamesJSON, null, 4);
     }
 
     sortGames(refreshAfter=true, sortAlgo=this.currentSort,gamesToSort=this.myGames) {
-        if (this.viewConsoleLogs) {
+        if (settings.printConsoleLogs) {
             console.log("Sorting games with algorithm: ",sortAlgo, this.myGames);
         }
         gamesToSort.sort(

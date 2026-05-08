@@ -1,6 +1,7 @@
 import {GameHolder} from '../HTMLElements/gameHolder.js';
 import { windowAPI } from '../APIThroughWindow.js';
 import { Game } from '../game.js';
+import { settings } from '.././settingsManager.js';
 export class GameViewer {
     /**
      * @param {Game[]} gamesArray 
@@ -50,7 +51,7 @@ export class GameViewer {
         gameViewerSorting.value=localStorage.getItem("Sort");
         //add event listener to sort games
         gameViewerSorting.addEventListener('change', function(event) {
-            if (windowAPI.viewConsoleLogs) {
+            if (settings.printConsoleLogs) {
                 console.log("Resorting games with algorithm ",gameViewerSorting.value);
             }
             localStorage.setItem("Sort",gameViewerSorting.value);

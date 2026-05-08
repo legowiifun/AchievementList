@@ -1,5 +1,6 @@
 import { windowAPI } from "../../APIThroughWindow.js";
 import { getFilePath } from "../../utils.js";
+import { settings } from '../.././settingsManager.js';
 export class SelectJSONView {
     constructor() {
         //let file;
@@ -20,7 +21,7 @@ export class SelectJSONView {
                 let idx=path.lastIndexOf("\\resources\\")+11;
                 if (idx!=-1) {
                     path=path.substring(idx);
-                    if (windowAPI.viewConsoleLogs) {
+                    if (settings.printConsoleLogs) {
                         console.log(path);
                     }
                 }
@@ -72,7 +73,7 @@ export class SelectJSONView {
             
             let radioVal=document.querySelector('input[name="JSONType"]:checked').value;
             //set view to the proper version of edit JSON view, passing in the JSON value
-            if (windowAPI.viewConsoleLogs) {
+            if (settings.printConsoleLogs) {
                 console.log("checked ",radioVal);
                 console.log("JSON location=",path);
             }

@@ -1,6 +1,7 @@
 import {gamesJSON, gamesJSONObj} from '../../JSONObjects/gamesJSON.js';
 import { getJson, getFilePath, editJson, fileSelection, getPathFromResources, validateGameJSON, validateSaveJSON } from '../../utils.js';
 import { windowAPI } from '../../APIThroughWindow.js';
+import { settings } from '../.././settingsManager.js';
 export class editGamesJSONView {
     /**
      * @type {gamesJSON}
@@ -65,7 +66,7 @@ export class editGamesJSONView {
                         let JSONPath=path;
                         if (JSONPath==undefined) {
                             fileSelection().then((val)=> {
-                                if (windowAPI.viewConsoleLogs) {
+                                if (settings.printConsoleLogs) {
                                     console.log(val);
                                 }
                                 JSONPath=getPathFromResources(val.filePath);
@@ -116,7 +117,7 @@ export class editGamesJSONView {
             } else {
                 gamePath=undefined;
             }
-            if (windowAPI.viewConsoleLogs) {
+            if (settings.printConsoleLogs) {
                 console.log("JSON file",self.json.file, index);
             }
             self.json.file[index].jsonName=gamePath;
