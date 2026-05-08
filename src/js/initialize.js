@@ -34,6 +34,9 @@ export class Initialize {
         document.getElementById("mosaic").addEventListener('click',()=>{
             windowAPI.viewManager.setView(windowAPI.viewManager.views.mosaicView);
         });
+        document.getElementById("settings").addEventListener('click',()=>{
+            windowAPI.viewManager.setView(windowAPI.viewManager.views.settingsView);
+        });
         document.getElementById("refreshBtn").addEventListener('click',()=> {
             location.reload();
         });

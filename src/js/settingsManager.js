@@ -1,3 +1,4 @@
+//handles all settings
 class Settings {
     /**
      * 0=mm/dd/yy
