@@ -407,7 +407,7 @@ export function convertDate(date, format=0) {
             let year=date.getFullYear();
             dateStr+=year;
             dateStr+=" ";
-            let hrs=dateStr.getHours();
+            let hrs=date.getHours();
             if (hrs<10) {
                 dateStr+="0";
             }
