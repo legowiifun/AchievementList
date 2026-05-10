@@ -230,4 +230,11 @@ export class Game {
         }
         return lastCompletion;
     }
+    getFullAchievementsList() {
+        let fullList=[];
+        for (let i=0;i<this.achievementSets.length;i++) {
+            fullList=fullList.concat(this.achievementSets[i].achievements);
+        }
+        return fullList;
+    }
 }
