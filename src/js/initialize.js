@@ -129,7 +129,23 @@ export class Initialize {
             console.error("I can not find the achievements for game "+name+"!");
             return -1;
         }
+        //set overrides
+        let overrides = game.overrides;
+        if (overrides!=undefined) {
+            if (overrides[platform]!=undefined) {
+                if (overrides[platform].name!=undefined) {
+                    name=overrides[platform].name;
+                }
+                if (overrides[platform].img!=undefined) {
+                    img=overrides[platform].img;
+                }
+                if (overrides[platform].platImg!=undefined) {
+                    platImg=overrides[platform].platImg;
+                }
+            }
+        }
         let newGame=new Game(name,img,platform,platImg, JSONLocation);
+        //parse achievement sets
         let skippedSets=0;
         for (let i=0;i<game.achievements.length;i++) {
             let skipAchievements=true;
@@ -146,12 +162,32 @@ export class Initialize {
                 //if there is not an onlyOn array, do not skip this achievement set
                 skipAchievements=false;
             }
-            
+            //not skipping this achievement set
             if (!skipAchievements) {
-                if (settings.printConsoleLogs) {
-                    console.log("Adding achievement set ",achievements[i].name);
+                let setName = achievements[i].name;
+                let setImg = achievements[i].image;
+                let reqForPlat = achievements[i].requiredForPlat;
+                //overrides
+                let setOverrides = achievements[i].overrides;
+                if (setOverrides!=undefined) {
+                    if (setOverrides[platform]!=undefined) {
+                        if (setOverrides[platform].name!=undefined) {
+                            setName=setOverrides[platform].name;
+                        }
+                        if (setOverrides[platform].image!=undefined) {
+                            setImg=setOverrides[platform].image;
+                        }
+                        if (setOverrides[platform].requiredForPlat!=undefined) {
+                            reqForPlat=setOverrides[platform].requiredForPlat;
+                        }
+                    }
                 }
-                newGame.addAchievementSet(achievements[i].name,achievements[i].image,achievements[i].requiredForPlat);
+                if (settings.printConsoleLogs) {
+                    console.log("Adding achievement set ",setName);
+                }
+                newGame.addAchievementSet(setName,setImg,reqForPlat);
+
+                //parse achievements
                 for (let j=0;j<achievements[i].achievements.length;j++) {
                     let skipAchievement=true;
                     if (achievements[i].achievements[j].onlyOn!=undefined) {
@@ -162,11 +198,39 @@ export class Initialize {
                     } else {
                         skipAchievement=false;
                     }
+                    //not skipping this achievement
                     if (!skipAchievement) {
-                        if (settings.printConsoleLogs) {
-                            console.log("Adding achievement ",achievements[i].achievements[j].name);
+                        let achName = achievements[i].achievements[j].name;
+                        let achDesc = achievements[i].achievements[j].description;
+                        let achImg = achievements[i].achievements[j].img;
+                        let outOf = achievements[i].achievements[j].outOf;
+                        let hidden = achievements[i].achievements[j].hidden;
+
+                        //overrides
+                        let achOverrides = achievements[i].achievements[j].overrides;
+                        if (achOverrides!=undefined) {
+                            if (achOverrides[platform]!=undefined) {
+                                if (achOverrides[platform].name!=undefined) {
+                                    achName=achOverrides[platform].name;
+                                }
+                                if (achOverrides[platform].description!=undefined) {
+                                    achDesc=achOverrides[platform].description;
+                                }
+                                if (achOverrides[platform].img!=undefined) {
+                                    achImg=achOverrides[platform].img;
+                                }
+                                if (achOverrides[platform].outOf!=undefined) {
+                                    outOf=achOverrides[platform].outOf;
+                                }
+                                if (achOverrides[platform].hidden!=undefined) {
+                                    hidden=achOverrides[platform].hidden;
+                                }
+                            }
                         }
-                        newGame.addAchievementByIndex(i-skippedSets,achievements[i].achievements[j].name,achievements[i].achievements[j].description,achievements[i].achievements[j].img,achievements[i].achievements[j].outOf,achievements[i].achievements[j].hidden);
+                        if (settings.printConsoleLogs) {
+                            console.log("Adding achievement ",achName);
+                        }
+                        newGame.addAchievementByIndex(i-skippedSets,achName,achDesc,achImg,outOf,hidden);
                     } else {
                         if (settings.printConsoleLogs) {
                             console.log("Skipping adding achievement ",achievements[i].achievements[j].name);

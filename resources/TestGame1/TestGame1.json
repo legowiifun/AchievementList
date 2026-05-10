@@ -2,17 +2,32 @@
     "name": "TestGame1",
     "img": "img.png", 
     "platImg":"img.png",
+    "overrides": {
+        "PlayStation 5": {
+            "name": "TestGame2"
+        }
+    },
     "achievements": [
         {
             "image": "img.png",
-            "name": "achievementSetTest1",
+            "name": "achievementSetTest",
             "requiredForPlat": true,
+            "overrides": {
+                "PlayStation 5": {
+                    "name": "achievementSetTest1"
+                }
+            },
             "achievements": [
                 {
                     "name": "Started the game!",
                     "description": "Start the game",
                     "img": "img.png",
-                    "outOf":1
+                    "outOf":1,
+                    "overrides": {
+                        "PlayStation 5":{
+                            "description": "Game Trophy on PS5"
+                        }
+                    }
                 },
                 {
                     "name": "This is an achievement!",
