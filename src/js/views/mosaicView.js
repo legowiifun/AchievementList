@@ -1,6 +1,7 @@
 import { Game } from "../game.js";
 import { windowAPI } from '../APIThroughWindow.js';
 import { getCompletePath } from "../utils.js";
+import { settings } from "../settingsManager.js";
 export class MosaicViewer {
     /**
      * @type {string[]}
@@ -192,7 +193,9 @@ export class MosaicViewer {
                     return 0;
                 });
             } else {
-                console.log(games);
+                if (settings.printConsoleLogs) {
+                    console.log(games);
+                }
                 games.sort((a, b)=> {
                     let aCompleted=a.getDateForPercentage(percentageInput.valueAsNumber);
                     let bCompleted=b.getDateForPercentage(percentageInput.valueAsNumber);
@@ -216,7 +219,9 @@ export class MosaicViewer {
                     }
                     return 0;
                 });
-                console.log(games);
+                if (settings.printConsoleLogs) {
+                    console.log(games);
+                }
             }
             let rows;
             let columns;
