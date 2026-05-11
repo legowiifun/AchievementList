@@ -2,6 +2,7 @@ import {gamesJSON, gamesJSONObj} from '../../JSONObjects/gamesJSON.js';
 import { getJson, getFilePath, editJson, fileSelection, getPathFromResources, validateGameJSON, validateSaveJSON } from '../../utils.js';
 import { windowAPI } from '../../APIThroughWindow.js';
 import { settings } from '../.././settingsManager.js';
+import { singlePlatformSelectionBox } from '../../PlaformSelectionBoxes/singlePlatformSelectionBox.js';
 export class editGamesJSONView {
     /**
      * @type {gamesJSON}
@@ -154,46 +155,17 @@ export class editGamesJSONView {
 
         //console.log(obj);
         //input box, with other select for platform
+        let platformSelection=new singlePlatformSelectionBox(()=> {
+            self.json.file[index].platform=platformSelection.getValue();
+        });
         let platformParagraph=document.createElement('p');
         platformParagraph.id="platformParagraph";
         platformParagraph.innerHTML="Platform: ";
-        let platformSelect = document.createElement('select');
-        platformSelect.id="addGameSelectViewer";
-        let options = ["PlayStation 3", "PlayStation 4", "PlayStation Vita", "PlayStation 5", "XBox", "XBox 360", "XBox One", "XBox Series X", "Steam", "GOG", "Other"];
-        for (let i=0;i<options.length;i++) {
-            let optionSelect = document.createElement('option');
-            optionSelect.value=options[i];
-            optionSelect.innerHTML=options[i];
-            platformSelect.appendChild(optionSelect);
-        }
-
-        let platformTextInput=document.createElement('input');
-        platformTextInput.type="text";
-        platformTextInput.id="addGameTextInput";
-        platformTextInput.hidden=true;
-        platformSelect.addEventListener('change', function(event) {
-            if (platformSelect.value=="Other") {
-                platformTextInput.hidden=false;
-            } else {
-                platformTextInput.hidden=true;
-                self.json.file[index].platform=platformSelect.value;
-            }
-        });
-        platformTextInput.addEventListener('change', function() {
-            self.json.file[index].platform=platformTextInput.value;
-        });
+        
         if (obj!=undefined) {
-            if (options.find((value)=>{
-                return value==obj.platform;
-            })) {
-                platformSelect.value=obj.platform;
-            } else {
-                platformSelect.value="Other";
-                platformTextInput.value=obj.platform;
-            }
+            platformSelection.setValue(obj.platform);
         }
-        platformParagraph.appendChild(platformSelect);
-        platformParagraph.appendChild(platformTextInput);
+        platformParagraph.appendChild(platformSelection.display);
         platformParagraph.classList.add("formElement");
         listItem.appendChild(platformParagraph);
 
