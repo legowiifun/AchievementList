@@ -40,7 +40,7 @@ export class Initialize {
         document.getElementById("refreshBtn").addEventListener('click',()=> {
             location.reload();
         });
-        getJson("games.json").then((result)=>{
+        getJson(settings.gamesJSONFile).then((result)=>{
             this.gamesJson=JSON.parse(result);
         }).then(()=>{
             this.init().catch((err)=> {

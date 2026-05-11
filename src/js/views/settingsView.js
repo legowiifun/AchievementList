@@ -1,5 +1,7 @@
 import { windowAPI } from '../APIThroughWindow.js';
-import { settings, saveSettings } from '../settingsManager.js';
+import { settings, saveSettings, setReloadFlag } from '../settingsManager.js';
+import { getFilePath, getPathFromResources } from '../utils.js';
+
 export class SettingsView {
     constructor() {
         //date type
@@ -59,8 +61,29 @@ export class SettingsView {
         });
         showDevToolsParagraph.appendChild(showDevToolsInput);
         windowAPI.mainContent.appendChild(showDevToolsParagraph);
-
-
         windowAPI.mainContent.appendChild(printConsoleLogsParagraph);
+
+        //set games.json storage location
+        let gamesJSONStorageParagraph = document.createElement('p');
+        gamesJSONStorageParagraph.innerText = "Where do you want to store your games? (currently "+settings.gamesJSONFile+").";
+        let gamesJSONStorageInput=document.createElement('input');
+        gamesJSONStorageInput.name="gamesJSON";
+        gamesJSONStorageInput.type="file";
+        gamesJSONStorageInput.accept=".json";
+        gamesJSONStorageInput.id="gamesJSONStorageInput";
+        gamesJSONStorageInput.addEventListener('change', function(event) {
+            let file=event.target.files[0];
+            if (file!=undefined) {
+                //get the file down to just the contents
+                settings.gamesJSONFile=getPathFromResources(getFilePath(file));
+                console.log(settings.gamesJSONFile);
+                saveSettings();
+            } else {
+                settings.gamesJSONFile=undefined;
+            }
+            setReloadFlag(true);
+        });
+        gamesJSONStorageParagraph.appendChild(gamesJSONStorageInput);
+        windowAPI.mainContent.appendChild(gamesJSONStorageParagraph);
     }
 }

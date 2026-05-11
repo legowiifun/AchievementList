@@ -9,7 +9,7 @@ import { editGamesJSONView } from './views/JSONEditing/editGamesJSONView.js';
 import { editGameJSONView } from './views/JSONEditing/editGameJSONView.js';
 import { editSaveJSONView } from './views/JSONEditing/editSaveJSONView.js';
 import { MosaicViewer } from './views/mosaicView.js';
-import { settings } from './settingsManager.js';
+import { settings, reloadFlag } from './settingsManager.js';
 import { SettingsView } from './views/settingsView.js';
 /**
  * Handles switching between different application views
@@ -48,6 +48,9 @@ export class ViewManager {
      * @param {boolean} refresh
      */
     setView(view, idx=0, refresh=false) {
+        if (reloadFlag) {
+            location.reload();
+        }
         if (this.currentState==view&&!refresh) {
             return;
         }

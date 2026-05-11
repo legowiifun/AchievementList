@@ -26,17 +26,27 @@ class Settings {
      */
     printConsoleLogs;
 
+    /**
+     * @type {string}
+     */
+    gamesJSONFile;
+
     constructor() {
         this.dateType=0;
         this.defaultStorageLocation="saves";
         this.showDevToolsBtn=false;
         this.printConsoleLogs=false;
+        this.gamesJSONFile="games.json";
     }
 }
 /**
  * @type {Settings}
  */
 export let settings=undefined;
+export let reloadFlag=false;
+export function setReloadFlag(val) {
+    reloadFlag=val;
+}
 export function saveSettings() {
     localStorage.setItem("Settings",JSON.stringify(settings));
 }
