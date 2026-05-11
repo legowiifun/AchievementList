@@ -2,6 +2,7 @@ import { Game } from "../game.js";
 import { windowAPI } from '../APIThroughWindow.js';
 import { getCompletePath } from "../utils.js";
 import { settings } from "../settingsManager.js";
+import { multiplePlatformSelectionBox } from "../PlaformSelectionBoxes/multiplePlatformSelectionBox.js";
 export class MosaicViewer {
     /**
      * @type {string[]}
@@ -20,59 +21,10 @@ export class MosaicViewer {
         let platformParagraph=document.createElement('p');
         platformParagraph.id="platformParagraph";
         platformParagraph.innerHTML="Platforms to view (leave empty for all): ";
-        let platformSelect = document.createElement('select');
-        platformSelect.id="achievementSelectPlatform";
-        platformSelect.multiple=true;
-        let options = ["PlayStation 3", "PlayStation 4", "PlayStation Vita", "PlayStation 5", "XBox", "XBox 360", "XBox One", "XBox Series X", "Steam", "GOG", "Other"];
-        for (let i=0;i<options.length;i++) {
-            let optionSelect = document.createElement('option');
-            optionSelect.value=options[i];
-            optionSelect.innerHTML=options[i];
-            platformSelect.appendChild(optionSelect);
-        }
-        platformSelect.size=1;
-
-        let platformList = document.createElement('ul');
-        platformList.hidden=true;
-
-        let platformTextInputCount = document.createElement('input');
-        platformTextInputCount.type="number";
-        platformTextInputCount.id="platformCountTextInput";
-        platformTextInputCount.hidden=true;
-        platformSelect.addEventListener('change', function(event) {
-            let flag=false;
-            for (let i=0;i<platformSelect.selectedOptions.length&&!flag;i++) {
-                if (platformSelect.selectedOptions.item(i).innerText=="Other") {
-                    platformTextInputCount.hidden=false;
-                    platformList.hidden=false;
-                    flag=true;
-                }
-            }
-            if (!flag) {
-                platformTextInputCount.hidden=true;
-                platformList.hidden=true;
-            }
-            self.platforms=Array.from(platformSelect.selectedOptions).map((option)=> {
-                if (option!="Other") {
-                    return option.innerText;
-                }
-            });
+        let platformSelect = new multiplePlatformSelectionBox(()=> {
+            self.platforms=platformSelect.getValue();
         });
-        platformTextInputCount.addEventListener('change',function(event) {
-            platformList.innerHTML="";
-            for (let i=0;i<platformTextInputCount.value;i++) {
-                let platformTextInput=document.createElement('input');
-                platformTextInput.type="text";
-                platformTextInput.id="addGameTextInput";
-                platformTextInput.addEventListener('change', function() {
-                    self.platforms[i+platformSelect.selectedOptions.length]=platformTextInput.value;
-                });
-                platformList.appendChild(document.createElement('li').appendChild(platformTextInput));
-            }
-        });
-        platformParagraph.appendChild(platformSelect);
-        platformParagraph.appendChild(platformTextInputCount);
-        platformParagraph.appendChild(platformList);
+        platformParagraph.appendChild(platformSelect.display);
         platformParagraph.classList.add("formElement");
         windowAPI.mainContent.appendChild(platformParagraph);
 
