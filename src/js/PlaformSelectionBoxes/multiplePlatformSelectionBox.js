@@ -36,15 +36,14 @@ export class multiplePlatformSelectionBox {
                 platformsArr.push(value[i]);
             }
         }
-        
         //if there are other platforms
         if (platformsArr.length!=0) {
             this.platformSelect.lastChild.selected=true;
             this.platformSelect.dispatchEvent(new Event('change'));
-            this.platformTextInputCount=platformsArr.length;
+            this.platformTextInputCount.value=platformsArr.length;
             this.platformTextInputCount.dispatchEvent(new Event('change'));
             for (let i=0;i<platformsArr.length;i++) {
-                this.platformList.children[i].children[0].value=platformsArr[i];
+                this.platformList.children[i].value=platformsArr[i];
             }
         }
     }
