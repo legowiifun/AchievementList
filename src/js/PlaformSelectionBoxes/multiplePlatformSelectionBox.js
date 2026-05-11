@@ -1,6 +1,6 @@
 import { platformList } from "./constants.js";
 
-class multiplePlatformSelectionBox {
+export class multiplePlatformSelectionBox {
     /**
      * @returns {string[]}
      */
@@ -9,10 +9,13 @@ class multiplePlatformSelectionBox {
             if (option!="Other") {
                 return option.innerText;
             }
+        }).filter((option)=> {
+            return option!="Other";
         });
         for (let i=0;i<this.platformTextInputCount.valueAsNumber;i++) {
             platforms[platforms.length]=this.platformList.childNodes[i].value;
         }
+        return platforms
     }
     /**
      * @param {string[]} value 
@@ -49,7 +52,11 @@ class multiplePlatformSelectionBox {
     platformSelect;
     platformTextInputCount;
     platformList;
-    constructor() {
+    /**
+     * 
+     * @param {function() onChangeFn }
+     */
+    constructor(onChangeFn=undefined) {
         this.platformSelect=document.createElement('select');
         this.platformSelect.multiple=true;
         for (let i=0;i<platformList.length;i++) {
@@ -66,35 +73,36 @@ class multiplePlatformSelectionBox {
         this.platformTextInputCount.type="number";
         this.platformTextInputCount.id="platformCountTextInput";
         this.platformTextInputCount.hidden=true;
-        this.platformSelect.addEventListener('change', function(event) {
+        let self = this;
+        this.platformSelect.addEventListener('change', (event)=> {
             let flag=false;
-            for (let i=0;i<this.platformSelect.selectedOptions.length&&!flag;i++) {
-                if (this.platformSelect.selectedOptions.item(i).innerText=="Other") {
-                    this.platformTextInputCount.hidden=false;
-                    this.platformList.hidden=false;
+            for (let i=0;i<self.platformSelect.selectedOptions.length&&!flag;i++) {
+                if (self.platformSelect.selectedOptions.item(i).innerText=="Other") {
+                    self.platformTextInputCount.hidden=false;
+                    self.platformList.hidden=false;
                     flag=true;
                 }
             }
             if (!flag) {
-                this.platformTextInputCount.hidden=true;
-                this.platformList.hidden=true;
+                self.platformTextInputCount.hidden=true;
+                self.platformList.hidden=true;
             }
-            self.platforms=Array.from(this.platformSelect.selectedOptions).map((option)=> {
-                if (option!="Other") {
-                    return option.innerText;
-                }
-            });
+            if (onChangeFn) {
+                onChangeFn();
+            }
         });
-        platformTextInputCount.addEventListener('change',function(event) {
-            platformList.innerHTML="";
-            for (let i=0;i<platformTextInputCount.value;i++) {
+        this.platformTextInputCount.addEventListener('change',function(event) {
+            self.platformList.innerHTML="";
+            for (let i=0;i<self.platformTextInputCount.value;i++) {
                 let platformTextInput=document.createElement('input');
                 platformTextInput.type="text";
                 platformTextInput.id="addGameTextInput";
                 platformTextInput.addEventListener('change', function() {
-                    self.platforms[i+this.platformSelect.selectedOptions.length]=platformTextInput.value;
+                    if (onChangeFn) {
+                        onChangeFn();
+                    }
                 });
-                platformList.appendChild(document.createElement('li').appendChild(platformTextInput));
+                self.platformList.appendChild(document.createElement('li').appendChild(platformTextInput));
             }
         });
 

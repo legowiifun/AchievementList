@@ -2,6 +2,7 @@ import {gameJSON, achievementObject, achievementSetObject} from '../../JSONObjec
 import { getJson, getFilePath, editJson, fileSelection, getPathFromResources, validateGameJSON, validateSaveJSON } from '../../utils.js';
 import { windowAPI } from '../../APIThroughWindow.js';
 import { settings } from '../../settingsManager.js';
+import { multiplePlatformSelectionBox } from '../../PlaformSelectionBoxes/multiplePlatformSelectionBox.js';
 export class editGameJSONView {
     /**
      * @type {gameJSON}
@@ -212,94 +213,19 @@ export class editGameJSONView {
         listItem.appendChild(reqForPlatParagraph);
 
         //only on
-        //selection box
-        //can select multiple
-        //if select other, create list of others, any size
+        let onlyOnSelection = new multiplePlatformSelectionBox(()=>{
+            self.json.achievements[index].onlyOn=onlyOnSelection.getValue();
+        });
         let platformParagraph=document.createElement('p');
         platformParagraph.id="platformParagraph";
         platformParagraph.innerHTML="Select which platforms this achievement set is available on (leave empty for all): ";
-        let platformSelect = document.createElement('select');
-        platformSelect.id="achievementSelectPlatform";
-        platformSelect.multiple=true;
-        let options = ["PlayStation 3", "PlayStation 4", "PlayStation Vita", "PlayStation 5", "XBox", "XBox 360", "XBox One", "XBox Series X", "Steam", "GOG", "Other"];
-        for (let i=0;i<options.length;i++) {
-            let optionSelect = document.createElement('option');
-            optionSelect.value=options[i];
-            optionSelect.innerHTML=options[i];
-            platformSelect.appendChild(optionSelect);
-        }
-        platformSelect.size=1;
-
-        let platformList = document.createElement('ul');
-        platformList.hidden=true;
-
-        let platformTextInputCount = document.createElement('input');
-        platformTextInputCount.type="number";
-        platformTextInputCount.id="platformCountTextInput";
-        platformTextInputCount.hidden=true;
-        platformSelect.addEventListener('change', function(event) {
-            let flag=false;
-            for (let i=0;i<platformSelect.selectedOptions.length&&!flag;i++) {
-                if (platformSelect.selectedOptions.item(i).innerText=="Other") {
-                    platformTextInputCount.hidden=false;
-                    platformList.hidden=false;
-                    flag=true;
-                }
-            }
-            if (!flag) {
-                platformTextInputCount.hidden=true;
-                platformList.hidden=true;
-            }
-            self.json.achievements[index].onlyOn=Array.from(platformSelect.selectedOptions).map((option)=> {
-                if (option!="Other") {
-                    return option.innerText;
-                }
-            });
-            //self.json.file[index].platform=platformSelect.value;
-        });
-        platformTextInputCount.addEventListener('change',function(event) {
-            platformList.innerHTML="";
-            for (let i=0;i<platformTextInputCount.value;i++) {
-                let platformTextInput=document.createElement('input');
-                platformTextInput.type="text";
-                platformTextInput.id="addGameTextInput";
-                platformTextInput.addEventListener('change', function() {
-                    self.json.achievements[index].onlyOn[i+platformSelect.selectedOptions.length]=platformTextInput.value;
-                });
-                platformList.appendChild(document.createElement('li').appendChild(platformTextInput));
-            }
-        });
-        platformParagraph.appendChild(platformSelect);
-        platformParagraph.appendChild(platformTextInputCount);
-        platformParagraph.appendChild(platformList);
+        platformParagraph.appendChild(onlyOnSelection.display);
         platformParagraph.classList.add("formElement");
+        
         listItem.appendChild(platformParagraph);
 
         if (obj!=undefined&&obj.onlyOn!=undefined) {
-            let platformsArr=[];
-            for (let i=0;i<obj.onlyOn.length;i++) {
-                if (options.find((value)=> {
-                    return value==obj.onlyOn[i];
-                })) {
-                    for (let j=0;j<platformSelect.children.length;j++) {
-                        if (platformSelect.children.item(j).value==obj.onlyOn[i]) {
-                            platformSelect.children.item(j).selected=true;
-                        }
-                    }
-                } else {
-                    platformsArr.push(obj.onlyOn[i]);
-                }
-            }
-            
-            if (platformsArr.length!=0) {
-                document.querySelector(`#platformSelect option[value="Other"]`).selected=true;
-                platformSelect.dispatchEvent(new Event('change'));
-                platformTextInputCount=platformsArr.length;
-                platformTextInputCount.dispatchEvent(new Event('change'));
-                for (let i=0;i<platformsArr.length;i++) {
-                    platformList.children[i].children[0].value=platformsArr[i];
-                }
-            }
+            onlyOnSelection.setValue(obj.onlyOn);
         }
         let achievementList = document.createElement('ul');
         //achievements in the set
@@ -440,94 +366,18 @@ export class editGameJSONView {
 
 
         //onlyon
-        //selection box
-        //can select multiple
-        //if select other, create list of others, any size
+        let onlyOnSelection = new multiplePlatformSelectionBox(()=>{
+            self.json.achievements[index1].achievements[index2].onlyOn=onlyOnSelection.getValue();
+        });
         let platformParagraph=document.createElement('p');
         platformParagraph.id="platformParagraph";
         platformParagraph.innerHTML="Select which platforms this achievement is available on (leave empty for all): ";
-        let platformSelect = document.createElement('select');
-        platformSelect.id="achievementSelectPlatform";
-        platformSelect.multiple=true;
-        let options = ["PlayStation 3", "PlayStation 4", "PlayStation Vita", "PlayStation 5", "XBox", "XBox 360", "XBox One", "XBox Series X", "Steam", "GOG", "Other"];
-        for (let i=0;i<options.length;i++) {
-            let optionSelect = document.createElement('option');
-            optionSelect.value=options[i];
-            optionSelect.innerHTML=options[i];
-            platformSelect.appendChild(optionSelect);
-        }
-        platformSelect.size=1;
-
-        let platformList = document.createElement('ul');
-        platformList.hidden=true;
-
-        let platformTextInputCount = document.createElement('input');
-        platformTextInputCount.type="number";
-        platformTextInputCount.id="platformCountTextInput";
-        platformTextInputCount.hidden=true;
-        platformSelect.addEventListener('change', function(event) {
-            let flag=false;
-            for (let i=0;i<platformSelect.selectedOptions.length&&!flag;i++) {
-                if (platformSelect.selectedOptions.item(i).innerText=="Other") {
-                    platformTextInputCount.hidden=false;
-                    platformList.hidden=false;
-                    flag=true;
-                }
-            }
-            if (!flag) {
-                platformTextInputCount.hidden=true;
-                platformList.hidden=true;
-            }
-            self.json.achievements[index1].achievements[index2].onlyOn=Array.from(platformSelect.selectedOptions).map((option)=> {
-                if (option!="Other") {
-                    return option.innerText;
-                }
-            });
-            //self.json.file[index].platform=platformSelect.value;
-        });
-        platformTextInputCount.addEventListener('change',function(event) {
-            platformList.innerHTML="";
-            for (let i=0;i<platformTextInputCount.value;i++) {
-                let platformTextInput=document.createElement('input');
-                platformTextInput.type="text";
-                platformTextInput.id="addGameTextInput";
-                platformTextInput.addEventListener('change', function() {
-                    self.json.achievements[index1].achievements[index2].onlyOn[i+platformSelect.selectedOptions.length]=platformTextInput.value;
-                });
-                platformList.appendChild(document.createElement('li').appendChild(platformTextInput));
-            }
-        });
-        platformParagraph.appendChild(platformSelect);
-        platformParagraph.appendChild(platformTextInputCount);
-        platformParagraph.appendChild(platformList);
+        platformParagraph.appendChild(onlyOnSelection.display);
         platformParagraph.classList.add("formElement");
         listItem.appendChild(platformParagraph);
 
         if (obj!=undefined&&obj.onlyOn!=undefined) {
-            let platformsArr=[];
-            for (let i=0;i<obj.onlyOn.length;i++) {
-                if (options.find((value)=> {
-                    return value==obj.onlyOn[i];
-                })) {
-                    for (let j=0;j<platformSelect.children.length;j++) {
-                        if (platformSelect.children.item(j).value==obj.onlyOn[i]) {
-                            platformSelect.children.item(j).selected=true;
-                        }
-                    }
-                } else {
-                    platformsArr.push(obj.onlyOn[i]);
-                }
-            }
-            
-            if (platformsArr.length!=0) {
-                document.querySelector(`#platformSelect option[value="Other"]`).selected=true;
-                platformSelect.dispatchEvent(new Event('change'));
-                platformTextInputCount=platformsArr.length;
-                platformTextInputCount.dispatchEvent(new Event('change'));
-                for (let i=0;i<platformsArr.length;i++) {
-                    platformList.children[i].children[0].value=platformsArr[i];
-                }
-            }
+            onlyOnSelection.setValue(obj.onlyOn);
         }
 
         //delete the achievement

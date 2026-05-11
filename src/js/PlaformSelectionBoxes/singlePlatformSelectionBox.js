@@ -1,6 +1,6 @@
 import { platformList } from "./constants.js";
 
-class singlePlatformSelectionBox {
+export class singlePlatformSelectionBox {
     /**
      * @returns {string}
      */
@@ -27,7 +27,7 @@ class singlePlatformSelectionBox {
     display;
     platformSelect;
     platformTextInput;
-    constructor() {
+    constructor(onChangeFn=undefined) {
         this.platformSelect=document.createElement('select');
         for (let i=0;i<platformList.length;i++) {
             let optionSelect = document.createElement('option');
@@ -40,11 +40,20 @@ class singlePlatformSelectionBox {
         this.platformTextInput.type="text";
         this.platformTextInput.id="platformSelectTextInput";
         this.platformTextInput.hidden=true;
+        let self = this;
         this.platformSelect.addEventListener('change', function(event) {
-            if (this.platformSelect.value=="Other") {
-                this.platformTextInput.hidden=false;
+            if (self.platformSelect.value=="Other") {
+                self.platformTextInput.hidden=false;
             } else {
-                this.platformTextInput.hidden=true;
+                self.platformTextInput.hidden=true;
+            }
+            if (onChangeFn) {
+                onChangeFn();
+            }
+        });
+        self.platformTextInput.addEventListener('change', function(event) {
+            if (onChangeFn) {
+                onChangeFn();
             }
         });
         
