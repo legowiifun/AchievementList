@@ -1,6 +1,7 @@
 import { windowAPI } from "../APIThroughWindow.js";
 import { getFilePath, editJson, getJson } from "../utils.js";
 import { settings } from '.././settingsManager.js';
+import { singlePlatformSelectionBox } from "../PlaformSelectionBoxes/singlePlatformSelectionBox.js";
 export class AddGameViewer {
     constructor() {
         let file;
@@ -23,28 +24,9 @@ export class AddGameViewer {
         let platformParagraph=document.createElement('p');
         platformParagraph.id="platformParagraph";
         platformParagraph.innerHTML="Platform: ";
-        let platformSelect = document.createElement('select');
-        platformSelect.id="addGameSelectViewer";
-        let options = ["PlayStation 3", "PlayStation 4", "PlayStation Vita", "PlayStation 5", "XBox", "XBox 360", "XBox One", "XBox Series X", "Steam", "GOG", "Other"];
-        for (let i=0;i<options.length;i++) {
-            let optionSelect = document.createElement('option');
-            optionSelect.value=options[i];
-            optionSelect.innerHTML=options[i];
-            platformSelect.appendChild(optionSelect);
-        }
-        let platformTextInput=document.createElement('input');
-        platformTextInput.type="text";
-        platformTextInput.id="addGameTextInput";
-        platformTextInput.hidden=true;
-        platformSelect.addEventListener('change', function(event) {
-            if (platformSelect.value=="Other") {
-                platformTextInput.hidden=false;
-            } else {
-                platformTextInput.hidden=true;
-            }
-        });
-        platformParagraph.appendChild(platformSelect);
-        platformParagraph.appendChild(platformTextInput);
+
+        let platformSelect = new singlePlatformSelectionBox();
+        platformParagraph.appendChild(platformSelect.display);
         platformParagraph.classList.add("formElement");
         document.getElementById("content").appendChild(platformParagraph);
 
@@ -56,7 +38,7 @@ export class AddGameViewer {
             if (file!=undefined) {
                 if (settings.printConsoleLogs) {
                     console.log("JSON location=",getFilePath(file));
-                    console.log("Selected platform=",platformSelect.value);
+                    console.log("Selected platform=",platformSelect.getValue());
                 }
                 //get the file down to just the contents
                 let path=getFilePath(file);
@@ -65,12 +47,9 @@ export class AddGameViewer {
                     path=path.substring(idx);
                     if (settings.printConsoleLogs) {
                         console.log(path);
-                        console.log("addGameTextInput value: ", platformTextInput.value);
+                        console.log("addGameTextInput value: ", platformSelect.platformTextInput.value);
                     }
-                    let platform=platformSelect.value;
-                    if (platform=="Other") {
-                        platform=platformTextInput.value;
-                    }
+                    let platform=platformSelect.getValue();
                     //validate the JSON file
                     getJson(path).then((value)=> {
                         let json=JSON.parse(value);
@@ -80,7 +59,7 @@ export class AddGameViewer {
                             if (settings.printConsoleLogs) {
                                 console.log(windowAPI.createGamesJSON());
                             }
-                            editJson("games.json",windowAPI.createGamesJSON());
+                            editJson(settings.gamesJSONFile,windowAPI.createGamesJSON());
                             windowAPI.viewManager.setView(windowAPI.viewManager.views.gamesView, 0);
                         }
                     }).catch((err) => {
