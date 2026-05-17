@@ -25,3 +25,4 @@ jobs:
               with:
                 artifacts: "*.zip"
                 draft: true
+                tag: v1.0.2
