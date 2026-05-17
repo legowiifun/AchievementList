@@ -9,14 +9,19 @@ jobs:
         strategy:
             fail-fast: false
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
+            - name: checkout Repository
+              uses: actions/checkout@v4
+            - name: setup NodeJS
+              uses: actions/setup-node@v4
               with: 
                 node-version: '20'
                 cache: 'npm'
-            - run: npm ci
-            - run: npm run make --if-present >> $GITHUB_OUTPUT
-            - uses: ncipollo/release-action@v1
+            - name: install dependencies
+              run: npm ci
+            - name: build the software
+              run: npm run make --if-present >> $GITHUB_OUTPUT
+            - name: create a release
+              uses: ncipollo/release-action@v1
               with:
                 artifacts: "*.zip"
                 draft: true
