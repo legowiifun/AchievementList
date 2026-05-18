@@ -22,9 +22,11 @@ jobs:
               run: npm ci
             - name: build the software
               run: npm run make --if-present >> $GITHUB_OUTPUT
+            - name: zip folder
+              run: Compress-Archive -Path out/achievementlist-win32-x64/* achievementList.zip
             - name: create a release
               uses: ncipollo/release-action@v1
               with:
-                artifacts: "*.zip"
+                artifacts: "achievementList.zip"
                 draft: true
                 tag: v1.0.2
