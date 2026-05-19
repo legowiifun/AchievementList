@@ -11,6 +11,8 @@ import { editSaveJSONView } from './views/JSONEditing/editSaveJSONView.js';
 import { MosaicViewer } from './views/mosaicView.js';
 import { settings, reloadFlag } from './settingsManager.js';
 import { SettingsView } from './views/settingsView.js';
+import { Game } from './game.js';
+import { Achievement } from './achievement.js';
 /**
  * Handles switching between different application views
  */
@@ -43,6 +45,15 @@ export class ViewManager {
     JSONSelectionPath="";
 
     /**
+     * @type {Game[]}
+     */
+    displayedGames;
+    /**
+     * @type {Achievement[]}
+     */
+    displayedAchievements;
+
+    /**
      * @param {string} view 
      * @param {number} idx
      * @param {boolean} refresh
@@ -73,7 +84,8 @@ export class ViewManager {
             case this.views.gamesView: 
                 document.getElementById("backButton").setAttribute("hidden",true);
                 this.previousState="";
-                new GameViewer(windowAPI.myGames);
+                this.displayedGames=windowAPI.myGames;
+                new GameViewer(this.displayedGames);
                 if (this.currentState==this.views.achievementSetsView) {
                     windowAPI.mainContent.scrollTo(0,this.gameScrollPos);
                 } else {
@@ -94,7 +106,8 @@ export class ViewManager {
                 this.achievementSetIdx=idx;
                 this.previousState=this.views.achievementSetsView;
                 this.previousIdx=this.gameIdx;
-                new AchievementViewer(windowAPI.myGames[this.gameIdx].achievementSets[idx].achievements);
+                this.displayedAchievements=windowAPI.myGames[this.gameIdx].achievementSets[idx].achievements;
+                new AchievementViewer(this.displayedAchievements);
                 if (this.currentState==this.views.editAchievementView) {
                     windowAPI.mainContent.scrollTo(0,this.achievementScrollPos);
                 } else {

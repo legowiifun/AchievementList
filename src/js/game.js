@@ -14,13 +14,15 @@ export class Game {
     platImg="";
     platform="";
     gameJSONLocation="";
-    saveJSONLocation=""
-    constructor(name, img, platform, platImg, gameJSONLocation) {
+    saveJSONLocation="";
+    idx=0;
+    constructor(name, img, platform, platImg, gameJSONLocation,idx) {
         this.name=name;
         this.img=getPathMinusFiles()+img;
         this.platform=platform;
         this.platImg=getPathMinusFiles()+platImg;
         this.gameJSONLocation=gameJSONLocation;
+        this.idx=idx;
     }
     havePlat() {
         let hasAPlat=false;

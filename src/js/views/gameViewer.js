@@ -56,16 +56,16 @@ export class GameViewer {
             }
             localStorage.setItem("Sort",gameViewerSorting.value);
             windowAPI.currentSort = gameViewerSorting.value;
-            windowAPI.sortGames();
+            windowAPI.viewManager.displayedGames=windowAPI.sortGames();
         });
         
         document.getElementById("content").appendChild(gamesList);
         windowAPI.currentSort = gameViewerSorting.value;
-        windowAPI.sortGames(false);
+        windowAPI.viewManager.displayedGames=windowAPI.sortGames(false);
         document.getElementById("sideBar").appendChild(addGameButton);
         document.getElementById("sideBar").appendChild(gameViewerSorting);
-        for (let i=0;i<gamesArray.length;i++) {
-            new GameHolder(gamesArray[i], i, gamesList);
+        for (let i=0;i<windowAPI.viewManager.displayedGames.length;i++) {
+            new GameHolder(windowAPI.viewManager.displayedGames[i], windowAPI.viewManager.displayedGames[i].idx, gamesList);
         }
     }
 }

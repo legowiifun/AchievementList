@@ -41,11 +41,11 @@ export class APIThroughWindow {
         return JSON.stringify(newGamesJSON, null, 4);
     }
 
-    sortGames(refreshAfter=true, sortAlgo=this.currentSort,gamesToSort=this.myGames) {
+    sortGames(refreshAfter=true, sortAlgo=this.currentSort,gamesToSort=this.viewManager.displayedGames) {
         if (settings.printConsoleLogs) {
-            console.log("Sorting games with algorithm: ",sortAlgo, this.myGames);
+            console.log("Sorting games with algorithm: ",sortAlgo, gamesToSort);
         }
-        gamesToSort.sort(
+        let newGames = gamesToSort.toSorted(
             /**
              * @param {Game} a 
              * @param {Game} b 
@@ -165,8 +165,9 @@ export class APIThroughWindow {
             }
         );
         if (refreshAfter) {
-            this.viewManager.setView(this.viewManager.views.gamesView,0, true);
+            this.viewManager.setView(this.viewManager.currentState,0, true);
         }
+        return newGames;
     }
     
 }

@@ -75,7 +75,7 @@ export class Initialize {
                 try {
                     thisJson=await getJson(jsonName);
                 
-                    gameIdx=this.initGame(JSON.parse(thisJson),this.gamesJson[i].platform, jsonName);
+                    gameIdx=this.initGame(JSON.parse(thisJson),this.gamesJson[i].platform, jsonName,i);
                     //if there was not an error
                     if (gameIdx!=-1) {
                         //get the save file
@@ -105,7 +105,7 @@ export class Initialize {
     /**
      * @param {object} game 
      */
-    initGame(game, platform, JSONLocation) {
+    initGame(game, platform, JSONLocation, idx) {
         if (settings.printConsoleLogs) {
             console.log("initializing game: ",game);
         }
@@ -144,7 +144,7 @@ export class Initialize {
                 }
             }
         }
-        let newGame=new Game(name,img,platform,platImg, JSONLocation);
+        let newGame=new Game(name,img,platform,platImg, JSONLocation, idx);
         //parse achievement sets
         let skippedSets=0;
         for (let i=0;i<game.achievements.length;i++) {
